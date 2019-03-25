@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Sports Connectivity</string>
+    <string name="hello">hello</string>
+    <string name="question">question</string>
+    <string name="bye">bye</string>
+    <string name="saySome">Say something</string>
+    <string name="helloText">Hello, I am glad to see you.</string>
+    <string name="quizText">How are you? How was your day?</string>
+    <string name="byeText">Bye, have a nice evening, looking forward too see you again.</string>
 </resources>
