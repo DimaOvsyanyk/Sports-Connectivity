@@ -2,43 +2,60 @@ package com.dimaoprog.sportsconnectivity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import com.dimaoprog.sportsconnectivity.manager.NewsManager;
+import com.dimaoprog.sportsconnectivity.news.News;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+import java.util.List;
 
-    public Button btnHello, btnQuiz, btnBye;
-    public TextView txtSpeech;
+public class MainActivity extends AppCompatActivity implements NewsAdapter.IDetailNewsListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnHello = findViewById(R.id.btnHello);
-        btnQuiz = findViewById(R.id.btnQuiz);
-        btnBye = findViewById(R.id.btnBye);
-        txtSpeech = findViewById(R.id.txtSpeech);
-        btnHello.setOnClickListener(this);
-        btnQuiz.setOnClickListener(this);
-        btnBye.setOnClickListener(this);
+        NewsManager.setAllNews(importAllNews());
+        openNewsListFragment();
+    }
+
+    private void openNewsListFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container_fr, NewsListFragment.newInstance(this))
+                .commit();
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnHello:
-                txtSpeech.setText(getString(R.string.helloText));
-                txtSpeech.setBackgroundColor(getResources().getColor(R.color.green));
-                break;
-            case R.id.btnQuiz:
-                txtSpeech.setText(getString(R.string.quizText));
-                txtSpeech.setBackgroundColor(getResources().getColor(R.color.yellow));
-                break;
-            case R.id.btnBye:
-                txtSpeech.setText(getString(R.string.byeText));
-                txtSpeech.setBackgroundColor(getResources().getColor(R.color.red));
-                break;
-        }
+    public void openDetailNewsFragment(int i) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
+                .replace(R.id.container_fr, DetailNewsFragment.newInstance(i))
+                .addToBackStack(null)
+                .commit();
     }
+
+    public List<News> importAllNews() {
+        List<News> allNews = new ArrayList<>();
+        String[] titles = getResources().getStringArray(R.array.titles);
+        String[] shortNews = getResources().getStringArray(R.array.shortNews);
+        String[] longNews = getResources().getStringArray(R.array.longNews);
+        int[] pictures = {R.drawable.pic_1,
+                R.drawable.pic_2,
+                R.drawable.pic_3,
+                R.drawable.pic_4,
+                R.drawable.pic_5,
+                R.drawable.pic_6,
+                R.drawable.pic_7,
+                R.drawable.pic_8,
+                R.drawable.pic_9,
+                R.drawable.pic_10,
+        };
+        for (int i = 0; i < titles.length; i++) {
+            allNews.add(new News(titles[i], shortNews[i], longNews[i], pictures[i]));
+        }
+        return allNews;
+    }
+
+
 }
