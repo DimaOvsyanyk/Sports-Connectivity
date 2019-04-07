@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/txtDialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp"
+        android:text="@string/add_news"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/txtDialogTitle"
+        android:background="?android:attr/listDivider"
+        android:visibility="visible" />
+
+    <EditText
+        android:id="@+id/etNewTitle"
+        style="@android:style/Widget.Material.Light.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_below="@id/divider2"
+        android:layout_marginTop="10dp"
+        android:autofillHints="@string/put_the_title_here"
+        android:ems="10"
+        android:hint="@string/put_the_title_here"
+        android:inputType="textMultiLine"
+        android:textSize="18sp"
+        tools:targetApi="o" />
+
+    <EditText
+        android:id="@+id/etNewShort"
+        style="@android:style/Widget.Material.Light.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/etNewTitle"
+        android:autofillHints="@string/put_the_short_description_here"
+        android:ems="10"
+        android:gravity="bottom|start|fill_horizontal"
+        android:hint="@string/put_the_short_description_here"
+        android:inputType="textMultiLine"
+        android:textSize="18sp"
+        tools:targetApi="o" />
+
+    <EditText
+        android:id="@+id/etNewLong"
+        style="@android:style/Widget.Material.Light.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@id/button_layout"
+        android:layout_below="@id/etNewShort"
+        android:layout_marginBottom="10dp"
+        android:autofillHints="@string/put_the_article_here"
+        android:ems="10"
+        android:gravity="start|fill_horizontal|top"
+        android:hint="@string/put_the_article_here"
+        android:inputType="textMultiLine"
+        android:textSize="18sp"
+        tools:targetApi="o" />
+
+    <LinearLayout
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@android:string/cancel"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_confirm_add"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/add"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
