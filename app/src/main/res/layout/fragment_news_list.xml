@@ -21,39 +21,6 @@
         android:gravity="center_horizontal">
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add_workout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@android:drawable/ic_input_add"
-            app:elevation="10dp"
-            app:fabSize="mini" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add_food"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@android:drawable/ic_input_add"
-            app:elevation="10dp"
-            app:fabSize="mini"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add_new_sizes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@android:drawable/ic_input_add"
-            app:elevation="10dp"
-            app:fabSize="mini"/>
-
-        <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,10 +1,10 @@
 package com.dimaoprog.sportsconnectivity;
 
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.dimaoprog.sportsconnectivity.manager.NewsManager;
 import com.dimaoprog.sportsconnectivity.news.News;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +27,16 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.IDeta
 
     @Override
     public void openDetailNewsFragment(int i) {
+        int container;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            container = R.id.container_fr;
+        } else {
+            container = R.id.container_detail_fr;
+        }
         getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
-                .replace(R.id.container_fr, DetailNewsFragment.newInstance(i))
+                .replace(container, DetailNewsFragment.newInstance(i))
                 .addToBackStack(null)
                 .commit();
     }

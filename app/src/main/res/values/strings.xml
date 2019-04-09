@@ -50,4 +50,5 @@
     <string name="put_the_title_here">Put the title here</string>
     <string name="put_the_short_description_here">Put the short description here</string>
     <string name="put_the_article_here">Put the article here</string>
+    <string name="detail">Detail</string>
 </resources>

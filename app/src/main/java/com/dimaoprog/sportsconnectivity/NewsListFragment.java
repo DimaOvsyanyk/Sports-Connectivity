@@ -29,10 +29,6 @@ public class NewsListFragment extends Fragment implements View.OnClickListener {
 
     RecyclerView newsList;
     FloatingActionButton fabAdd;
-    FloatingActionButton fabAddWorkout;
-    FloatingActionButton fabAddFood;
-    FloatingActionButton fabAddNewSizes;
-    boolean isFABaddsShow;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,12 +42,7 @@ public class NewsListFragment extends Fragment implements View.OnClickListener {
         Animation in = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
         newsList.startAnimation(in);
 
-        isFABaddsShow = false;
-        fabAddsShow(isFABaddsShow);
         fabAdd.setOnClickListener(this);
-        fabAddFood.setOnClickListener(this);
-        fabAddWorkout.setOnClickListener(this);
-        fabAddNewSizes.setOnClickListener(this);
 
         return v;
     }
@@ -59,22 +50,6 @@ public class NewsListFragment extends Fragment implements View.OnClickListener {
     private void initViews(View v) {
         newsList = v.findViewById(R.id.rvNewsList);
         fabAdd = v.findViewById(R.id.fab_add);
-        fabAddWorkout = v.findViewById(R.id.fab_add_workout);
-        fabAddFood = v.findViewById(R.id.fab_add_food);
-        fabAddNewSizes = v.findViewById(R.id.fab_add_new_sizes);
-    }
-
-    private void fabAddsShow(boolean show) {
-        if (show) {
-            fabAddFood.show();
-            fabAddNewSizes.show();
-            fabAddWorkout.show();
-        } else {
-            fabAddFood.hide();
-            fabAddNewSizes.hide();
-            fabAddWorkout.hide();
-        }
-        this.isFABaddsShow = !show;
     }
 
     @Override
@@ -83,8 +58,6 @@ public class NewsListFragment extends Fragment implements View.OnClickListener {
         RecyclerView.Adapter currentAdapter = newsList.getAdapter();
         if (currentAdapter != null)
             currentAdapter.notifyDataSetChanged();
-        isFABaddsShow = false;
-        fabAddsShow(isFABaddsShow);
 
     }
 
@@ -97,19 +70,21 @@ public class NewsListFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_add:
-                fabAddsShow(isFABaddsShow);
-                break;
-            case R.id.fab_add_workout:
+                rotateFab();
                 showDialogWorkoutAdd();
-                break;
-            case R.id.fab_add_food:
-
-                break;
-            case R.id.fab_add_new_sizes:
-
                 break;
         }
     }
+
+
+    private void rotateFab() {
+        if (fabAdd.getRotation() == 0) {
+            fabAdd.animate().setDuration(200).rotation(180);
+        } else {
+            fabAdd.animate().setDuration(200).rotation(0);
+        }
+    }
+
     private void showDialogWorkoutAdd() {
         final Dialog dialog = new Dialog(Objects.requireNonNull(getContext()));
         dialog.setContentView(R.layout.dialog_workouk_add);
