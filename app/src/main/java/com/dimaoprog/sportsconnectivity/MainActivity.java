@@ -1,28 +1,81 @@
 package com.dimaoprog.sportsconnectivity;
 
 import android.content.res.Configuration;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import com.dimaoprog.sportsconnectivity.dbUsers.App;
+import com.dimaoprog.sportsconnectivity.dbUsers.User;
+import com.dimaoprog.sportsconnectivity.dbUsers.UserDao;
+import com.dimaoprog.sportsconnectivity.dbUsers.UserDatabase;
 import com.dimaoprog.sportsconnectivity.manager.NewsManager;
-import com.dimaoprog.sportsconnectivity.news.News;
-import java.util.ArrayList;
-import java.util.List;
+import org.json.JSONException;
+import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity implements NewsAdapter.IDetailNewsListener {
+public class MainActivity extends AppCompatActivity implements NewsAdapter.IDetailNewsListener,
+        LoginFragment.OnPressedButtonListener,
+        RegistrationFragment.RegistrationCompleteListener,
+        NewsListFragment.LogOffListener {
+
+    public User currentUser;
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        NewsManager.setAllNews(importAllNews());
-        openNewsListFragment();
-    }
 
-    private void openNewsListFragment() {
+        try {
+            NewsManager.setAllNews(this, R.raw.json_demo_db);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (checkSomeOneInSystem() != null) {
+            openNewsListFragment(checkSomeOneInSystem());
+        }else {
+            openLoginFragment();
+        }
+    }
+    @Override
+    public void openLoginFragment() {
+        setCurrentUser(null);
+        clearBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_fr, NewsListFragment.newInstance(this))
+                .replace(R.id.container_fr, LoginFragment.newInstance(this))
                 .commit();
+    }
+
+    @Override
+    public void openRegistrationFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container_fr, RegistrationFragment.newInstance(this))
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void openNewsListFragment(User userToLogin) {
+        setCurrentUser(userToLogin);
+        clearBackStack();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container_fr, NewsListFragment.newInstance(this,this, currentUser))
+                .commit();
+    }
+
+    public void clearBackStack() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        }
     }
 
     @Override
@@ -41,27 +94,9 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.IDeta
                 .commit();
     }
 
-    public List<News> importAllNews() {
-        List<News> allNews = new ArrayList<>();
-        String[] titles = getResources().getStringArray(R.array.titles);
-        String[] shortNews = getResources().getStringArray(R.array.shortNews);
-        String[] longNews = getResources().getStringArray(R.array.longNews);
-        int[] pictures = {R.drawable.pic_1,
-                R.drawable.pic_2,
-                R.drawable.pic_3,
-                R.drawable.pic_4,
-                R.drawable.pic_5,
-                R.drawable.pic_6,
-                R.drawable.pic_7,
-                R.drawable.pic_8,
-                R.drawable.pic_9,
-                R.drawable.pic_10,
-        };
-        for (int i = 0; i < titles.length; i++) {
-            allNews.add(new News(titles[i], shortNews[i], longNews[i], pictures[i]));
-        }
-        return allNews;
+    private User checkSomeOneInSystem() {
+        UserDatabase db = App.getInstance().getDatabase();
+        UserDao userDao = db.userDao();
+        return userDao.getByStayIn(User.STAY);
     }
-
-
 }

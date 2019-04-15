@@ -11,7 +11,7 @@ import com.dimaoprog.sportsconnectivity.news.News;
 
 public class NewsViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView txtTitle, txtShortText;
+    private TextView txtTitle, txtShortText, txtTime;
     private ImageView newsPicture;
     private Button btnGoDetail;
 
@@ -20,6 +20,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
 
         txtTitle = itemView.findViewById(R.id.txtTitle);
         txtShortText = itemView.findViewById(R.id.txtShortText);
+        txtTime = itemView.findViewById(R.id.txtTime);
         newsPicture = itemView.findViewById(R.id.imageView);
         btnGoDetail = itemView.findViewById(R.id.btn_go_detail);
         txtShortText.setVisibility(View.GONE);
@@ -27,9 +28,10 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(News news, final int i, final NewsAdapter.IDetailNewsListener listener) {
-        txtTitle.setText(news.getTitle());
-        txtShortText.setText(news.getShortNew());
-        newsPicture.setImageResource(news.getImage());
+        txtTitle.setText(news.getTitleResource());
+        txtShortText.setText(news.getShortDescription());
+        newsPicture.setImageResource(news.getIconResource());
+        txtTime.setText(news.getTime());
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

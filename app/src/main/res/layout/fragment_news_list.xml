@@ -36,4 +36,33 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginEnd="75dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_log_active_user"
+            android:text="Active Log"
+            android:textSize="12sp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_log_all_users"
+            android:text="All Log"
+            android:textSize="12sp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_logoff"
+            android:text="Logoff"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
 </FrameLayout>

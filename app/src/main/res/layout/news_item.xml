@@ -12,55 +12,77 @@
     android:translationZ="1dp"
     android:orientation="vertical">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:orientation="horizontal"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_margin="8dp"
+            android:layout_toStartOf="@id/icon_frame"
+            android:gravity="start"
+            android:text="@string/title"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtTitle"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/icon_frame"
+            android:gravity="end"
+            android:text="@string/time"
+            android:textSize="12sp" />
+
+    <FrameLayout
+        android:id="@+id/icon_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true">
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/picture"
-            app:srcCompat="@drawable/pic_1" />
+            app:srcCompat="@drawable/icon_food" />
 
         </FrameLayout>
 
         <ImageView
             android:id="@+id/corners"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/picture"
             app:srcCompat="@drawable/shape_for_pic" />
 
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="start"
-        android:text="@string/title"
-        android:textSize="18sp" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/txtShortText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:gravity="fill_horizontal|end"
         android:text="@string/short_news"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 
     <Button
         android:id="@+id/btn_go_detail"

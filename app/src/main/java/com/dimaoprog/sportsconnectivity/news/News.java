@@ -1,47 +1,89 @@
 package com.dimaoprog.sportsconnectivity.news;
 
+import com.dimaoprog.sportsconnectivity.R;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import static com.dimaoprog.sportsconnectivity.manager.NewsManager.NEWS_FOOD_FLAG;
+import static com.dimaoprog.sportsconnectivity.manager.NewsManager.NEWS_MEASUREMENTS_FLAG;
+import static com.dimaoprog.sportsconnectivity.manager.NewsManager.NEWS_WATER_FLAG;
+import static com.dimaoprog.sportsconnectivity.manager.NewsManager.NEWS_WORKOUT_FLAG;
+
 public class News {
-    private String title;
-    private String shortNew;
-    private String longNew;
-    private int image;
+    private int flag;
+    private int titleResource;
+    private String shortDescription;
+    private String time;
+    private int iconResource;
 
-    public News (String title, String shortNew, String longNew, int image) {
-        this.title = title;
-        this.shortNew = shortNew;
-        this.longNew = longNew;
-        this.image = image;
+    public News(int flag, String shortDescription) {
+        this.flag = flag;
+        this.shortDescription = shortDescription;
+        Date currentTime = Calendar.getInstance().getTime();
+        setTime(currentTime);
+        setTitleResource(flag);
+        setIconResource(flag);
     }
 
-    public String getTitle() {
-        return title;
+    public int getFlag() {
+        return flag;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 
-    public String getShortNew() {
-        return shortNew;
+    public int getTitleResource() {
+        return titleResource;
     }
 
-    public void setShortNew(String shortNew) {
-        this.shortNew = shortNew;
+    public void setTitleResource( int flag) {
+        int title = 0;
+        if (flag == NEWS_WORKOUT_FLAG) {
+            title = R.string.title_workout;
+        } else if (flag == NEWS_FOOD_FLAG) {
+            title = R.string.title_food;
+        } else if (flag == NEWS_MEASUREMENTS_FLAG) {
+            title = R.string.title_new_measurements;
+        } else if (flag == NEWS_WATER_FLAG) {
+            title = R.string.title_water;
+        }
+        this.titleResource = title;
     }
 
-    public String getLongNew() {
-        return longNew;
+    public String getShortDescription() {
+        return shortDescription;
     }
 
-    public void setLongNew(String longNew) {
-        this.longNew = longNew;
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
-    public int getImage() {
-        return image;
+    public String getTime() {
+        return time;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setTime(Date time) {
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        this.time = dateFormat.format(time);
+    }
+
+    public int getIconResource() {
+        return iconResource;
+    }
+
+    public void setIconResource(int flag) {
+        int icon = 0;
+        if (flag == NEWS_WORKOUT_FLAG) {
+            icon = R.drawable.icon_workout;
+        } else if (flag == NEWS_FOOD_FLAG) {
+            icon = R.drawable.icon_food;
+        } else if (flag == NEWS_MEASUREMENTS_FLAG) {
+            icon = R.drawable.icon_measurements;
+        } else if (flag == NEWS_WATER_FLAG) {
+            icon = R.drawable.icon_water;
+        }
+        this.iconResource = icon;
     }
 }

@@ -1,0 +1,24 @@
+{
+"news" : [
+  
+  {"flag" : 0, "short_description" : "You have workout today, don't forget)"},
+  
+  {"flag" : 1, "short_description" : "To build your muscles you need to eat more"},
+  
+  {"flag" : 3, "short_description" : "Don't forget to drink water"},
+  
+  {"flag" : 1, "short_description" : "To build your muscles you need to eat more"},
+  
+  {"flag" : 3, "short_description" : "To have strong and health body you should drink 2 liters of water per day"},
+  
+  {"flag" : 2, "short_description" : "Put your new measurements to track your success"},
+  
+  {"flag" : 0, "short_description" : "You have workout today, don't forget)"},
+
+  {"flag" : 1, "short_description" : "To build your muscles you need to eat more, food is your build resource"},
+
+  {"flag" : 3, "short_description" : "Don't forget to drink water"},
+
+  {"flag" : 0, "short_description" : "You have workout today, don't forget)"}
+  
+]}

@@ -24,8 +24,9 @@ public class DetailNewsFragment extends Fragment {
     }
 
     TextView title;
-    TextView shortNew;
-    TextView longNew;
+    TextView description;
+    TextView time;
+    TextView fullDescription;
     ImageView picture;
 
     @Override
@@ -47,16 +48,18 @@ public class DetailNewsFragment extends Fragment {
 
     private void initViews(View v) {
         title = v.findViewById(R.id.txt_title);
-        shortNew = v.findViewById(R.id.txt_short);
-        longNew = v.findViewById(R.id.txt_long);
+        description = v.findViewById(R.id.txt_short);
+        time = v.findViewById(R.id.txt_time);
+        fullDescription = v.findViewById(R.id.txt_long);
         picture = v.findViewById(R.id.img_picture);
     }
 
     private void fillViews(News someNew) {
-        title.setText(someNew.getTitle());
-        shortNew.setText(someNew.getShortNew());
-        longNew.setText(someNew.getLongNew());
-        picture.setImageResource(someNew.getImage());
+        title.setText(someNew.getTitleResource());
+        description.setText(someNew.getShortDescription());
+        fullDescription.setText(R.string.default_full_description);
+        time.setText(someNew.getTime());
+        picture.setImageResource(R.drawable.pic_1);
     }
 
 

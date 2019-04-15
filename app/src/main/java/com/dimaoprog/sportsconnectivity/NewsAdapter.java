@@ -13,10 +13,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
         void openDetailNewsFragment(int i);
     }
 
-    private IDetailNewsListener listener;
+    private IDetailNewsListener detailListener;
 
-    public NewsAdapter(IDetailNewsListener listener) {
-        this.listener = listener;
+    public NewsAdapter(IDetailNewsListener detailListener) {
+        this.detailListener = detailListener;
     }
 
     @NonNull
@@ -28,7 +28,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder newsViewHolder, int i) {
-        newsViewHolder.bind(NewsManager.getAllNews().get(i), i, listener);
+        newsViewHolder.bind(NewsManager.getAllNews().get(i), i, detailListener);
     }
 
     @Override

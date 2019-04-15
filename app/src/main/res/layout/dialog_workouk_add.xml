@@ -27,27 +27,26 @@
         android:background="?android:attr/listDivider"
         android:visibility="visible" />
 
-    <EditText
-        android:id="@+id/etNewTitle"
+    <Spinner
+        android:id="@+id/spinner_title"
         style="@android:style/Widget.Material.Light.EditText"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/divider2"
         android:layout_marginTop="20dp"
-        android:autofillHints="@string/put_the_title_here"
-        android:ems="10"
-        android:gravity="start|fill_horizontal|top"
-        android:hint="@string/put_the_title_here"
-        android:inputType="textMultiLine"
-        android:textSize="18sp"
-        tools:targetApi="o" />
+        android:contentDescription="@string/put_the_title_here"
+        android:dropDownWidth="wrap_content"
+        android:entries="@array/spinner_add"
+        android:gravity="start"
+        android:popupBackground="@color/colorAccent"
+        android:spinnerMode="dropdown"/>
 
     <EditText
         android:id="@+id/etNewShort"
         style="@android:style/Widget.Material.Light.EditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/etNewTitle"
+        android:layout_below="@id/spinner_title"
         android:autofillHints="@string/put_the_short_description_here"
         android:ems="10"
         android:gravity="start|fill_horizontal|top"
