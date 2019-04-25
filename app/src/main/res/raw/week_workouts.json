@@ -1,0 +1,43 @@
+{
+"week_workouts" : [
+	{"workout_title" : "Day 1: Legs Workout", "muscle_groups" : "Quadriceps, Hamstrings, Calves", "date_of_workout" : "22.04.2019", "exercises" : [
+		{"exercise_title" : "Barbell Full Squat", "rounds" : 5, "repetitions" : 3},
+		{"exercise_title" : "Leg Press", "rounds" : 4, "repetitions" : 10},
+		{"exercise_title" : "Seated Leg Curl", "rounds" : 4, "repetitions" : 10},
+		{"exercise_title" : "Leg Extensions", "rounds" : 4, "repetitions" : 15},
+		{"exercise_title" : "Standing Calf Raises", "rounds" : 4, "repetitions" : 15}
+		]},
+
+	{"workout_title" : "Day 2: Chest Workout", "muscle_groups" : "Chest", "date_of_workout" : "23.04.2019", "exercises" : [
+		{"exercise_title" : "Barbell Incline Bench Press Medium-Grip", "rounds" : 5, "repetitions" : 3},
+		{"exercise_title" : "Dumbbell Bench Press", "rounds" : 4, "repetitions" : 10},
+		{"exercise_title" : "Dumbbell Flyes", "rounds" : 4, "repetitions" : 10},
+		{"exercise_title" : "Butterfly", "rounds" : 3, "repetitions" : 15},
+		{"exercise_title" : "Bent-Arm Dumbbell Pullover", "rounds" : 3, "repetitions" : 15}
+		]},
+
+	{"workout_title" : "Day 3: Back Workout", "muscle_groups" : "Back, Trapezius", "date_of_workout" : "24.04.2019", "exercises" : [
+		{"exercise_title" : "Pullups", "rounds" : 5, "repetitions" : 3},
+		{"exercise_title" : "Bent Over Barbell Row", "rounds" : 4, "repetitions" : 10},
+		{"exercise_title" : "Straight-Arm Pulldown", "rounds" : 4, "repetitions" : 10},
+		{"exercise_title" : "Barbell Shrug", "rounds" : 3, "repetitions" : 15},
+		{"exercise_title" : "V-Bar Pulldown", "rounds" : 3, "repetitions" : 15}
+		]},
+
+	{"workout_title" : "Day 5: Shoulders Workout", "muscle_groups" : "Shoulders", "date_of_workout" : "26.04.2019", "exercises" : [
+		{"exercise_title" : "Push Press", "rounds" : 5, "repetitions" : 3},
+		{"exercise_title" : "Upright Barbell Row", "rounds" : 4, "repetitions" : 10},
+		{"exercise_title" : "One-Arm Incline Lateral Raise", "rounds" : 4, "repetitions" : 10},
+		{"exercise_title" : "Front Dumbbell Raise", "rounds" : 3, "repetitions" : 15},
+		{"exercise_title" : "Bent Over Low-Pulley Side Lateral", "rounds" : 3, "repetitions" : 15}
+		]},
+
+	{"workout_title" : "Day 6: Arms", "muscle_groups" : "Biceps, Triceps", "date_of_workout" : "27.04.2019", "exercises" : [
+		{"exercise_title" : "Preacher Curl", "rounds" : 5, "repetitions" : 3},
+		{"exercise_title" : "Decline EZ Bar Triceps Extension", "rounds" : 4, "repetitions" : 10},
+		{"exercise_title" : "Hammer Curls", "rounds" : 4, "repetitions" : 10},
+		{"exercise_title" : "Dips - Triceps Version", "rounds" : 3, "repetitions" : 15},
+		{"exercise_title" : "Barbell Curl", "rounds" : 3, "repetitions" : 15}
+		]}
+
+]}

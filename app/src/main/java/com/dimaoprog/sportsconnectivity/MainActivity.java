@@ -1,54 +1,76 @@
 package com.dimaoprog.sportsconnectivity;
 
-import android.content.res.Configuration;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.dimaoprog.sportsconnectivity.dbUsers.App;
-import com.dimaoprog.sportsconnectivity.dbUsers.User;
-import com.dimaoprog.sportsconnectivity.dbUsers.UserDao;
-import com.dimaoprog.sportsconnectivity.dbUsers.UserDatabase;
-import com.dimaoprog.sportsconnectivity.manager.NewsManager;
-import org.json.JSONException;
-import java.io.IOException;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements NewsAdapter.IDetailNewsListener,
-        LoginFragment.OnPressedButtonListener,
-        RegistrationFragment.RegistrationCompleteListener,
-        NewsListFragment.LogOffListener {
+import com.dimaoprog.sportsconnectivity.dbEntities.User;
+import com.dimaoprog.sportsconnectivity.dbWorkouts.UserDao;
+import com.dimaoprog.sportsconnectivity.dbWorkouts.AppDatabase;
+import com.dimaoprog.sportsconnectivity.loginRegistrationViews.LoginFragment;
+import com.dimaoprog.sportsconnectivity.loginRegistrationViews.RegistrationFragment;
+import com.dimaoprog.sportsconnectivity.workoutViews.DetailWorkoutFragment;
+import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutAddFragment;
+import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutsAdapter;
+import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutsListFragment;
 
-    public User currentUser;
+import java.util.List;
 
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
+import static com.dimaoprog.sportsconnectivity.dbEntities.User.NOTSTAY;
+import static com.dimaoprog.sportsconnectivity.dbEntities.User.STAY;
+
+public class MainActivity extends AppCompatActivity implements WorkoutsAdapter.IDetailWorkoutListener,
+        LoginFragment.OnPressedButtonListener, RegistrationFragment.RegistrationCompleteListener,
+        WorkoutsListFragment.AddListener, WorkoutAddFragment.AddWorkoutListener, NavigationView.OnNavigationItemSelectedListener {
+
+    public static final String LOG_MAIN = "applog";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        try {
-            NewsManager.setAllNews(this, R.raw.json_demo_db);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
+                R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         if (checkSomeOneInSystem() != null) {
-            openNewsListFragment(checkSomeOneInSystem());
-        }else {
+            User.setACTIVEUSER(checkSomeOneInSystem());
+            openWorkoutsListFragment();
+        } else {
             openLoginFragment();
         }
     }
+
     @Override
     public void openLoginFragment() {
-        setCurrentUser(null);
+        User.setACTIVEUSER(null);
         clearBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container_fr, LoginFragment.newInstance(this))
+                .commit();
+    }
+
+    @Override
+    public void openWorkoutAddFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container_fr, WorkoutAddFragment.newInstance(this))
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -62,13 +84,13 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.IDeta
     }
 
     @Override
-    public void openNewsListFragment(User userToLogin) {
-        setCurrentUser(userToLogin);
+    public void openWorkoutsListFragment() {
         clearBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_fr, NewsListFragment.newInstance(this,this, currentUser))
+                .replace(R.id.container_fr, WorkoutsListFragment.newInstance(this, this))
                 .commit();
+        Toast.makeText(this, "Hello " + User.getACTIVEUSER().getFirstName(), Toast.LENGTH_SHORT).show();
     }
 
     public void clearBackStack() {
@@ -79,24 +101,47 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.IDeta
     }
 
     @Override
-    public void openDetailNewsFragment(int i) {
-        int container;
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            container = R.id.container_fr;
-        } else {
-            container = R.id.container_detail_fr;
-        }
+    public void openDetailWorkoutFragment(int i) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
-                .replace(container, DetailNewsFragment.newInstance(i))
+                .replace(R.id.container_fr, DetailWorkoutFragment.newInstance(i))
                 .addToBackStack(null)
                 .commit();
     }
 
     private User checkSomeOneInSystem() {
-        UserDatabase db = App.getInstance().getDatabase();
+        AppDatabase db = AppDatabase.getInstance(this);
         UserDao userDao = db.userDao();
         return userDao.getByStayIn(User.STAY);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        AppDatabase db = AppDatabase.getInstance(this);
+        UserDao userDao = db.userDao();
+
+        switch (menuItem.getItemId()) {
+            case R.id.menu_active_user:
+                Log.d(LOG_MAIN, User.getACTIVEUSER().toString());
+                break;
+            case R.id.menu_all_users:
+                List<User> allUsers = userDao.getAllUsers();
+                for (int i = 0; i < allUsers.size(); i++) {
+                    String stringUser = allUsers.get(i).toString();
+                    Log.d(LOG_MAIN, stringUser);
+                }
+                break;
+            case R.id.menu_logoff:
+                if (User.getACTIVEUSER().getStayInSystem() == STAY) {
+                    User.getACTIVEUSER().setStayInSystem(NOTSTAY);
+                    userDao.update(User.getACTIVEUSER());
+                }
+                openLoginFragment();
+                break;
+        }
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 }

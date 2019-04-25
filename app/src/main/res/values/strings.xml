@@ -20,6 +20,20 @@
     <string name="detail">Detail</string>
     <string name="time">Time</string>
 
+    <string-array name="pick_muscle_groups">
+        <item>Quadriceps</item>
+        <item>Hamstrings</item>
+        <item>Calves</item>
+        <item>Chest</item>
+        <item>Back</item>
+        <item>Shoulders</item>
+        <item>Triceps</item>
+        <item>Biceps</item>
+        <item>Forearms</item>
+        <item>Trapezius</item>
+        <item>Abs</item>
+    </string-array>
+
     <string-array name="spinner_add">
         <item>Workout</item>
         <item>Food</item>
@@ -42,5 +56,27 @@
     <string name="enter_second_name">Enter second name</string>
     <string name="incorrect_e_mail">Incorrect E-mail</string>
     <string name="incorrect_password">Incorrect password</string>
+    <string name="exercise_add_title">Exercise</string>
+    <string name="rounds">Sets:</string>
+    <string name="reps">Reps:</string>
+    <string name="wzero">00</string>
+    <string name="muscle_group">Muscle groups</string>
+    <string name="workout_title">Workout title</string>
+    <string name="weight">Weight:</string>
+    <string name="pick_the_date">Pick the date</string>
+    <string name="date">date</string>
+    <string name="add_new_exercise">Add new exercise</string>
+    <string name="pick_muscle_groups">Pick muscle groups</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_new_workout">Add new workout</string>
+
+    <string name="active_user_to_log">Active user to log</string>
+    <string name="all_user_to_log">All user to log</string>
+    <string name="add_workouts_from_json">Add workouts from json</string>
+    <string name="logoff">Logoff</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
 </resources>

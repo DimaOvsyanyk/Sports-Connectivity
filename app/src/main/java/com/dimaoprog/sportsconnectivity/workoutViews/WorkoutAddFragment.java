@@ -1,0 +1,240 @@
+package com.dimaoprog.sportsconnectivity.workoutViews;
+
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.NumberPicker;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
+import com.dimaoprog.sportsconnectivity.dbEntities.User;
+import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
+import com.dimaoprog.sportsconnectivity.dbWorkouts.AppDatabase;
+import com.dimaoprog.sportsconnectivity.dbWorkouts.ExerciseDao;
+import com.dimaoprog.sportsconnectivity.dbWorkouts.WorkoutDao;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Objects;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
+public class WorkoutAddFragment extends Fragment implements AddExerciseAdapter.AddNewExerciseListener {
+
+    public static WorkoutAddFragment newInstance(AddWorkoutListener addWorkoutListener) {
+        WorkoutAddFragment fragment = new WorkoutAddFragment();
+        fragment.setAddWorkoutListener(addWorkoutListener);
+        return fragment;
+    }
+
+    private AddWorkoutListener addWorkoutListener;
+
+    public interface AddWorkoutListener {
+        void openWorkoutsListFragment();
+    }
+
+    public void setAddWorkoutListener(AddWorkoutListener addWorkoutListener) {
+        this.addWorkoutListener = addWorkoutListener;
+    }
+
+    Unbinder unbinder;
+
+    @BindView(R.id.et_add_workout_title)
+    EditText workoutTitle;
+    @BindView(R.id.txt_pick_the_date)
+    TextView pickTheDate;
+    @BindView(R.id.txt_pick_muscle_groups)
+    TextView pickMuscleGroup;
+    @BindView(R.id.rv_exercises)
+    RecyclerView rvAddExercises;
+
+    private boolean datePicked;
+    private boolean muscleGroupsPicked;
+    public static final long TEMP_WORKOUT_ID = 0;
+    public static List<Exercise> tempExercises;
+    Calendar calendar;
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_workout_add, container, false);
+        unbinder = ButterKnife.bind(this, v);
+
+        rvAddExercises.setAdapter(new AddExerciseAdapter(this));
+        rvAddExercises.setLayoutManager(new LinearLayoutManager(getContext()));
+        showAddExerciseDialog();
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+                tempExercises.remove(viewHolder.getAdapterPosition());
+                Objects.requireNonNull(rvAddExercises.getAdapter()).notifyDataSetChanged();
+            }
+        }).attachToRecyclerView(rvAddExercises);
+
+        return v;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        datePicked = false;
+        muscleGroupsPicked = false;
+        tempExercises = new ArrayList<>();
+        calendar = Calendar.getInstance();
+    }
+
+    @OnClick({R.id.txt_pick_the_date, R.id.txt_pick_muscle_groups, R.id.btn_confirm_add})
+    void chooseDate(View v) {
+        switch (v.getId()) {
+            case R.id.txt_pick_the_date:
+                showDatePicker();
+                break;
+            case R.id.txt_pick_muscle_groups:
+                showPickMuscleGroupsDialog();
+                break;
+            case R.id.btn_confirm_add:
+                if (checkAllEntities()) {
+                    Workout newWorkout = new Workout(User.getACTIVEUSER().getId(), workoutTitle.getText().toString(),
+                            pickMuscleGroup.getText().toString(), pickTheDate.getText().toString());
+                    AppDatabase db = AppDatabase.getInstance(getContext());
+                    WorkoutDao workoutDao = db.workoutDao();
+                    ExerciseDao exerciseDao = db.exerciseDao();
+                    long newWorkoutId = workoutDao.insert(newWorkout);
+                    for (int i = 0; i < tempExercises.size(); i++) {
+                        Exercise newExercise = tempExercises.get(i);
+                        newExercise.setWorkoutId(newWorkoutId);
+                        exerciseDao.insert(newExercise);
+                        addWorkoutListener.openWorkoutsListFragment();
+                    }
+                } else {
+                    Toast.makeText(getContext(),"You should fill all fields", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+
+    }
+
+    private boolean checkAllEntities() {
+        return datePicked & muscleGroupsPicked & workoutTitle.length() > 0 & tempExercises.size() > 0;
+    }
+
+    private void showDatePicker(){
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            new DatePickerDialog(getContext(), onDateSetListener,
+                    year, month, dayOfMonth).show();
+        }
+    }
+
+    DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            String date = dayOfMonth + "." + (monthOfYear + 1) + "." + year;
+            pickTheDate.setText(date);
+            datePicked = true;
+        }
+    };
+
+    private void showPickMuscleGroupsDialog() {
+        final String[] allMuscleGroups = getResources().getStringArray(R.array.pick_muscle_groups);
+        final boolean[] selectedMuscleGroups = new boolean[allMuscleGroups.length];
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.pick_muscle_groups);
+        builder.setMultiChoiceItems(allMuscleGroups, selectedMuscleGroups, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                selectedMuscleGroups[which] = isChecked;
+            }
+        });
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < selectedMuscleGroups.length; i++) {
+                    if (selectedMuscleGroups[i]) {
+                        if (sb.length() == 0) {
+                            sb.append(allMuscleGroups[i]);
+                        } else {
+                            sb.append(", ");
+                            sb.append(allMuscleGroups[i]);
+                        }
+                    }
+                }
+                pickMuscleGroup.setText(sb.toString());
+                muscleGroupsPicked = true;
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.show();
+    }
+
+    @Override
+    public void showAddExerciseDialog() {
+        final Dialog dialogAddExercise = new Dialog(getContext());
+        dialogAddExercise.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogAddExercise.setContentView(R.layout.dialog_add_exercise);
+        dialogAddExercise.setCanceledOnTouchOutside(true);
+
+        final NumberPicker pickerRounds = dialogAddExercise.findViewById(R.id.num_picker_rounds);
+        pickerRounds.setMinValue(0);
+        pickerRounds.setMaxValue(50);
+        final NumberPicker pickerReps = dialogAddExercise.findViewById(R.id.num_picker_reps);
+        pickerReps.setMinValue(0);
+        pickerReps.setMaxValue(50);
+
+        final EditText newExerciseTitle = dialogAddExercise.findViewById(R.id.et_exercise_to_add);
+
+        Button btnOk = dialogAddExercise.findViewById(R.id.btn_add_dialog);
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (newExerciseTitle.getText().toString().trim().length() > 0 &&
+                        pickerRounds.getValue() > 0 && pickerReps.getValue() > 0) {
+                    Exercise newExercise = new Exercise(TEMP_WORKOUT_ID, newExerciseTitle.getText().toString().trim(),
+                            pickerRounds.getValue(), pickerReps.getValue());
+                    tempExercises.add(newExercise);
+                    RecyclerView.Adapter currentAdapter = rvAddExercises.getAdapter();
+                    if (currentAdapter != null)
+                        currentAdapter.notifyDataSetChanged();
+                    dialogAddExercise.dismiss();
+                }
+            }
+        });
+        dialogAddExercise.show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
+}
