@@ -1,5 +1,6 @@
 package com.dimaoprog.sportsconnectivity.dbWorkouts;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -14,10 +15,10 @@ import java.util.List;
 public interface WorkoutDao {
 
     @Query("SELECT * FROM workouts WHERE user_id = :userId")
-    List<Workout> getByUserId(long userId);
+    LiveData<List<Workout>> getByUserId(long userId);
 
-    @Query("SELECT * FROM workouts")
-    List<Workout> getAllWorkouts();
+    @Query("SELECT * FROM workouts WHERE id = :id")
+    Workout getById(long id);
 
     @Insert
     long insert(Workout workout);

@@ -13,6 +13,7 @@ import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.dbEntities.User;
 import com.dimaoprog.sportsconnectivity.dbWorkouts.UserDao;
 import com.dimaoprog.sportsconnectivity.dbWorkouts.AppDatabase;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,14 +39,22 @@ public class RegistrationFragment extends Fragment {
 
     private Unbinder unbinder;
 
-    @BindView(R.id.et_e_mail) EditText txtEMail;
-    @BindView(R.id.et_password) EditText txtPassword;
-    @BindView(R.id.et_first_name) EditText txtFirstName;
-    @BindView(R.id.et_second_name) EditText txtSecondName;
-    @BindView(R.id.text_incorrect_first) TextView incorrectFirst;
-    @BindView(R.id.text_incorrect_second) TextView incorrectSecond;
-    @BindView(R.id.text_incorrect_mail) TextView incorrectEMail;
-    @BindView(R.id.text_incorrect_password) TextView incorrectPassword;
+    @BindView(R.id.et_e_mail)
+    EditText txtEMail;
+    @BindView(R.id.et_password)
+    EditText txtPassword;
+    @BindView(R.id.et_first_name)
+    EditText txtFirstName;
+    @BindView(R.id.et_second_name)
+    EditText txtSecondName;
+    @BindView(R.id.text_incorrect_first)
+    TextView incorrectFirst;
+    @BindView(R.id.text_incorrect_second)
+    TextView incorrectSecond;
+    @BindView(R.id.text_incorrect_mail)
+    TextView incorrectEMail;
+    @BindView(R.id.text_incorrect_password)
+    TextView incorrectPassword;
     boolean firstNameOK;
     boolean secondNameOK;
     boolean eMailOK;

@@ -1,7 +1,10 @@
 package com.dimaoprog.sportsconnectivity.workoutViews;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,15 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dimaoprog.sportsconnectivity.R;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.AppDatabase;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.JSONWorkoutReader;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.WorkoutDao;
-import com.dimaoprog.sportsconnectivity.manager.WorkoutsManager;
+import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
 
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,24 +29,21 @@ import butterknife.Unbinder;
 
 public class WorkoutsListFragment extends Fragment {
 
-
-    WorkoutsAdapter.IDetailWorkoutListener detailListener;
+    WorkoutsListAdapter.IDetailWorkoutListener detailListener;
     AddListener addListener;
 
-    public static WorkoutsListFragment newInstance(WorkoutsAdapter.IDetailWorkoutListener detailListener, AddListener addListener) {
+    public static WorkoutsListFragment newInstance(WorkoutsListAdapter.IDetailWorkoutListener detailListener, AddListener addListener) {
         WorkoutsListFragment fragment = new WorkoutsListFragment();
         fragment.setDetailListener(detailListener);
         fragment.setAddListener(addListener);
         return fragment;
     }
 
-    public void setDetailListener(WorkoutsAdapter.IDetailWorkoutListener detailListener) {
+    public void setDetailListener(WorkoutsListAdapter.IDetailWorkoutListener detailListener) {
         this.detailListener = detailListener;
     }
 
     public interface AddListener {
-        void openLoginFragment();
-
         void openWorkoutAddFragment();
     }
 
@@ -55,35 +52,40 @@ public class WorkoutsListFragment extends Fragment {
     }
 
     private Unbinder unbinder;
-    public static final int FIRST_WEEK_WORKOUTS = R.raw.week_workouts;
     @BindView(R.id.rvNewsList)
     RecyclerView workoutList;
     @BindView(R.id.swipe_layout)
     SwipeRefreshLayout swipeLayout;
+
+    private WorkoutsListViewModel wlViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_workouts_list, container, false);
 
         unbinder = ButterKnife.bind(this, v);
-        WorkoutsManager.setAllWorkouts(getContext());
-        workoutList.setAdapter(new WorkoutsAdapter(detailListener));
         workoutList.setLayoutManager(new LinearLayoutManager(getContext()));
+        final WorkoutsListAdapter workoutsListAdapter = new WorkoutsListAdapter(detailListener);
+        workoutList.setAdapter(workoutsListAdapter);
+
+        wlViewModel = ViewModelProviders.of(this).get(WorkoutsListViewModel.class);
+        wlViewModel.getAllWorkouts().observe(this, new Observer<List<Workout>>() {
+            @Override
+            public void onChanged(@Nullable List<Workout> workouts) {
+                workoutsListAdapter.submitList(workouts);
+            }
+        });
 
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 try {
-                    JSONWorkoutReader.setWorkoutsFromJSON(getContext(), FIRST_WEEK_WORKOUTS);
+                    wlViewModel.addNewWorkoutsFromJson();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                WorkoutsManager.setAllWorkouts(getContext());
-                RecyclerView.Adapter currentAdapter = workoutList.getAdapter();
-                if (currentAdapter != null)
-                    currentAdapter.notifyDataSetChanged();
                 swipeLayout.setRefreshing(false);
             }
         });
@@ -97,23 +99,11 @@ public class WorkoutsListFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                AppDatabase db = AppDatabase.getInstance(getContext());
-                WorkoutDao workoutDao = db.workoutDao();
-                workoutDao.delete(WorkoutsManager.getAllWorkouts().get(viewHolder.getAdapterPosition()));
-                WorkoutsManager.setAllWorkouts(getContext());
-                Objects.requireNonNull(workoutList.getAdapter()).notifyDataSetChanged();
+                wlViewModel.delete(workoutsListAdapter.getWorkoutAtPos(viewHolder.getAdapterPosition()));
             }
         }).attachToRecyclerView(workoutList);
 
         return v;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        RecyclerView.Adapter currentAdapter = workoutList.getAdapter();
-        if (currentAdapter != null)
-            currentAdapter.notifyDataSetChanged();
     }
 
     @OnClick(R.id.fab_add)

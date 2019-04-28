@@ -12,9 +12,7 @@ import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddExerciseViewHolder extends RecyclerView.ViewHolder {
-
-
+public class DetailWorkoutViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.txt_exercise_title)
     TextView exerciseTitle;
@@ -25,24 +23,16 @@ public class AddExerciseViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.btn_add_exercise_item)
     Button btnAddNewExercise;
 
-    public AddExerciseViewHolder(@NonNull View itemView) {
+    public DetailWorkoutViewHolder(@NonNull View itemView) {
         super(itemView);
 
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(Exercise exercise, final AddExerciseAdapter.AddNewExerciseListener addNewExerciseListener) {
+    public void bind(Exercise exercise) {
+        btnAddNewExercise.setVisibility(View.INVISIBLE);
         exerciseTitle.setText(exercise.getExerciseTitle());
         txtRounds.setText(String.valueOf(exercise.getRounds()));
         txtReps.setText(String.valueOf(exercise.getRepetitions()));
-        btnAddNewExercise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addNewExerciseListener.showAddExerciseDialog();
-            }
-        });
-
     }
-
-
 }

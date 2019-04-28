@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.dimaoprog.sportsconnectivity.R;
 
-public class AddExerciseAdapter extends RecyclerView.Adapter<AddExerciseViewHolder> {
+public class WorkoutAddAdapter extends RecyclerView.Adapter<WorkoutAddViewHolder> {
 
     private AddNewExerciseListener addNewExerciseListener;
 
@@ -16,20 +16,20 @@ public class AddExerciseAdapter extends RecyclerView.Adapter<AddExerciseViewHold
         void showAddExerciseDialog();
     }
 
-    public AddExerciseAdapter(AddNewExerciseListener addNewExerciseListener) {
+    public WorkoutAddAdapter(AddNewExerciseListener addNewExerciseListener) {
         this.addNewExerciseListener = addNewExerciseListener;
     }
 
     @NonNull
     @Override
-    public AddExerciseViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public WorkoutAddViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.exercise_add_item, viewGroup, false);
-        return new AddExerciseViewHolder(view);
+        return new WorkoutAddViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AddExerciseViewHolder addExerciseViewHolder, int i) {
-        addExerciseViewHolder.bind(WorkoutAddFragment.tempExercises.get(i), addNewExerciseListener);
+    public void onBindViewHolder(@NonNull WorkoutAddViewHolder workoutAddViewHolder, int i) {
+        workoutAddViewHolder.bind(WorkoutAddFragment.tempExercises.get(i), addNewExerciseListener);
     }
 
     @Override

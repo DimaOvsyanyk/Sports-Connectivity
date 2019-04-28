@@ -1,6 +1,8 @@
 package com.dimaoprog.sportsconnectivity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -15,11 +17,9 @@ import android.widget.Toast;
 import com.dimaoprog.sportsconnectivity.dbEntities.User;
 import com.dimaoprog.sportsconnectivity.dbWorkouts.UserDao;
 import com.dimaoprog.sportsconnectivity.dbWorkouts.AppDatabase;
-import com.dimaoprog.sportsconnectivity.loginRegistrationViews.LoginFragment;
-import com.dimaoprog.sportsconnectivity.loginRegistrationViews.RegistrationFragment;
 import com.dimaoprog.sportsconnectivity.workoutViews.DetailWorkoutFragment;
 import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutAddFragment;
-import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutsAdapter;
+import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutsListAdapter;
 import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutsListFragment;
 
 import java.util.List;
@@ -27,8 +27,7 @@ import java.util.List;
 import static com.dimaoprog.sportsconnectivity.dbEntities.User.NOTSTAY;
 import static com.dimaoprog.sportsconnectivity.dbEntities.User.STAY;
 
-public class MainActivity extends AppCompatActivity implements WorkoutsAdapter.IDetailWorkoutListener,
-        LoginFragment.OnPressedButtonListener, RegistrationFragment.RegistrationCompleteListener,
+public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsListAdapter.IDetailWorkoutListener,
         WorkoutsListFragment.AddListener, WorkoutAddFragment.AddWorkoutListener, NavigationView.OnNavigationItemSelectedListener {
 
     public static final String LOG_MAIN = "applog";
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutsAdapter.I
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_for_workouts);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
@@ -47,21 +46,51 @@ public class MainActivity extends AppCompatActivity implements WorkoutsAdapter.I
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (checkSomeOneInSystem() != null) {
-            User.setACTIVEUSER(checkSomeOneInSystem());
-            openWorkoutsListFragment();
-        } else {
-            openLoginFragment();
-        }
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.menu_account:
+                        openProfileFragment();
+                        break;
+                    case R.id.menu_workouts:
+                        openWorkoutsListFragment();
+                        break;
+                    case R.id.menu_food:
+                        openFoodFragment();
+                        break;
+                    case R.id.menu_trainer:
+                        openTrainerFragment();
+                        break;
+                }
+                return true;
+            }
+        });
+        bottomNavigationView.setSelectedItemId(R.id.menu_workouts);
+        Toast.makeText(this, "Hello " + User.getACTIVEUSER().getFirstName(), Toast.LENGTH_SHORT).show();
+        openWorkoutsListFragment();
     }
 
-    @Override
-    public void openLoginFragment() {
-        User.setACTIVEUSER(null);
-        clearBackStack();
+
+    public void openProfileFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_fr, LoginFragment.newInstance(this))
+                .replace(R.id.container_fr, ProfileFragment.newInstance())
+                .commit();
+    }
+
+    public void openFoodFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container_fr, FoodFragment.newInstance())
+                .commit();
+    }
+
+    public void openTrainerFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container_fr, TrainerFragment.newInstance())
                 .commit();
     }
 
@@ -75,22 +104,12 @@ public class MainActivity extends AppCompatActivity implements WorkoutsAdapter.I
     }
 
     @Override
-    public void openRegistrationFragment() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container_fr, RegistrationFragment.newInstance(this))
-                .addToBackStack(null)
-                .commit();
-    }
-
-    @Override
     public void openWorkoutsListFragment() {
         clearBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container_fr, WorkoutsListFragment.newInstance(this, this))
                 .commit();
-        Toast.makeText(this, "Hello " + User.getACTIVEUSER().getFirstName(), Toast.LENGTH_SHORT).show();
     }
 
     public void clearBackStack() {
@@ -101,18 +120,12 @@ public class MainActivity extends AppCompatActivity implements WorkoutsAdapter.I
     }
 
     @Override
-    public void openDetailWorkoutFragment(int i) {
+    public void openDetailWorkoutFragment(long workoutId) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_fr, DetailWorkoutFragment.newInstance(i))
+                .replace(R.id.container_fr, DetailWorkoutFragment.newInstance(workoutId))
                 .addToBackStack(null)
                 .commit();
-    }
-
-    private User checkSomeOneInSystem() {
-        AppDatabase db = AppDatabase.getInstance(this);
-        UserDao userDao = db.userDao();
-        return userDao.getByStayIn(User.STAY);
     }
 
     @Override
@@ -136,7 +149,8 @@ public class MainActivity extends AppCompatActivity implements WorkoutsAdapter.I
                     User.getACTIVEUSER().setStayInSystem(NOTSTAY);
                     userDao.update(User.getACTIVEUSER());
                 }
-                openLoginFragment();
+                Intent intent = new Intent(ForWorkoutsActivity.this, LoginActivity.class);
+                startActivity(intent);
                 break;
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

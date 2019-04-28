@@ -25,11 +25,7 @@ public class JSONWorkoutReader {
     private static final String TAG_EXERCISE_ROUNDS = "rounds";
     private static final String TAG_EXERCISE_REPETITIONS = "repetitions";
 
-    public static void setWorkoutsFromJSON(Context context, int fileId) throws IOException, JSONException {
-        AppDatabase db = AppDatabase.getInstance(context);
-        WorkoutDao workoutDao = db.workoutDao();
-        ExerciseDao exerciseDao = db.exerciseDao();
-
+    public static void setWorkoutsFromJSON(Context context, WorkoutDao workoutDao, ExerciseDao exerciseDao, int fileId) throws IOException, JSONException {
         String jsonText = readJSON(context, fileId);
         JSONObject jsonObject = new JSONObject(jsonText);
         JSONArray jsonArrayWeekWorkouts = jsonObject.getJSONArray(TAG_WEEK_WORKOUTS);

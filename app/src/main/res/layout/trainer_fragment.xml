@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".TrainerFragment">
+
+    <LinearLayout
+        android:id="@+id/top_part"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:background="@color/backgroundColor">
+
+    <ImageView
+        android:id="@+id/img_trainer_avatar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@color/colorPrimaryDark"
+        android:src="@drawable/ic_trainer_white_24dp"
+        android:contentDescription="@string/trainer_photo" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_chat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_s"
+        android:padding="@dimen/margin_s"
+        android:layout_below="@id/top_part"
+        android:layout_above="@id/bottom_part"/>
+
+    <LinearLayout
+        android:id="@+id/bottom_part"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="@color/backgroundColor">
+
+        <EditText
+            android:id="@+id/et_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/margin_s"
+            android:layout_marginEnd="@dimen/margin_s"
+            android:hint="@string/enter_message"
+            android:layout_gravity="center_vertical"
+            android:inputType="textMultiLine"
+            android:background="@drawable/shape_card"
+            android:autofillHints="@string/enter_message"
+            tools:targetApi="o" />
+
+        <Button
+            android:id="@+id/btn_send_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@android:style/Widget.Material.Button.Borderless.Colored"
+            android:text="@string/send_message"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

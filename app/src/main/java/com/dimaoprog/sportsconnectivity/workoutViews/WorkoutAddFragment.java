@@ -2,6 +2,7 @@ package com.dimaoprog.sportsconnectivity.workoutViews;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
@@ -28,9 +29,6 @@ import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
 import com.dimaoprog.sportsconnectivity.dbEntities.User;
 import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.AppDatabase;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.ExerciseDao;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.WorkoutDao;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,7 +40,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class WorkoutAddFragment extends Fragment implements AddExerciseAdapter.AddNewExerciseListener {
+public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.AddNewExerciseListener {
 
     public static WorkoutAddFragment newInstance(AddWorkoutListener addWorkoutListener) {
         WorkoutAddFragment fragment = new WorkoutAddFragment();
@@ -71,6 +69,8 @@ public class WorkoutAddFragment extends Fragment implements AddExerciseAdapter.A
     @BindView(R.id.rv_exercises)
     RecyclerView rvAddExercises;
 
+    private WorkoutAddViewModel waViewModel;
+
     private boolean datePicked;
     private boolean muscleGroupsPicked;
     public static final long TEMP_WORKOUT_ID = 0;
@@ -82,7 +82,9 @@ public class WorkoutAddFragment extends Fragment implements AddExerciseAdapter.A
         View v = inflater.inflate(R.layout.fragment_workout_add, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        rvAddExercises.setAdapter(new AddExerciseAdapter(this));
+        waViewModel = ViewModelProviders.of(this).get(WorkoutAddViewModel.class);
+
+        rvAddExercises.setAdapter(new WorkoutAddAdapter(this));
         rvAddExercises.setLayoutManager(new LinearLayoutManager(getContext()));
         showAddExerciseDialog();
 
@@ -124,18 +126,15 @@ public class WorkoutAddFragment extends Fragment implements AddExerciseAdapter.A
                 if (checkAllEntities()) {
                     Workout newWorkout = new Workout(User.getACTIVEUSER().getId(), workoutTitle.getText().toString(),
                             pickMuscleGroup.getText().toString(), pickTheDate.getText().toString());
-                    AppDatabase db = AppDatabase.getInstance(getContext());
-                    WorkoutDao workoutDao = db.workoutDao();
-                    ExerciseDao exerciseDao = db.exerciseDao();
-                    long newWorkoutId = workoutDao.insert(newWorkout);
+                    long newWorkoutId = waViewModel.insertWorkout(newWorkout);
                     for (int i = 0; i < tempExercises.size(); i++) {
                         Exercise newExercise = tempExercises.get(i);
                         newExercise.setWorkoutId(newWorkoutId);
-                        exerciseDao.insert(newExercise);
+                        waViewModel.insertExercise(newExercise);
                         addWorkoutListener.openWorkoutsListFragment();
                     }
                 } else {
-                    Toast.makeText(getContext(),"You should fill all fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "You should fill all fields", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -146,7 +145,7 @@ public class WorkoutAddFragment extends Fragment implements AddExerciseAdapter.A
         return datePicked & muscleGroupsPicked & workoutTitle.length() > 0 & tempExercises.size() > 0;
     }
 
-    private void showDatePicker(){
+    private void showDatePicker() {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);

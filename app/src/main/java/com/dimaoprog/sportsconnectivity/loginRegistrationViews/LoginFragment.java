@@ -28,7 +28,7 @@ public class LoginFragment extends Fragment {
     }
 
     public interface OnPressedButtonListener {
-        void openWorkoutsListFragment();
+        void openForWorkoutsActivity();
 
         void openRegistrationFragment();
     }
@@ -61,7 +61,7 @@ public class LoginFragment extends Fragment {
         switch (v.getId()) {
             case R.id.btn_login:
                 if (checkUser()) {
-                    pressedEvent.openWorkoutsListFragment();
+                    pressedEvent.openForWorkoutsActivity();
                 }
                 break;
             case R.id.btn_register:

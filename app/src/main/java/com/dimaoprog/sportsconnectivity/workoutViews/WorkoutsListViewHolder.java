@@ -11,7 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class WorkoutsViewHolder extends RecyclerView.ViewHolder {
+public class WorkoutsListViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.txt_title)
     TextView txtTitle;
@@ -20,20 +20,20 @@ public class WorkoutsViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.txt_muscle_groups)
     TextView txtMuscleGroups;
 
-    public WorkoutsViewHolder(@NonNull View itemView) {
+    public WorkoutsListViewHolder(@NonNull View itemView) {
         super(itemView);
 
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(Workout workout, final int i, final WorkoutsAdapter.IDetailWorkoutListener listener) {
+    public void bind(final Workout workout, final WorkoutsListAdapter.IDetailWorkoutListener listener) {
         txtTitle.setText(workout.getWorkoutTitle());
         txtMuscleGroups.setText(workout.getMuscleGroups());
         txtDate.setText(workout.getDateOfWorkout());
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.openDetailWorkoutFragment(i);
+                listener.openDetailWorkoutFragment(workout.getId());
             }
         });
     }

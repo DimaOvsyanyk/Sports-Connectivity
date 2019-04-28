@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".ProfileFragment">
+
+        <ImageView
+            android:id="@+id/img_profile_pic"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/colorPrimaryDark"
+            android:contentDescription="@string/profile_picture"
+            android:src="@drawable/ic_account_circle_white_24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_l"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="@dimen/margin_s"
+                    android:layout_toStartOf="@id/txt_edit_profile_details"
+                    tools:text="Name surname" />
+
+                <TextView
+                    android:id="@+id/txt_edit_profile_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_s"
+                    android:layout_toStartOf="@id/btn_edit_profile"
+                    android:text="@string/edit_profile_details" />
+
+                <Button
+                    android:id="@+id/btn_edit_profile"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/margin_s"
+                    android:background="@drawable/ic_edit_orange_24dp" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_xs"
+                android:background="@color/colorAccent" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_workouts_statistic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_s"
+                    android:layout_toStartOf="@id/btn_detail_workout_statistic"
+                    android:text="@string/workout_statistics" />
+
+                <Button
+                    android:id="@+id/btn_detail_workout_statistic"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/ic_arrow_drop_down_orange_24dp" />
+
+                <ImageView
+                    android:id="@+id/img_workout_statistic_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_workouts_statistic"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="0dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/workout_statistics"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/pic_time_to_workout"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_xs"
+                android:background="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/txt_food_receipts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_s"
+                android:text="@string/receipts" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_xs"
+                android:background="@color/colorAccent" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_s"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_measurements_ago"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/date_of_last_measurements" />
+
+                <TextView
+                    android:id="@+id/txt_date_last_measure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_xs"
+                    android:layout_toStartOf="@id/btn_add_new_measurements"
+                    android:layout_toEndOf="@id/txt_measurements_ago"
+                    tools:text="22.04.2019" />
+
+                <Button
+                    android:id="@+id/btn_add_new_measurements"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/ic_add_box_orange" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_xs"
+                android:background="@color/colorAccent" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_s"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/txt_water_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/water_balance" />
+
+                <FrameLayout
+                    android:id="@+id/progress_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/margin_l"
+                    android:layout_toEndOf="@id/txt_water_balance">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:background="@color/colorPrimary"
+                        tools:progress="68" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/shape_for_pic" />
+
+
+                </FrameLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
