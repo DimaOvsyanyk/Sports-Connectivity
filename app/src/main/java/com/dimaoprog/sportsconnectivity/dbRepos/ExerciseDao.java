@@ -1,4 +1,4 @@
-package com.dimaoprog.sportsconnectivity.dbWorkouts;
+package com.dimaoprog.sportsconnectivity.dbRepos;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;

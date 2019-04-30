@@ -6,10 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.dimaoprog.sportsconnectivity.dbEntities.User;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.AppDatabase;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.UserDao;
+import com.dimaoprog.sportsconnectivity.dbRepos.AppDatabase;
+import com.dimaoprog.sportsconnectivity.dbRepos.UserDao;
 import com.dimaoprog.sportsconnectivity.loginRegistrationViews.LoginFragment;
 import com.dimaoprog.sportsconnectivity.loginRegistrationViews.RegistrationFragment;
+
 public class LoginActivity extends AppCompatActivity implements LoginFragment.OnPressedButtonListener,
         RegistrationFragment.RegistrationCompleteListener {
 
@@ -20,12 +21,24 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (checkSomeOneInSystem() != null) {
-            User.setACTIVEUSER(checkSomeOneInSystem());
-            openForWorkoutsActivity();
-        } else {
-            openLoginFragment();
+        if (savedInstanceState == null) {
+            if (checkSomeOneInSystem() != null) {
+                User.setACTIVEUSER(checkSomeOneInSystem());
+                openForWorkoutsActivity();
+            } else {
+                openLoginFragment();
+            }
         }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -41,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
     @Override
     public void openForWorkoutsActivity() {
         Intent intent = new Intent(LoginActivity.this, ForWorkoutsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

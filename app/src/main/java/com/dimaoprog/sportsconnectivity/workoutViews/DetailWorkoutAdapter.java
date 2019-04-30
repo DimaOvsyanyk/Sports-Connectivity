@@ -34,7 +34,7 @@ public class DetailWorkoutAdapter extends ListAdapter<Exercise, DetailWorkoutVie
     @NonNull
     @Override
     public DetailWorkoutViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.exercise_add_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_exercise_add, viewGroup, false);
         return new DetailWorkoutViewHolder(view);
     }
 

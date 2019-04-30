@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/shape_card"
+    android:elevation="3dp"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:translationZ="1dp">
+
+    <TextView
+        android:id="@+id/txt_menu_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/title_icon"
+        android:gravity="start"
+        android:text="@string/title"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_menu_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_menu_title"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="32dp"
+        android:layout_toStartOf="@id/title_icon"
+        android:gravity="end"
+        android:text="@string/date"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/title_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/picture"
+        android:src="@drawable/icon_food" />
+
+</RelativeLayout>

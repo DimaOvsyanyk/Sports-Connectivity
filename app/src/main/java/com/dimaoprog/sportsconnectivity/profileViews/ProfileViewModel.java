@@ -1,4 +1,4 @@
-package com.dimaoprog.sportsconnectivity;
+package com.dimaoprog.sportsconnectivity.profileViews;
 
 import android.arch.lifecycle.ViewModel;
 

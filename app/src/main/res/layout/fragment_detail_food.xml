@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".foodViews.DetailFoodFragment">
+
+        <ImageView
+            android:id="@+id/img_picture_food"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/picture"
+            android:scaleType="centerCrop"
+            android:src="@drawable/pic_food" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_picture_food"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="-75dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/white"
+            android:elevation="3dp"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:translationZ="1dp">
+
+            <TextView
+                android:id="@+id/txt_title_menu_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="start"
+                android:text="@string/title"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/txt_date_menu_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:text="@string/date"
+                android:textSize="14sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_detail_meals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

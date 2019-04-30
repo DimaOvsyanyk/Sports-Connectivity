@@ -40,7 +40,7 @@ public class WorkoutsListAdapter extends ListAdapter<Workout, WorkoutsListViewHo
     @NonNull
     @Override
     public WorkoutsListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.workout_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_workout, viewGroup, false);
         return new WorkoutsListViewHolder(view);
     }
 

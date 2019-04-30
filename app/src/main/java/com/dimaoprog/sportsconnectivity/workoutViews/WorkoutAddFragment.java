@@ -30,10 +30,7 @@ import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
 import com.dimaoprog.sportsconnectivity.dbEntities.User;
 import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,14 +65,16 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
     TextView pickMuscleGroup;
     @BindView(R.id.rv_exercises)
     RecyclerView rvAddExercises;
+    @BindView(R.id.btn_add_new_exercise)
+    Button btnAddNewExercise;
 
     private WorkoutAddViewModel waViewModel;
 
     private boolean datePicked;
     private boolean muscleGroupsPicked;
     public static final long TEMP_WORKOUT_ID = 0;
-    public static List<Exercise> tempExercises;
     Calendar calendar;
+    WorkoutAddAdapter addAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,10 +82,10 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
         unbinder = ButterKnife.bind(this, v);
 
         waViewModel = ViewModelProviders.of(this).get(WorkoutAddViewModel.class);
-
-        rvAddExercises.setAdapter(new WorkoutAddAdapter(this));
         rvAddExercises.setLayoutManager(new LinearLayoutManager(getContext()));
-        showAddExerciseDialog();
+        addAdapter = new WorkoutAddAdapter(this, waViewModel.getTempExercises());
+        rvAddExercises.setAdapter(addAdapter);
+
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -96,11 +95,12 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                tempExercises.remove(viewHolder.getAdapterPosition());
-                Objects.requireNonNull(rvAddExercises.getAdapter()).notifyDataSetChanged();
+                waViewModel.deleteExerciseFromWorkout(addAdapter.getExerciseAtPos(viewHolder.getAdapterPosition()));
+                addAdapter.notifyDataSetChanged();
+                checkVisibilityAddBTN();
             }
         }).attachToRecyclerView(rvAddExercises);
-
+        checkVisibilityAddBTN();
         return v;
     }
 
@@ -109,11 +109,10 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
         super.onAttach(context);
         datePicked = false;
         muscleGroupsPicked = false;
-        tempExercises = new ArrayList<>();
         calendar = Calendar.getInstance();
     }
 
-    @OnClick({R.id.txt_pick_the_date, R.id.txt_pick_muscle_groups, R.id.btn_confirm_add})
+    @OnClick({R.id.txt_pick_the_date, R.id.txt_pick_muscle_groups, R.id.btn_confirm_add, R.id.btn_add_new_exercise})
     void chooseDate(View v) {
         switch (v.getId()) {
             case R.id.txt_pick_the_date:
@@ -127,22 +126,25 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
                     Workout newWorkout = new Workout(User.getACTIVEUSER().getId(), workoutTitle.getText().toString(),
                             pickMuscleGroup.getText().toString(), pickTheDate.getText().toString());
                     long newWorkoutId = waViewModel.insertWorkout(newWorkout);
-                    for (int i = 0; i < tempExercises.size(); i++) {
-                        Exercise newExercise = tempExercises.get(i);
+                    Exercise newExercise;
+                    for (int i = 0; i < waViewModel.getTempExercises().size(); i++) {
+                        newExercise = waViewModel.getTempExercises().get(i);
                         newExercise.setWorkoutId(newWorkoutId);
                         waViewModel.insertExercise(newExercise);
-                        addWorkoutListener.openWorkoutsListFragment();
                     }
+                    addWorkoutListener.openWorkoutsListFragment();
                 } else {
                     Toast.makeText(getContext(), "You should fill all fields", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.btn_add_new_exercise:
+                showAddExerciseDialog();
+                break;
         }
-
     }
 
     private boolean checkAllEntities() {
-        return datePicked & muscleGroupsPicked & workoutTitle.length() > 0 & tempExercises.size() > 0;
+        return datePicked & muscleGroupsPicked & workoutTitle.length() > 0 & waViewModel.getTempExercises().size() > 0;
     }
 
     private void showDatePicker() {
@@ -196,6 +198,10 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
         builder.show();
     }
 
+    public void checkVisibilityAddBTN() {
+        btnAddNewExercise.setVisibility(waViewModel.getTempExercises().size() > 0 ? View.GONE : View.VISIBLE);
+    }
+
     @Override
     public void showAddExerciseDialog() {
         final Dialog dialogAddExercise = new Dialog(getContext());
@@ -204,27 +210,23 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
         dialogAddExercise.setCanceledOnTouchOutside(true);
 
         final NumberPicker pickerRounds = dialogAddExercise.findViewById(R.id.num_picker_rounds);
-        pickerRounds.setMinValue(0);
+        pickerRounds.setMinValue(1);
         pickerRounds.setMaxValue(50);
         final NumberPicker pickerReps = dialogAddExercise.findViewById(R.id.num_picker_reps);
-        pickerReps.setMinValue(0);
+        pickerReps.setMinValue(1);
         pickerReps.setMaxValue(50);
-
         final EditText newExerciseTitle = dialogAddExercise.findViewById(R.id.et_exercise_to_add);
 
         Button btnOk = dialogAddExercise.findViewById(R.id.btn_add_dialog);
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (newExerciseTitle.getText().toString().trim().length() > 0 &&
-                        pickerRounds.getValue() > 0 && pickerReps.getValue() > 0) {
-                    Exercise newExercise = new Exercise(TEMP_WORKOUT_ID, newExerciseTitle.getText().toString().trim(),
-                            pickerRounds.getValue(), pickerReps.getValue());
-                    tempExercises.add(newExercise);
-                    RecyclerView.Adapter currentAdapter = rvAddExercises.getAdapter();
-                    if (currentAdapter != null)
-                        currentAdapter.notifyDataSetChanged();
+                if (newExerciseTitle.getText().toString().trim().length() > 0) {
+                    waViewModel.addNewExerciseToWorkout(new Exercise(TEMP_WORKOUT_ID, newExerciseTitle.getText().toString().trim(),
+                            pickerRounds.getValue(), pickerReps.getValue()));
+                    addAdapter.notifyDataSetChanged();
                     dialogAddExercise.dismiss();
+                    checkVisibilityAddBTN();
                 }
             }
         });

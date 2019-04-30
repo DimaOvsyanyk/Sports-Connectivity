@@ -5,29 +5,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".workoutViews.WorkoutsListFragment">
+    tools:context=".foodViews.FoodFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_layout"
+        android:id="@+id/swipe_layout_food"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_workouts_list"
+            android:id="@+id/rv_food_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add"
+        android:id="@+id/fab_add_food"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/margin_s"
+        android:layout_marginEnd="@dimen/margin_s"
+        android:layout_marginBottom="@dimen/margin_s"
         android:src="@android:drawable/ic_input_add"
-        app:fabSize="normal"
-        app:layout_anchor="@id/rv_workouts_list"
-        app:layout_anchorGravity="bottom|end"/>
+        app:fabSize="normal" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
 import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.WorkoutsRepository;
+import com.dimaoprog.sportsconnectivity.dbRepos.WorkoutsRepository;
 
 import java.util.List;
 

@@ -1,0 +1,52 @@
+{
+"week_menu" : [
+	{"menu_title" : "Monday", "date_of_menu" : "06.05.2019", "meals" : [
+		{"food_intake" : "Breakfast", "meal" : "Scrambled eggs with mushrooms and oatmeal"},
+		{"food_intake" : "Snack", "meal" : "Low-fat cottage cheese with blueberries"},
+		{"food_intake" : "Lunch", "meal" : "Venison burger, white rice and broccoli"},
+		{"food_intake" : "Snack", "meal" : "Protein shake and a banana"},
+		{"food_intake" : "Dinner", "meal" : "Salmon, quinoa and asparagus"}
+		]},
+	{"menu_title" : "Tuesday", "date_of_menu" : "07.05.2019", "meals" : [
+		{"food_intake" : "Breakfast", "meal" : "Protein pancakes with light-syrup, peanut butter and raspberries"},
+		{"food_intake" : "Snack", "meal" : "Hard-boiled eggs and an apple"},
+		{"food_intake" : "Lunch", "meal" : "Sirloin steak, sweet potato and spinach salad with vinaigrette"},
+		{"food_intake" : "Snack", "meal" : "Protein shake and walnuts"},
+		{"food_intake" : "Dinner", "meal" : "Ground turkey and marinara sauce over pasta"}
+		]},
+	{"menu_title" : "Wednesday", "date_of_menu" : "08.05.2019", "meals" : [
+		{"food_intake" : "Breakfast", "meal" : "Chicken sausage with egg and roasted potatoes"},
+		{"food_intake" : "Snack", "meal" : "Greek yogurt and almonds"},
+		{"food_intake" : "Lunch", "meal" : "Turkey breast, basmati rice and mushrooms"},
+		{"food_intake" : "Snack", "meal" : "Protein shake and grapes"},
+		{"food_intake" : "Dinner", "meal" : "Mackerel, brown rice and salad leaves with vinaigrette"}
+		]},
+	{"menu_title" : "Thursday", "date_of_menu" : "09.05.2019", "meals" : [
+		{"food_intake" : "Breakfast", "meal" : "Ground turkey, egg, cheese and salsa in a whole-grain tortilla"},
+		{"food_intake" : "Snack", "meal" : "Yogurt with granola"},
+		{"food_intake" : "Lunch", "meal" : "Chicken breast, baked potato, sour cream and broccoli"},
+		{"food_intake" : "Snack", "meal" : "Protein shake and mixed berries"},
+		{"food_intake" : "Dinner", "meal" : "Stir-fry with chicken, egg, brown rice, broccoli, peas and carrots"}
+		]},
+	{"menu_title" : "Friday", "date_of_menu" : "10.05.2019", "meals" : [
+		{"food_intake" : "Breakfast", "meal" : "Blueberries, strawberries and vanilla Greek yogurt on overnight oats"},
+		{"food_intake" : "Snack", "meal" : "Jerky and mixed nuts"},
+		{"food_intake" : "Lunch", "meal" : "Tilapia fillets with lime juice, black and pinto beans and seasonal veggies"},
+		{"food_intake" : "Snack", "meal" : "Protein shake and watermelon"},
+		{"food_intake" : "Dinner", "meal" : "Ground beef with corn, brown rice, green peas and green beans"}
+		]},
+	{"menu_title" : "Saturday", "date_of_menu" : "11.05.2019", "meals" : [
+		{"food_intake" : "Breakfast", "meal" : "Ground turkey and egg with corn, bell peppers, cheese and salsa"},
+		{"food_intake" : "Snack", "meal" : "Can of tuna with crackers"},
+		{"food_intake" : "Lunch", "meal" : "Tilapia fillet, potato wedges and bell peppers"},
+		{"food_intake" : "Snack", "meal" : "Protein shake and pear"},
+		{"food_intake" : "Dinner", "meal" : "Diced beef with rice, black beans, bell peppers, cheese and pico de gallo"}
+		]},
+	{"menu_title" : "Sunday", "date_of_menu" : "12.05.2019", "meals" : [
+		{"food_intake" : "Breakfast", "meal" : "Eggs sunny-side up and avocado toast"},
+		{"food_intake" : "Snack", "meal" : "Protein balls and almond butter"},
+		{"food_intake" : "Lunch", "meal" : "Pork tenderloin slices with roasted garlic potatoes and green beans"},
+		{"food_intake" : "Snack", "meal" : "Protein shake and strawberries"},
+		{"food_intake" : "Dinner", "meal" : "Turkey meatballs, marinara sauce and parmesan cheese over pasta"}
+		]}
+]}

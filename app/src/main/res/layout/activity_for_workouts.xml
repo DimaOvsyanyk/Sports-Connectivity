@@ -1,34 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
+    <FrameLayout
+        android:id="@+id/container_fr"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/backgroundColor"
-        android:fitsSystemWindows="true"
-        tools:openDrawer="start">
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <FrameLayout
-            android:id="@+id/container_fr"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <android.support.design.widget.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            app:headerLayout="@layout/drawer_header"
-            app:itemTextColor="@color/colorPrimaryDark"
-            app:menu="@menu/drawer_menu" />
-
-    </android.support.v4.widget.DrawerLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_nav_view"
@@ -41,4 +23,4 @@
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         app:menu="@menu/bottom_nav_menu" />
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

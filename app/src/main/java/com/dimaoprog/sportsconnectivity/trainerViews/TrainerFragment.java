@@ -1,4 +1,4 @@
-package com.dimaoprog.sportsconnectivity;
+package com.dimaoprog.sportsconnectivity.trainerViews;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -9,25 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FoodFragment extends Fragment {
+import com.dimaoprog.sportsconnectivity.R;
 
-    private FoodViewModel mViewModel;
+public class TrainerFragment extends Fragment {
 
-    public static FoodFragment newInstance() {
-        return new FoodFragment();
+    private TrainerViewModel mViewModel;
+
+    public static TrainerFragment newInstance() {
+        return new TrainerFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.food_fragment, container, false);
-        return v;
+        return inflater.inflate(R.layout.fragment_trainer, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(TrainerViewModel.class);
         // TODO: Use the ViewModel
     }
 

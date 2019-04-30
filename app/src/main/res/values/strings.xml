@@ -103,5 +103,7 @@
     <string name="send_message">Send message</string>
     <string name="enter_message">Enter message</string>
     <string name="trainer_photo">Trainer photo</string>
+    <string name="meal">Meal</string>
+    <string name="food_intake">Food intake</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.dimaoprog.sportsconnectivity.dbWorkouts;
+package com.dimaoprog.sportsconnectivity.dbRepos;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
@@ -71,6 +71,6 @@ public class WorkoutsRepository {
     }
 
     public void addWorkoutsFromJson(Context context) throws IOException, JSONException {
-        JSONWorkoutReader.setWorkoutsFromJSON(context, workoutDao, exerciseDao, FIRST_WEEK_WORKOUTS);
+        JSONReader.setWorkoutsFromJSON(context, workoutDao, exerciseDao, FIRST_WEEK_WORKOUTS);
     }
 }

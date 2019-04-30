@@ -1,4 +1,4 @@
-package com.dimaoprog.sportsconnectivity;
+package com.dimaoprog.sportsconnectivity.trainerViews;
 
 import android.arch.lifecycle.ViewModel;
 

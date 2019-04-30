@@ -3,10 +3,11 @@ package com.dimaoprog.sportsconnectivity.workoutViews;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.WorkoutsRepository;
+import com.dimaoprog.sportsconnectivity.dbRepos.WorkoutsRepository;
 
 import org.json.JSONException;
 
@@ -32,7 +33,7 @@ public class WorkoutsListViewModel extends AndroidViewModel {
         return allWorkouts;
     }
 
-    public void addNewWorkoutsFromJson() throws IOException, JSONException {
-        workoutsRep.addWorkoutsFromJson(getApplication());
+    public void addNewWorkoutsFromJson(Context context) throws IOException, JSONException {
+        workoutsRep.addWorkoutsFromJson(context);
     }
 }

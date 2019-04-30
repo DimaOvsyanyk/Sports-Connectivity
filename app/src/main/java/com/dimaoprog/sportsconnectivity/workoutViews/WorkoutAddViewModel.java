@@ -5,18 +5,17 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
-
 import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
 import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.WorkoutsRepository;
+import com.dimaoprog.sportsconnectivity.dbRepos.WorkoutsRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorkoutAddViewModel extends AndroidViewModel {
 
     private WorkoutsRepository workoutsRep;
-    private MutableLiveData<CharSequence> workoutTitle;
-    private MutableLiveData<CharSequence> workoutMuscleGroups;
-    private MutableLiveData<CharSequence> workoutDate;
-
+    private List<Exercise> tempExercises = new ArrayList<>();
 
 
     public WorkoutAddViewModel(@NonNull Application application) {
@@ -32,27 +31,16 @@ public class WorkoutAddViewModel extends AndroidViewModel {
         workoutsRep.insert(exercise);
     }
 
-    public LiveData<CharSequence> getWorkoutTitle() {
-        return workoutTitle;
+    public void addNewExerciseToWorkout(Exercise exercise) {
+        tempExercises.add(exercise);
     }
 
-    public void setWorkoutTitle(CharSequence inputData) {
-        workoutTitle.setValue(inputData);
+    public List<Exercise> getTempExercises() {
+        return tempExercises;
     }
 
-    public LiveData<CharSequence> getWorkoutMuscleGroups() {
-        return workoutMuscleGroups;
+    public void deleteExerciseFromWorkout(Exercise exercise) {
+        tempExercises.remove(exercise);
     }
 
-    public void setWorkoutMuscleGroups(CharSequence inputData) {
-        workoutMuscleGroups.setValue(inputData);
-    }
-
-    public LiveData<CharSequence> getWorkoutDate() {
-        return workoutDate;
-    }
-
-    public void setWorkoutDate(CharSequence inputData) {
-        workoutDate.setValue(inputData);
-    }
 }

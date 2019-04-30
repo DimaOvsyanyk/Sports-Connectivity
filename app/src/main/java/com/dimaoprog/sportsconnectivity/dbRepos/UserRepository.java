@@ -1,4 +1,4 @@
-package com.dimaoprog.sportsconnectivity.dbWorkouts;
+package com.dimaoprog.sportsconnectivity.dbRepos;
 
 import android.app.Application;
 import com.dimaoprog.sportsconnectivity.dbEntities.User;

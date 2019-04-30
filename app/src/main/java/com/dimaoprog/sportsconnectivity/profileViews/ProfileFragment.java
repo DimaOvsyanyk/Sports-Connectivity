@@ -1,4 +1,4 @@
-package com.dimaoprog.sportsconnectivity;
+package com.dimaoprog.sportsconnectivity.profileViews;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.dimaoprog.sportsconnectivity.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +35,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.profile_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_profile, container, false);
         unbinder = ButterKnife.bind(this, v);
         return v;
     }

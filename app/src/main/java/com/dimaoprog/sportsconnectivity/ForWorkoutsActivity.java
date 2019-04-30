@@ -1,52 +1,41 @@
 package com.dimaoprog.sportsconnectivity;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.dimaoprog.sportsconnectivity.dbEntities.User;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.UserDao;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.AppDatabase;
+import com.dimaoprog.sportsconnectivity.foodViews.DetailFoodFragment;
+import com.dimaoprog.sportsconnectivity.foodViews.FoodListAdapter;
+import com.dimaoprog.sportsconnectivity.profileViews.ProfileFragment;
+import com.dimaoprog.sportsconnectivity.trainerViews.TrainerFragment;
 import com.dimaoprog.sportsconnectivity.workoutViews.DetailWorkoutFragment;
+import com.dimaoprog.sportsconnectivity.foodViews.FoodFragment;
 import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutAddFragment;
 import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutsListAdapter;
 import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutsListFragment;
 
-import java.util.List;
-
-import static com.dimaoprog.sportsconnectivity.dbEntities.User.NOTSTAY;
-import static com.dimaoprog.sportsconnectivity.dbEntities.User.STAY;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsListAdapter.IDetailWorkoutListener,
-        WorkoutsListFragment.AddListener, WorkoutAddFragment.AddWorkoutListener, NavigationView.OnNavigationItemSelectedListener {
+        WorkoutsListFragment.AddListener, WorkoutAddFragment.AddWorkoutListener, FoodListAdapter.DetailFoodListener {
 
     public static final String LOG_MAIN = "applog";
+
+    @BindView(R.id.bottom_nav_view)
+    BottomNavigationView bottomNavigationView;
+
+    private static final int FULL_SCREEN_CONTAINER = R.id.container_fr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_for_workouts);
+        ButterKnife.bind(this);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
-                R.string.open, R.string.close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -67,30 +56,40 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
                 return true;
             }
         });
-        bottomNavigationView.setSelectedItemId(R.id.menu_workouts);
-        Toast.makeText(this, "Hello " + User.getACTIVEUSER().getFirstName(), Toast.LENGTH_SHORT).show();
-        openWorkoutsListFragment();
+        if (savedInstanceState == null) {
+            bottomNavigationView.setSelectedItemId(R.id.menu_workouts);
+            openWorkoutsListFragment();
+        }
     }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
     public void openProfileFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_fr, ProfileFragment.newInstance())
+                .replace(FULL_SCREEN_CONTAINER, ProfileFragment.newInstance())
                 .commit();
     }
 
     public void openFoodFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_fr, FoodFragment.newInstance())
+                .replace(FULL_SCREEN_CONTAINER, FoodFragment.newInstance(this))
                 .commit();
     }
 
     public void openTrainerFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_fr, TrainerFragment.newInstance())
+                .replace(FULL_SCREEN_CONTAINER, TrainerFragment.newInstance())
                 .commit();
     }
 
@@ -98,7 +97,7 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
     public void openWorkoutAddFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_fr, WorkoutAddFragment.newInstance(this))
+                .replace(FULL_SCREEN_CONTAINER, WorkoutAddFragment.newInstance(this))
                 .addToBackStack(null)
                 .commit();
     }
@@ -108,7 +107,7 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
         clearBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_fr, WorkoutsListFragment.newInstance(this, this))
+                .replace(FULL_SCREEN_CONTAINER, WorkoutsListFragment.newInstance(this, this))
                 .commit();
     }
 
@@ -123,39 +122,47 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
     public void openDetailWorkoutFragment(long workoutId) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_fr, DetailWorkoutFragment.newInstance(workoutId))
+                .replace(FULL_SCREEN_CONTAINER, DetailWorkoutFragment.newInstance(workoutId))
                 .addToBackStack(null)
                 .commit();
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        AppDatabase db = AppDatabase.getInstance(this);
-        UserDao userDao = db.userDao();
-
-        switch (menuItem.getItemId()) {
-            case R.id.menu_active_user:
-                Log.d(LOG_MAIN, User.getACTIVEUSER().toString());
-                break;
-            case R.id.menu_all_users:
-                List<User> allUsers = userDao.getAllUsers();
-                for (int i = 0; i < allUsers.size(); i++) {
-                    String stringUser = allUsers.get(i).toString();
-                    Log.d(LOG_MAIN, stringUser);
-                }
-                break;
-            case R.id.menu_logoff:
-                if (User.getACTIVEUSER().getStayInSystem() == STAY) {
-                    User.getACTIVEUSER().setStayInSystem(NOTSTAY);
-                    userDao.update(User.getACTIVEUSER());
-                }
-                Intent intent = new Intent(ForWorkoutsActivity.this, LoginActivity.class);
-                startActivity(intent);
-                break;
-        }
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-
-        return true;
+    public void openDetailFoodFragment(long menuId) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(FULL_SCREEN_CONTAINER, DetailFoodFragment.newInstance(menuId))
+                .addToBackStack(null)
+                .commit();
     }
+
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//        AppDatabase db = AppDatabase.getInstance(this);
+//        UserDao userDao = db.userDao();
+//
+//        switch (menuItem.getItemId()) {
+//            case R.id.menu_active_user:
+//                Log.d(LOG_MAIN, User.getACTIVEUSER().toString());
+//                break;
+//            case R.id.menu_all_users:
+//                List<User> allUsers = userDao.getAllUsers();
+//                for (int i = 0; i < allUsers.size(); i++) {
+//                    String stringUser = allUsers.get(i).toString();
+//                    Log.d(LOG_MAIN, stringUser);
+//                }
+//                break;
+//            case R.id.menu_logoff:
+//                if (User.getACTIVEUSER().getStayInSystem() == STAY) {
+//                    User.getACTIVEUSER().setStayInSystem(NOTSTAY);
+//                    userDao.update(User.getACTIVEUSER());
+//                }
+//                Intent intent = new Intent(ForWorkoutsActivity.this, LoginActivity.class);
+//                startActivity(intent);
+//                break;
+//        }
+//        drawer.closeDrawer(GravityCompat.START);
+//
+//        return true;
+//    }
 }

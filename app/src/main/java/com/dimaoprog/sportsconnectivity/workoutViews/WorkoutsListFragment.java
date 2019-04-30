@@ -52,7 +52,7 @@ public class WorkoutsListFragment extends Fragment {
     }
 
     private Unbinder unbinder;
-    @BindView(R.id.rvNewsList)
+    @BindView(R.id.rv_workouts_list)
     RecyclerView workoutList;
     @BindView(R.id.swipe_layout)
     SwipeRefreshLayout swipeLayout;
@@ -62,7 +62,6 @@ public class WorkoutsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_workouts_list, container, false);
-
         unbinder = ButterKnife.bind(this, v);
         workoutList.setLayoutManager(new LinearLayoutManager(getContext()));
         final WorkoutsListAdapter workoutsListAdapter = new WorkoutsListAdapter(detailListener);
@@ -75,12 +74,11 @@ public class WorkoutsListFragment extends Fragment {
                 workoutsListAdapter.submitList(workouts);
             }
         });
-
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 try {
-                    wlViewModel.addNewWorkoutsFromJson();
+                    wlViewModel.addNewWorkoutsFromJson(getContext());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -102,7 +100,6 @@ public class WorkoutsListFragment extends Fragment {
                 wlViewModel.delete(workoutsListAdapter.getWorkoutAtPos(viewHolder.getAdapterPosition()));
             }
         }).attachToRecyclerView(workoutList);
-
         return v;
     }
 
@@ -110,17 +107,8 @@ public class WorkoutsListFragment extends Fragment {
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_add:
-                rotate(v);
                 addListener.openWorkoutAddFragment();
                 break;
-        }
-    }
-
-    private void rotate(View view) {
-        if (view.getRotation() == 0) {
-            view.animate().setDuration(200).rotation(180);
-        } else {
-            view.animate().setDuration(200).rotation(0);
         }
     }
 

@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.dbEntities.User;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.UserDao;
-import com.dimaoprog.sportsconnectivity.dbWorkouts.AppDatabase;
+import com.dimaoprog.sportsconnectivity.dbRepos.UserDao;
+import com.dimaoprog.sportsconnectivity.dbRepos.AppDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
