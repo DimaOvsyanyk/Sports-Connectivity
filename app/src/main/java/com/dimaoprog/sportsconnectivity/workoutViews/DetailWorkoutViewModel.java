@@ -15,6 +15,7 @@ public class DetailWorkoutViewModel extends AndroidViewModel {
 
     private WorkoutsRepository workoutsRep;
     private LiveData<List<Exercise>> allExercises;
+    private Workout currentWorkout;
     private long workoutId;
 
     public DetailWorkoutViewModel(@NonNull Application application) {
@@ -24,16 +25,27 @@ public class DetailWorkoutViewModel extends AndroidViewModel {
 
     public void setWorkoutId(long workoutId) {
         this.workoutId = workoutId;
+        setCurrentWorkout(workoutsRep.getWorkoutById(workoutId));
+        setAllExercises(workoutsRep.getAllExercises(workoutId));
+    }
+
+    public long getWorkoutId() {
+        return workoutId;
     }
 
     public LiveData<List<Exercise>> getAllExercises() {
-        allExercises = workoutsRep.getAllExercises(workoutId);
         return allExercises;
     }
 
-    public Workout getCurrentWorkout() {
-        return workoutsRep.getWorkoutById(workoutId);
+    public void setAllExercises(LiveData<List<Exercise>> allExercises) {
+        this.allExercises = allExercises;
     }
 
+    public Workout getCurrentWorkout() {
+        return currentWorkout;
+    }
 
+    public void setCurrentWorkout(Workout currentWorkout) {
+        this.currentWorkout = currentWorkout;
+    }
 }

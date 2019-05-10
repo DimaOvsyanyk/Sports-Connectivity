@@ -104,12 +104,8 @@ public class WorkoutsListFragment extends Fragment {
     }
 
     @OnClick(R.id.fab_add)
-    void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.fab_add:
-                addListener.openWorkoutAddFragment();
-                break;
-        }
+    void onFabAddClick(View v) {
+        addListener.openWorkoutAddFragment();
     }
 
     @Override

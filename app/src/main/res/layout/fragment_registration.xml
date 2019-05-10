@@ -1,116 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".loginRegistrationViews.RegistrationFragment">
+<layout xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <data>
+
+        <variable
+            name="regmodel"
+            type="com.dimaoprog.sportsconnectivity.loginRegistrationViews.RegistrationViewModel" />
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/margin_top_bottom_login_page"
-        android:layout_marginStart="@dimen/margin_left_right_login_page"
-        android:layout_marginEnd="@dimen/margin_left_right_login_page"
-        android:layout_gravity="top"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-        <EditText
-            android:id="@+id/et_first_name"
-            style="@android:style/Widget.Material.EditText"
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="@string/first_name"
-            android:ems="10"
-            android:hint="@string/first_name"
-            android:inputType="text"
-            tools:targetApi="o" />
+            android:orientation="vertical"
+            tools:context=".loginRegistrationViews.RegistrationFragment">
 
-        <TextView
-            android:id="@+id/text_incorrect_first"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/et_first_name"
-            android:text="@string/enter_first_name"
-            android:textColor="@android:color/holo_red_light"
-            android:gravity="end"
-            android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginStart="@dimen/margin_left_right_login_page"
+                android:layout_marginEnd="@dimen/margin_left_right_login_page"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_second_name"
-            style="@android:style/Widget.Material.EditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_incorrect_first"
-            android:autofillHints="@string/second_name"
-            android:ems="10"
-            android:hint="@string/second_name"
-            android:inputType="text"
-            tools:targetApi="o" />
+                <EditText
+                    android:id="@+id/et_first_name"
+                    style="@android:style/Widget.Material.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="@string/first_name"
+                    android:ems="10"
+                    android:hint="@string/first_name"
+                    android:inputType="text"
+                    android:text="@={regmodel.firstName}"
+                    tools:targetApi="o" />
 
-        <TextView
-            android:id="@+id/text_incorrect_second"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/et_second_name"
-            android:text="@string/enter_second_name"
-            android:textColor="@android:color/holo_red_light"
-            android:gravity="end"
-            android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/text_incorrect_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="@string/enter_first_name"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="12sp"
+                    android:visibility="invisible"
+                    tools:visibility="visible" />
 
-    <EditText
-        android:id="@+id/et_e_mail"
-        style="@android:style/Widget.Material.EditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top_bottom_login_page"
-        android:layout_below="@id/et_second_name"
-        android:autofillHints="@string/e_mail"
-        android:ems="10"
-        android:hint="@string/e_mail"
-        android:inputType="textEmailAddress"
-        tools:targetApi="o" />
+                <EditText
+                    android:id="@+id/et_second_name"
+                    style="@android:style/Widget.Material.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="@string/second_name"
+                    android:ems="10"
+                    android:hint="@string/second_name"
+                    android:inputType="text"
+                    android:text="@={regmodel.secondName}"
+                    tools:targetApi="o" />
 
-        <TextView
-            android:id="@+id/text_incorrect_mail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/et_e_mail"
-            android:text="@string/incorrect_e_mail"
-            android:textColor="@android:color/holo_red_light"
-            android:gravity="end"
-            android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/text_incorrect_second"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="@string/enter_second_name"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="12sp"
+                    android:visibility="invisible"
+                    tools:visibility="visible" />
 
-    <EditText
-        android:id="@+id/et_password"
-        style="@android:style/Widget.Material.EditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_incorrect_mail"
-        android:autofillHints="@string/password"
-        android:ems="10"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        tools:targetApi="o" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_m"
+                    android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/text_incorrect_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/et_password"
-            android:text="@string/incorrect_password"
-            android:textColor="@android:color/holo_red_light"
-            android:gravity="end"
-            android:textSize="12sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/select_gender"
+                        android:textSize="18sp" />
 
-    </RelativeLayout>
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btn_confirm"
-        style="@android:style/Widget.Material.Button.Borderless.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="@string/confirm" />
-</RelativeLayout>
+                        <RadioButton
+                            android:id="@+id/radio_male"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@={regmodel.male}"
+                            android:text="@string/male" />
+
+                        <RadioButton
+                            android:id="@+id/radio_female"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@={regmodel.female}"
+                            android:text="@string/female" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text_incorrect_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="@string/select_gender"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="12sp"
+                    android:visibility="invisible"
+                    tools:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_m"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date_of_birth"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/birth_day_picker"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:autofillHints="@string/tap_to_pick"
+                        android:ems="10"
+                        android:hint="@string/tap_to_pick"
+                        android:inputType="text"
+                        android:text="@={regmodel.birthDay}"
+                        android:textSize="18sp"
+                        tools:targetApi="o" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text_incorrect_date_of_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="@string/enter_date_of_birth"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="12sp"
+                    android:visibility="invisible"
+                    tools:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/et_e_mail"
+                    style="@android:style/Widget.Material.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_l"
+                    android:autofillHints="@string/e_mail"
+                    android:ems="10"
+                    android:hint="@string/e_mail"
+                    android:inputType="textEmailAddress"
+                    android:text="@={regmodel.email}"
+                    tools:targetApi="o" />
+
+                <TextView
+                    android:id="@+id/text_incorrect_mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="@string/incorrect_e_mail"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="12sp"
+                    android:visibility="invisible"
+                    tools:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/et_password"
+                    style="@android:style/Widget.Material.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="@string/password"
+                    android:ems="10"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:text="@={regmodel.password}"
+                    tools:targetApi="o" />
+
+                <TextView
+                    android:id="@+id/text_incorrect_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="@string/incorrect_password"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="12sp"
+                    android:visibility="invisible"
+                    tools:visibility="visible" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_confirm"
+                style="@android:style/Widget.Material.Button.Borderless.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

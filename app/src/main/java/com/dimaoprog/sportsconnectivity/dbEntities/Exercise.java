@@ -3,6 +3,7 @@ package com.dimaoprog.sportsconnectivity.dbEntities;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "exercises", foreignKeys = @ForeignKey(entity = Workout.class,
@@ -24,6 +25,13 @@ public class Exercise {
 
     public Exercise(long workoutId, String exerciseTitle, int rounds, int repetitions) {
         this.workoutId = workoutId;
+        this.exerciseTitle = exerciseTitle;
+        this.rounds = rounds;
+        this.repetitions = repetitions;
+    }
+
+    @Ignore
+    public Exercise(String exerciseTitle, int rounds, int repetitions) {
         this.exerciseTitle = exerciseTitle;
         this.rounds = rounds;
         this.repetitions = repetitions;

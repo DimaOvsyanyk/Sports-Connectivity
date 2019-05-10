@@ -1,72 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/shape_exercise"
-    android:padding="4dp"
-    android:layout_margin="4dp"
-    android:orientation="vertical">
+<layout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <data>
+        <variable
+            name="exercise"
+            type="com.dimaoprog.sportsconnectivity.dbEntities.Exercise"/>
 
-        <TextView
-            android:id="@+id/txt_exercise_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@id/btn_add_exercise_item"
-            android:text="@string/exercise_add_title"
-            android:textSize="18sp"/>
+    </data>
 
-
-        <Button
-            android:id="@+id/btn_add_exercise_item"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/ic_add_box" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/rounds_and_reps"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_margin="4dp"
+        android:background="@drawable/shape_exercise"
+        android:orientation="vertical"
+        android:padding="4dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rounds" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/txt_rounds"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/txt_exercise_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/btn_add_exercise_item"
+                android:text="@string/exercise_add_title"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_add_exercise_item"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_add_box" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/rounds_and_reps"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:gravity="center_horizontal"
-            android:text="@string/wzero" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/reps" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rounds" />
 
-        <TextView
-            android:id="@+id/txt_reps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="center_horizontal"
-            android:text="@string/wzero" />
+            <TextView
+                android:id="@+id/txt_rounds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center_horizontal"
+                android:text="@string/wzero" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reps" />
+
+            <TextView
+                android:id="@+id/txt_reps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center_horizontal"
+                android:text="@string/wzero" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</layout>

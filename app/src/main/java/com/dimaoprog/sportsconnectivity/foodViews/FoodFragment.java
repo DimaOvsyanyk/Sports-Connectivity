@@ -88,8 +88,6 @@ public class FoodFragment extends Fragment {
                 fViewModel.deleteMenu(foodAdapter.getMenuAtPos(viewHolder.getAdapterPosition()));
             }
         }).attachToRecyclerView(foodList);
-
-
         return v;
     }
 

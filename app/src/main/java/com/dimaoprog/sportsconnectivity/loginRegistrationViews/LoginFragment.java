@@ -1,23 +1,15 @@
 package com.dimaoprog.sportsconnectivity.loginRegistrationViews;
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.dimaoprog.sportsconnectivity.R;
-import com.dimaoprog.sportsconnectivity.dbEntities.User;
-import com.dimaoprog.sportsconnectivity.dbRepos.UserDao;
-import com.dimaoprog.sportsconnectivity.dbRepos.AppDatabase;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+import com.dimaoprog.sportsconnectivity.databinding.FragmentLoginBinding;
 
 public class LoginFragment extends Fragment {
 
@@ -28,9 +20,9 @@ public class LoginFragment extends Fragment {
     }
 
     public interface OnPressedButtonListener {
-        void openForWorkoutsActivity();
+        void onLoginClick();
 
-        void openRegistrationFragment();
+        void onRegisterClick();
     }
 
     public static LoginFragment newInstance(OnPressedButtonListener pressedEvent) {
@@ -39,60 +31,31 @@ public class LoginFragment extends Fragment {
         return fragment;
     }
 
-    private Unbinder unbinder;
-
-    @BindView(R.id.et_e_mail)
-    EditText txtEMail;
-    @BindView(R.id.et_password)
-    EditText txtPassword;
-    @BindView(R.id.check_stay_in)
-    CheckBox checkBoxStayIn;
+    LoginViewModel lViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_login, container, false);
-        unbinder = ButterKnife.bind(this, v);
-        return v;
-    }
-
-    @OnClick({R.id.btn_login, R.id.btn_register})
-    void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_login:
-                if (checkUser()) {
-                    pressedEvent.openForWorkoutsActivity();
+        final FragmentLoginBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
+        View v = binding.getRoot();
+        lViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        lViewModel.setOnPressedButtonListener(pressedEvent);
+        binding.setLoginmodel(lViewModel);
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (lViewModel.checkUser()) {
+                    pressedEvent.onLoginClick();
+                } else {
+                    if (lViewModel.isEmailOk()) {
+                        binding.etEMail.setError("invalid e-mail");
+                    }
+                    if (lViewModel.isPassOk()) {
+                        binding.etPassword.setError("invalid password");
+                    }
                 }
-                break;
-            case R.id.btn_register:
-                pressedEvent.openRegistrationFragment();
-                break;
-        }
-    }
-
-    private boolean checkUser() {
-        AppDatabase db = AppDatabase.getInstance(getActivity());
-        UserDao userDao = db.userDao();
-        User userToCheck = userDao.getByEmail(txtEMail.getText().toString());
-        if (userToCheck == null) {
-            Toast.makeText(getContext(), "This e-mail is not in the database", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (!userToCheck.getPassword().equals(txtPassword.getText().toString())) {
-            Toast.makeText(getContext(), "Incorrect password", Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
-            if (checkBoxStayIn.isChecked()) {
-                userToCheck.setStayInSystem(User.STAY);
-                userDao.update(userToCheck);
             }
-            User.setACTIVEUSER(userToCheck);
-            return true;
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
+        });
+        return v;
     }
 }

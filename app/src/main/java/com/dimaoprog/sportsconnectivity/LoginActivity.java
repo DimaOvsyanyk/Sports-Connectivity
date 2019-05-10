@@ -6,15 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.dimaoprog.sportsconnectivity.dbEntities.User;
-import com.dimaoprog.sportsconnectivity.dbRepos.AppDatabase;
-import com.dimaoprog.sportsconnectivity.dbRepos.UserDao;
+import com.dimaoprog.sportsconnectivity.dbRepos.UserRepository;
 import com.dimaoprog.sportsconnectivity.loginRegistrationViews.LoginFragment;
 import com.dimaoprog.sportsconnectivity.loginRegistrationViews.RegistrationFragment;
+
+import static com.dimaoprog.sportsconnectivity.Constants.STAY;
 
 public class LoginActivity extends AppCompatActivity implements LoginFragment.OnPressedButtonListener,
         RegistrationFragment.RegistrationCompleteListener {
 
-    private int container = R.id.container_fr_login;
+    private int container_id = R.id.container_fr_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,14 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
             } else {
                 openLoginFragment();
             }
+        } else {
+            onRestoreInstanceState(savedInstanceState);
         }
+    }
+
+    private User checkSomeOneInSystem() {
+        UserRepository userRepo = new UserRepository(this.getApplication());
+        return userRepo.getByStayIn(STAY);
     }
 
     @Override
@@ -47,22 +55,21 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         clearBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(container, LoginFragment.newInstance(this))
+                .replace(container_id, LoginFragment.newInstance(this))
                 .commit();
     }
 
-    @Override
     public void openForWorkoutsActivity() {
+        clearBackStack();
         Intent intent = new Intent(LoginActivity.this, ForWorkoutsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
-    @Override
     public void openRegistrationFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(container, RegistrationFragment.newInstance(this))
+                .replace(container_id, RegistrationFragment.newInstance(this))
                 .addToBackStack(null)
                 .commit();
     }
@@ -74,9 +81,13 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         }
     }
 
-    private User checkSomeOneInSystem() {
-        AppDatabase db = AppDatabase.getInstance(this);
-        UserDao userDao = db.userDao();
-        return userDao.getByStayIn(User.STAY);
+    @Override
+    public void onLoginClick() {
+        openForWorkoutsActivity();
+    }
+
+    @Override
+    public void onRegisterClick() {
+        openRegistrationFragment();
     }
 }

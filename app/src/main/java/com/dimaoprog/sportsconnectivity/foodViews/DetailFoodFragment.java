@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.dimaoprog.sportsconnectivity.ForWorkoutsActivity;
 import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.dbEntities.DailyMenu;
 import com.dimaoprog.sportsconnectivity.dbEntities.Meal;
@@ -84,5 +83,4 @@ public class DetailFoodFragment extends Fragment {
         super.onDetach();
         unbinder.unbind();
     }
-
 }

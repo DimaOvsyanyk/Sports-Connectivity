@@ -1,18 +1,19 @@
 package com.dimaoprog.sportsconnectivity.workoutViews;
 
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.databinding.ItemWorkoutBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
 
 public class WorkoutsListAdapter extends ListAdapter<Workout, WorkoutsListViewHolder> {
 
-    public interface IDetailWorkoutListener{
+    public interface IDetailWorkoutListener {
         void openDetailWorkoutFragment(long workoutId);
     }
 
@@ -40,8 +41,8 @@ public class WorkoutsListAdapter extends ListAdapter<Workout, WorkoutsListViewHo
     @NonNull
     @Override
     public WorkoutsListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_workout, viewGroup, false);
-        return new WorkoutsListViewHolder(view);
+        ItemWorkoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_workout, viewGroup, false);
+        return new WorkoutsListViewHolder(binding);
     }
 
     @Override

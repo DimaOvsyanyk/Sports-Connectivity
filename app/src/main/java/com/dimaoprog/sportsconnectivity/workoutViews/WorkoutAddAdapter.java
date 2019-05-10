@@ -1,19 +1,15 @@
 package com.dimaoprog.sportsconnectivity.workoutViews;
 
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.ListAdapter;
-import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.dimaoprog.sportsconnectivity.ForWorkoutsActivity;
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.databinding.ItemExerciseAddBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutAddAdapter extends RecyclerView.Adapter<WorkoutAddViewHolder> {
@@ -21,22 +17,20 @@ public class WorkoutAddAdapter extends RecyclerView.Adapter<WorkoutAddViewHolder
     private AddNewExerciseListener addNewExerciseListener;
     private List<Exercise> exercises;
 
-    public interface AddNewExerciseListener{
+    public interface AddNewExerciseListener {
         void showAddExerciseDialog();
     }
 
     public WorkoutAddAdapter(AddNewExerciseListener addNewExerciseListener, List<Exercise> exercises) {
-        Log.d(ForWorkoutsActivity.LOG_MAIN, "adapter creating start");
         this.addNewExerciseListener = addNewExerciseListener;
         this.exercises = exercises;
-        Log.d(ForWorkoutsActivity.LOG_MAIN, "adapter created");
     }
 
     @NonNull
     @Override
     public WorkoutAddViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_exercise_add, viewGroup, false);
-        return new WorkoutAddViewHolder(view);
+        ItemExerciseAddBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_exercise_add, viewGroup, false);
+        return new WorkoutAddViewHolder(binding);
     }
 
     @Override

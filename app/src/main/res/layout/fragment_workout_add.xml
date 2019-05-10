@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="workoutAddModel"
+            type="com.dimaoprog.sportsconnectivity.workoutViews.WorkoutAddViewModel"/>
+    </data>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -28,6 +34,7 @@
                 android:hint="@string/workout_title"
                 android:inputType="text"
                 android:textSize="24sp"
+                android:text="@={workoutAddModel.workoutTitle}"
                 tools:targetApi="o" />
 
             <TextView
@@ -37,7 +44,8 @@
                 android:layout_below="@id/et_add_workout_title"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/txt_pick_the_date"
-                android:text="@string/pick_muscle_groups"
+                android:hint="@string/pick_muscle_groups"
+                android:text="@={workoutAddModel.muscleGroups}"
                 android:textSize="18sp" />
 
             <TextView
@@ -46,7 +54,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/et_add_workout_title"
                 android:layout_alignParentEnd="true"
-                android:text="@string/pick_the_date"
+                android:hint="@string/pick_the_date"
+                android:text="@={workoutAddModel.workoutDate}"
                 android:textSize="18sp" />
 
         </RelativeLayout>
@@ -88,3 +97,4 @@
         </LinearLayout>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
+</layout>

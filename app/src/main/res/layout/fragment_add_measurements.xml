@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="com.dimaoprog.sportsconnectivity.Converter" />
+
+        <variable
+            name="addModel"
+            type="com.dimaoprog.sportsconnectivity.profileViews.AddMeasurementsViewModel" />
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:context=".profileViews.AddMeasurementsFragment">
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_m">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:text="@string/height_cm"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/picker_height"
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:background="@color/beige"
+                        android:text="@={Converter.intToString(addModel.height)}"
+                        android:textSize="18sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_m">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:text="@string/weight_kg"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/picker_weight"
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:background="@color/beige"
+                        android:text="@={Converter.intToString(addModel.weight)}"
+                        android:textSize="18sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_m">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:layout_marginEnd="@dimen/margin_l"
+                        android:text="@string/waist_girth_cm"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/picker_waist"
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:background="@color/beige"
+                        android:text="@={Converter.intToString(addModel.waist)}"
+                        android:textSize="18sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_m">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:text="@string/neck_girth_cm"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/picker_neck"
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:background="@color/beige"
+                        android:text="@={Converter.intToString(addModel.neck)}"
+                        android:textSize="18sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_m"
+                    android:layout_marginBottom="@dimen/margin_l">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:text="@string/hip_girth_cm"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/picker_hip"
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:background="@color/beige"
+                        android:textSize="18sp"
+                        android:text="@={Converter.intToString(addModel.hip)}" />
+
+                </TableRow>
+            </TableLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent" />
+
+            <Button
+                android:id="@+id/btn_refresh_fat_bmi"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_m"
+                android:onClick="@{() -> addModel.calculateFatBMI()}"
+                android:background="@drawable/ic_refresh_orange_24dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_m"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_m"
+                    android:text="@string/body_fat"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txt_body_fat"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/green"
+                    android:text="@={Converter.doubleToString(addModel.bodyFat)}"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_m"
+                    android:layout_marginEnd="@dimen/margin_m"
+                    android:text="@string/bmi"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txt_bmi"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/green"
+                    android:text="@={Converter.doubleToString(addModel.bmi)}"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_add_measurement"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_l"
+                android:text="@string/add_measurement" />
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

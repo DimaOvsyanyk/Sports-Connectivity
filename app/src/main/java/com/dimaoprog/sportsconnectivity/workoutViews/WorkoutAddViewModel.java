@@ -2,10 +2,11 @@ package com.dimaoprog.sportsconnectivity.workoutViews;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
+
 import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
+import com.dimaoprog.sportsconnectivity.dbEntities.User;
 import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
 import com.dimaoprog.sportsconnectivity.dbRepos.WorkoutsRepository;
 
@@ -16,6 +17,9 @@ public class WorkoutAddViewModel extends AndroidViewModel {
 
     private WorkoutsRepository workoutsRep;
     private List<Exercise> tempExercises = new ArrayList<>();
+    private String workoutTitle;
+    private ObservableField<String> workoutDate = new ObservableField<>();
+    private ObservableField<String> muscleGroups = new ObservableField<>();
 
 
     public WorkoutAddViewModel(@NonNull Application application) {
@@ -42,5 +46,51 @@ public class WorkoutAddViewModel extends AndroidViewModel {
     public void deleteExerciseFromWorkout(Exercise exercise) {
         tempExercises.remove(exercise);
     }
+
+    public boolean checkAllEntities() {
+        return workoutDate.get().length() > 0 & muscleGroups.get().length() > 0 &
+                workoutTitle.length() > 0 & tempExercises.size() > 0;
+    }
+
+    public void addWorkoutAndExercisesToDb() {
+        Workout newWorkout = new Workout(User.getACTIVEUSER().getId(), workoutTitle,
+                muscleGroups.get(), workoutDate.get());
+        long newWorkoutId = insertWorkout(newWorkout);
+        Exercise newExercise;
+        for (int i = 0; i < tempExercises.size(); i++) {
+            newExercise = tempExercises.get(i);
+            newExercise.setWorkoutId(newWorkoutId);
+            insertExercise(newExercise);
+        }
+    }
+
+    public void setTempExercises(List<Exercise> tempExercises) {
+        this.tempExercises = tempExercises;
+    }
+
+    public String getWorkoutTitle() {
+        return workoutTitle;
+    }
+
+    public void setWorkoutTitle(String workoutTitle) {
+        this.workoutTitle = workoutTitle;
+    }
+
+    public ObservableField<String> getWorkoutDate() {
+        return workoutDate;
+    }
+
+    public void setWorkoutDate(String workoutDate) {
+        this.workoutDate.set(workoutDate);
+    }
+
+    public ObservableField<String> getMuscleGroups() {
+        return muscleGroups;
+    }
+
+    public void setMuscleGroups(String muscleGroups) {
+        this.muscleGroups.set(muscleGroups);
+    }
+
 
 }

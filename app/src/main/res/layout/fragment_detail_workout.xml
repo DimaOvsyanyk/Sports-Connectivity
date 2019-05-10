@@ -1,81 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
 
-    <RelativeLayout
+    <data>
+
+        <variable
+            name="detailWorkoutModel"
+            type="com.dimaoprog.sportsconnectivity.workoutViews.DetailWorkoutViewModel" />
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".workoutViews.DetailWorkoutFragment">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/img_picture"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_alignParentTop="true"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/picture"
-            android:scaleType="centerCrop"
-            android:src="@drawable/pic_workout_advice" />
-
-        <LinearLayout
-            android:id="@+id/txt_info"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/img_picture"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="-75dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@android:color/white"
-            android:elevation="3dp"
             android:orientation="vertical"
-            android:padding="15dp"
-            android:translationZ="1dp">
+            tools:context=".workoutViews.DetailWorkoutFragment">
 
-            <TextView
-                android:id="@+id/txt_title"
+            <ImageView
+                android:id="@+id/img_picture"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_alignParentTop="true"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/picture"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pic_workout_advice" />
+
+            <LinearLayout
+                android:id="@+id/txt_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/img_picture"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="-75dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginBottom="10dp"
-                android:gravity="start"
-                android:text="@string/title"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:background="@android:color/white"
+                android:elevation="3dp"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:translationZ="1dp">
 
-            <View
-                android:id="@+id/divider1"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/colorAccent" />
+                <TextView
+                    android:id="@+id/txt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="start"
+                    android:text="@{detailWorkoutModel.currentWorkout.workoutTitle}"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="@string/title" />
 
-            <TextView
-                android:id="@+id/txt_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="end"
-                android:text="@string/date"
-                android:textSize="14sp" />
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/colorAccent" />
 
-            <TextView
-                android:id="@+id/txt_muscles"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="clip_horizontal|fill_horizontal"
-                android:text="@string/all_text"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/txt_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="end"
+                    android:text="@{detailWorkoutModel.currentWorkout.dateOfWorkout}"
+                    android:textSize="14sp"
+                    tools:text="@string/date" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_detail_exercises"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" />
+                <TextView
+                    android:id="@+id/txt_muscles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="clip_horizontal|fill_horizontal"
+                    android:text="@{detailWorkoutModel.currentWorkout.muscleGroups}"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="@string/muscle_group" />
 
-        </LinearLayout>
-    </RelativeLayout>
-</ScrollView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_detail_exercises"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</layout>

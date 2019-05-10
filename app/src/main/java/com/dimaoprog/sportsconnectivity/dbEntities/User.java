@@ -7,13 +7,11 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import java.util.List;
 
+import static com.dimaoprog.sportsconnectivity.Constants.NOTSTAY;
+
 @Entity(tableName = "users", indices = @Index(value = "e_mail", unique = true))
 public class User {
 
-    @Ignore
-    public static final int STAY = 1;
-    @Ignore
-    public static final int NOTSTAY = 0;
     @Ignore
     private static User ACTIVEUSER;
 
@@ -34,15 +32,22 @@ public class User {
     @ColumnInfo(name = "stay_in_system")
     private int stayInSystem;
 
+    @ColumnInfo(name = "date_of_birth")
+    private String dateOfBirth;
+
+    private String gender;
+
     @Ignore
     private List<Workout> workouts;
 
-    public User(String firstName, String secondName, String eMail, String password, int stayInSystem) {
+    public User(String firstName, String secondName, String eMail, String password, String dateOfBirth, String gender) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.eMail = eMail;
         this.password = password;
-        this.stayInSystem = stayInSystem;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.stayInSystem = NOTSTAY;
     }
 
     public void setId(long id) {
@@ -107,6 +112,22 @@ public class User {
 
     public void setWorkouts(List<Workout> workouts) {
         this.workouts = workouts;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     @Override

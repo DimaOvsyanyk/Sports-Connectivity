@@ -1,18 +1,19 @@
 package com.dimaoprog.sportsconnectivity.foodViews;
 
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.databinding.ItemDayMenuBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.DailyMenu;
 
 public class FoodListAdapter extends ListAdapter<DailyMenu, FoodViewHolder> {
 
-    DetailFoodListener detailFoodListener;
+    private DetailFoodListener detailFoodListener;
 
     public interface DetailFoodListener {
         void openDetailFoodFragment(long workoutId);
@@ -39,8 +40,8 @@ public class FoodListAdapter extends ListAdapter<DailyMenu, FoodViewHolder> {
     @NonNull
     @Override
     public FoodViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_day_menu, viewGroup, false);
-        return new FoodViewHolder(view);
+        ItemDayMenuBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_day_menu, viewGroup, false);
+        return new FoodViewHolder(binding);
     }
 
     @Override

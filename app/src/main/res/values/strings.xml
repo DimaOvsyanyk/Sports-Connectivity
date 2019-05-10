@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Sports Connectivity</string>
     <string name="title">Title</string>
-    <string name="short_news">Short news</string>
     <string name="add">Add</string>
     <string name="change_color">Change color</string>
     <string name="delete">Delete</string>
@@ -10,7 +9,6 @@
     <string name="title_food">Food</string>
     <string name="title_water">Water</string>
     <string name="title_new_measurements">Measurements</string>
-    <string name="default_full_description">Состав Outox не является секретом, а вот сама формула хранится в тайне. Ее изобрели двое ученых, которые в сотрудничестве с врачами скорой помощи на реальных примерах выяснили, что высокие дозы фруктозы позволяют ускорить естественное выведение алкоголя из организма человека. Основными активными ингредиентами в Outox являются фруктоза и витамин С. В отличие от популярных газированных напитков и энергетиков, в составе Outox нет таурина и кофеина. В составе Outox использованы только натуральные компоненты, а консервантами служат природные вытяжки из растительного сырья.</string>
 
     <string name="all_text">all text</string>
     <string name="add_news">Add news</string>
@@ -34,15 +32,6 @@
         <item>Abs</item>
     </string-array>
 
-    <string-array name="spinner_add">
-        <item>Workout</item>
-        <item>Food</item>
-        <item>Measurements</item>
-        <item>Water</item>
-    </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="password">Password</string>
@@ -71,8 +60,8 @@
     <string name="cancel">Cancel</string>
     <string name="add_new_workout">Add new workout</string>
 
-    <string name="active_user_to_log">Active user to log</string>
-    <string name="all_user_to_log">All user to log</string>
+    <string name="active_user_to_log">Active U to log</string>
+    <string name="all_user_to_log">All U to log</string>
     <string name="add_workouts_from_json">Add workouts from json</string>
     <string name="logoff">Logoff</string>
     <string name="title_profile">Profile</string>
@@ -91,13 +80,11 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+
     <string name="edit_profile">Edit Profile</string>
     <string name="edit_profile_details">Edit profile details</string>
     <string name="workout_statistics">Workout statistics</string>
-    <string name="date_of_last_measurements">Date of last measurements -</string>
+    <string name="date_of_last_measurements">Last measurements -</string>
     <string name="water_balance">Water balance</string>
     <string name="receipts">Receipts</string>
     <string name="send_message">Send message</string>
@@ -105,5 +92,22 @@
     <string name="trainer_photo">Trainer photo</string>
     <string name="meal">Meal</string>
     <string name="food_intake">Food intake</string>
+    <string name="select_gender">Select gender</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="enter_date_of_birth">Enter date of birth</string>
+    <string name="tap_to_pick">tap to pick</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="height_cm">Height, cm</string>
+    <string name="weight_kg">Weight, kg</string>
+    <string name="waist_girth_cm">Waist girth, cm</string>
+    <string name="neck_girth_cm">Neck girth, cm</string>
+    <string name="hip_girth_cm">Hip girth, cm</string>
+    <string name="body_fat">Body fat, %</string>
+    <string name="bmi">BMI</string>
+    <string name="add_measurement">Add measurement</string>
 
 </resources>

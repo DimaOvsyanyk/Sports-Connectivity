@@ -1,13 +1,14 @@
 package com.dimaoprog.sportsconnectivity.workoutViews;
 
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.databinding.ItemExerciseAddBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
 
 public class DetailWorkoutAdapter extends ListAdapter<Exercise, DetailWorkoutViewHolder> {
@@ -34,13 +35,12 @@ public class DetailWorkoutAdapter extends ListAdapter<Exercise, DetailWorkoutVie
     @NonNull
     @Override
     public DetailWorkoutViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_exercise_add, viewGroup, false);
-        return new DetailWorkoutViewHolder(view);
+        ItemExerciseAddBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_exercise_add, viewGroup, false);
+        return new DetailWorkoutViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DetailWorkoutViewHolder detailWorkoutViewHolder, int i) {
         detailWorkoutViewHolder.bind(getItem(i));
     }
-
 }

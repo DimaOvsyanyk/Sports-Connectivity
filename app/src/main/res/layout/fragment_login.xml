@@ -1,62 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".loginRegistrationViews.LoginFragment"
-    android:fitsSystemWindows="true"
-    android:layout_marginStart="@dimen/margin_left_right_login_page"
-    android:layout_marginEnd="@dimen/margin_left_right_login_page"
-    android:layout_gravity="center_vertical"
-    android:orientation="vertical">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <EditText
-        android:id="@+id/et_e_mail"
-        style="@android:style/Widget.Material.EditText"
+    <data>
+
+        <variable
+            name="loginmodel"
+            type="com.dimaoprog.sportsconnectivity.loginRegistrationViews.LoginViewModel" />
+
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints="E-mail"
-        android:ems="10"
-        android:hint="@string/e_mail"
-        android:inputType="textEmailAddress"
-        tools:targetApi="o" />
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-    <EditText
-        android:id="@+id/et_password"
-        style="@android:style/Widget.Material.EditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_e_mail"
-        android:autofillHints="Password"
-        android:ems="10"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        tools:targetApi="o" />
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/margin_left_right_login_page"
+            android:layout_marginEnd="@dimen/margin_left_right_login_page"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical"
+            tools:context=".loginRegistrationViews.LoginFragment">
 
-    <CheckBox
-        android:id="@+id/check_stay_in"
-        style="@android:style/Widget.Material.CompoundButton.CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_password"
-        android:layout_alignParentEnd="true"
-        android:text="@string/stay_in_system" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_l">
 
-    <Button
-        android:id="@+id/btn_login"
-        style="@android:style/Widget.Material.Button.Borderless.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/check_stay_in"
-        android:layout_marginTop="@dimen/margin_top_bottom_login_page"
-        android:text="@string/login" />
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/et_e_mail"
+                    style="@android:style/Widget.Material.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="E-mail"
+                    android:ems="10"
+                    android:hint="@string/e_mail"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:text="@={loginmodel.email}"
+                    tools:targetApi="o" />
+            </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/btn_register"
-        style="@android:style/Widget.Material.Button.Borderless.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btn_login"
-        android:text="@string/register" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_email"
+                app:passwordToggleEnabled="true">
 
-</RelativeLayout>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/et_password"
+                    style="@android:style/Widget.Material.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/et_e_mail"
+                    android:autofillHints="Password"
+                    android:ems="10"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:text="@={loginmodel.pass}"
+                    tools:targetApi="o" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/check_stay_in"
+                style="@android:style/Widget.Material.CompoundButton.CheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_pass"
+                android:layout_alignParentEnd="true"
+                android:checked="@={loginmodel.stayIn}"
+                android:text="@string/stay_in_system" />
+
+            <Button
+                android:id="@+id/btn_login"
+                style="@android:style/Widget.Material.Button.Borderless.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/check_stay_in"
+                android:layout_marginTop="@dimen/margin_l"
+                android:text="@string/login" />
+
+            <Button
+                android:id="@+id/btn_register"
+                style="@android:style/Widget.Material.Button.Borderless.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_login"
+                android:onClick="@{() -> loginmodel.register()}"
+                android:text="@string/register" />
+
+        </RelativeLayout>
+    </ScrollView>
+</layout>
