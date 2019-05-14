@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.dimaoprog.sportsconnectivity.Converter" />
+
+        <variable
+            name="doExerciseModel"
+            type="com.dimaoprog.sportsconnectivity.workoutViews.doWorkout.DoExercisesViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_s"
+            tools:context=".workoutViews.doWorkout.DoExercisesFragment">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rounds"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_s"
+                    android:layout_marginEnd="@dimen/margin_s"
+                    android:text="@{Converter.intToString(doExerciseModel.exerciseToDo.rounds)}"
+                    android:textSize="18sp"
+                    tools:text="@string/wzero" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reps"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_s"
+                    android:text="@{Converter.intToString(doExerciseModel.exerciseToDo.repetitions)}"
+                    android:textSize="18sp"
+                    tools:text="@string/wzero" />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rw_sets_done"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_s">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="@dimen/margin_s"
+                android:layout_marginBottom="@dimen/margin_s"
+                android:background="@color/colorAccent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/set"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_s"
+                    android:layout_marginEnd="@dimen/margin_s"
+                    android:text="@{Converter.intToString(doExerciseModel.currentSet)}"
+                    android:textSize="22sp"
+                    tools:text="@string/wzero" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/of"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_s"
+                    android:text="@{Converter.intToString(doExerciseModel.exerciseToDo.rounds)}"
+                    android:textSize="22sp"
+                    tools:text="@string/wzero" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_m"
+                android:layout_marginBottom="@dimen/margin_m"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_m"
+                    android:layout_weight="1">
+
+                    <android.support.design.widget.TextInputEditText
+                        style="@android:style/Widget.Material.EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@string/weight_kg"
+                        android:ems="10"
+                        android:hint="@string/weight_kg"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:text="@={Converter.intToString(doExerciseModel.tempWeight)}"
+                        tools:targetApi="o" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_m"
+                    android:layout_weight="1">
+
+                    <android.support.design.widget.TextInputEditText
+                        style="@android:style/Widget.Material.EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@string/repetitions"
+                        android:ems="10"
+                        android:hint="@string/repetitions"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:text="@={Converter.intToString(doExerciseModel.tempReps)}"
+                        tools:targetApi="o" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_add_set"
+                style="@android:style/Widget.Material.Button.Borderless.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_set" />
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

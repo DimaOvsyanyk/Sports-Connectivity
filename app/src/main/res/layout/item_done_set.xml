@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.dimaoprog.sportsconnectivity.Converter" />
+
+        <variable
+            name="exerciseDone"
+            type="com.dimaoprog.sportsconnectivity.dbEntities.ExerciseDone" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_xs"
+        android:background="@drawable/shape_card"
+        android:elevation="3dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/padding_l"
+        android:paddingEnd="@dimen/padding_l"
+        android:translationZ="1dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/weight"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@{Converter.intToString(exerciseDone.weightInKg)}"
+            android:textSize="18sp"
+            tools:text="@string/wzero" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reps"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@{Converter.intToString(exerciseDone.reps)}"
+            android:textSize="18sp"
+            tools:text="@string/wzero" />
+
+
+    </LinearLayout>
+</layout>

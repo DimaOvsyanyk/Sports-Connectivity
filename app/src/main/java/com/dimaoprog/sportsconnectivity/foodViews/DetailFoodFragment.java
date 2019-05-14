@@ -1,7 +1,7 @@
 package com.dimaoprog.sportsconnectivity.foodViews;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.databinding.FragmentDetailFoodBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.DailyMenu;
 import com.dimaoprog.sportsconnectivity.dbEntities.Meal;
 
@@ -36,51 +37,25 @@ public class DetailFoodFragment extends Fragment {
         return fragment;
     }
 
-    Unbinder unbinder;
-
-    @BindView(R.id.txt_title_menu_detail)
-    TextView txtMenuTitleDetail;
-    @BindView(R.id.txt_date_menu_detail)
-    TextView txtMenuDateDetail;
-    @BindView(R.id.rv_detail_meals)
-    RecyclerView detailMeals;
-
     private DetailFoodViewModel dfViewModel;
+    private FragmentDetailFoodBinding binding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_detail_food, container, false);
-        unbinder = ButterKnife.bind(this, v);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_food, container, false);
         dfViewModel = ViewModelProviders.of(this).get(DetailFoodViewModel.class);
         dfViewModel.setMenuId(getArguments().getLong(MENU_ID, -1));
-        return v;
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.setCurrentMenu(dfViewModel.getCurrentMenu());
+        RecyclerView detailMeals = binding.rvDetailMeals;
         detailMeals.setLayoutManager(new LinearLayoutManager(getContext()));
         final DetailFoodAdapter detailFoodAdapter = new DetailFoodAdapter();
         detailMeals.setAdapter(detailFoodAdapter);
-        dfViewModel.getMeals().observe(this, new Observer<List<Meal>>() {
-            @Override
-            public void onChanged(@Nullable List<Meal> meals) {
-                detailFoodAdapter.submitList(meals);
-            }
-        });
-        fillViews(dfViewModel.getCurrentMenu());
-    }
-
-    private void fillViews(DailyMenu menu) {
-        txtMenuTitleDetail.setText(menu.getMenuTitle());
-        txtMenuDateDetail.setText(menu.getDateOfMenu());
-
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        unbinder.unbind();
+        dfViewModel.getMeals().observe(this, meals -> detailFoodAdapter.submitList(meals));
     }
 }

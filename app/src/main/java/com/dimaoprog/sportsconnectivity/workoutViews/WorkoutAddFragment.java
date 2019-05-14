@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -143,28 +142,21 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
         final boolean[] selectedMuscleGroups = new boolean[allMuscleGroups.length];
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(R.string.pick_muscle_groups);
-        builder.setMultiChoiceItems(allMuscleGroups, selectedMuscleGroups, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                selectedMuscleGroups[which] = isChecked;
-            }
-        });
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < selectedMuscleGroups.length; i++) {
-                    if (selectedMuscleGroups[i]) {
-                        if (sb.length() == 0) {
-                            sb.append(allMuscleGroups[i]);
-                        } else {
-                            sb.append(", ");
-                            sb.append(allMuscleGroups[i]);
-                        }
+        builder.setMultiChoiceItems(allMuscleGroups, selectedMuscleGroups,
+                (dialog, which, isChecked) -> selectedMuscleGroups[which] = isChecked);
+        builder.setPositiveButton(R.string.ok, (dialog, which) -> {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < selectedMuscleGroups.length; i++) {
+                if (selectedMuscleGroups[i]) {
+                    if (sb.length() == 0) {
+                        sb.append(allMuscleGroups[i]);
+                    } else {
+                        sb.append(", ");
+                        sb.append(allMuscleGroups[i]);
                     }
                 }
-                waViewModel.setMuscleGroups(sb.toString());
             }
+            waViewModel.setMuscleGroups(sb.toString());
         });
         builder.setNegativeButton(R.string.cancel, null);
         builder.show();
@@ -190,16 +182,13 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
         final EditText newExerciseTitle = dialogAddExercise.findViewById(R.id.et_exercise_to_add);
 
         Button btnOk = dialogAddExercise.findViewById(R.id.btn_add_dialog);
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (newExerciseTitle.getText().toString().trim().length() > 0) {
-                    waViewModel.addNewExerciseToWorkout(new Exercise(newExerciseTitle.getText().toString().trim(),
-                            pickerRounds.getValue(), pickerReps.getValue()));
-                    addAdapter.notifyDataSetChanged();
-                    dialogAddExercise.dismiss();
-                    checkVisibilityAddBTN();
-                }
+        btnOk.setOnClickListener(__ -> {
+            if (newExerciseTitle.getText().toString().trim().length() > 0) {
+                waViewModel.addNewExerciseToWorkout(new Exercise(newExerciseTitle.getText().toString().trim(),
+                        pickerRounds.getValue(), pickerReps.getValue()));
+                addAdapter.notifyDataSetChanged();
+                dialogAddExercise.dismiss();
+                checkVisibilityAddBTN();
             }
         });
         dialogAddExercise.show();

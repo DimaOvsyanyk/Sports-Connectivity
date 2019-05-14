@@ -26,12 +26,7 @@ public class WorkoutAddViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Exercise exercise, final WorkoutAddAdapter.AddNewExerciseListener addNewExerciseListener) {
         binding.setExercise(exercise);
-        binding.btnAddExerciseItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addNewExerciseListener.showAddExerciseDialog();
-            }
-        });
+        binding.btnAddExerciseItem.setOnClickListener(__ -> addNewExerciseListener.showAddExerciseDialog());
 
     }
 

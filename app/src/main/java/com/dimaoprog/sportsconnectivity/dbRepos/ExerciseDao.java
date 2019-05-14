@@ -17,6 +17,9 @@ public interface ExerciseDao {
     @Query("SELECT * FROM exercises WHERE workout_id = :workoutId")
     LiveData<List<Exercise>> getByWorkoutId(long workoutId);
 
+    @Query("SELECT * FROM exercises WHERE workout_id = :workoutId")
+    List<Exercise> getByWorkoutIdStaticList(long workoutId);
+
     @Insert
     long insert(Exercise exercise);
 

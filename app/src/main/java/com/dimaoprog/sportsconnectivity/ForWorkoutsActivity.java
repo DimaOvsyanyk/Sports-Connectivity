@@ -1,15 +1,17 @@
 package com.dimaoprog.sportsconnectivity;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.View;
 
+import com.dimaoprog.sportsconnectivity.dbEntities.User;
+import com.dimaoprog.sportsconnectivity.dbRepos.UserRepository;
 import com.dimaoprog.sportsconnectivity.foodViews.DetailFoodFragment;
 import com.dimaoprog.sportsconnectivity.foodViews.FoodListAdapter;
+import com.dimaoprog.sportsconnectivity.loginRegistrationViews.LoginFragment;
+import com.dimaoprog.sportsconnectivity.loginRegistrationViews.RegistrationFragment;
 import com.dimaoprog.sportsconnectivity.profileViews.AddMeasurementsFragment;
 import com.dimaoprog.sportsconnectivity.profileViews.ProfileFragment;
 import com.dimaoprog.sportsconnectivity.trainerViews.TrainerFragment;
@@ -18,20 +20,21 @@ import com.dimaoprog.sportsconnectivity.foodViews.FoodFragment;
 import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutAddFragment;
 import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutsListAdapter;
 import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutsListFragment;
+import com.dimaoprog.sportsconnectivity.workoutViews.doWorkout.DoWorkoutFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.dimaoprog.sportsconnectivity.Constants.STAY;
+
 public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsListAdapter.IDetailWorkoutListener,
         WorkoutsListFragment.AddListener, WorkoutAddFragment.AddWorkoutListener, FoodListAdapter.DetailFoodListener,
-        ProfileFragment.ProfileActionListener {
-
-
+        ProfileFragment.ProfileActionListener, DetailWorkoutFragment.StartWorkoutListener, RegistrationFragment.RegistrationCompleteListener, LoginFragment.OnPressedButtonListener {
 
     @BindView(R.id.bottom_nav_view)
     BottomNavigationView bottomNavigationView;
 
-    private int full_screen_container_id = R.id.container_fr;
+    private int fullScreenContainerId = R.id.container_fr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,32 +42,68 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
         setContentView(R.layout.activity_for_workouts);
         ButterKnife.bind(this);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.menu_account:
-                        openProfileFragment();
-                        break;
-                    case R.id.menu_workouts:
-                        openWorkoutsListFragment();
-                        break;
-                    case R.id.menu_food:
-                        openFoodFragment();
-                        break;
-                    case R.id.menu_trainer:
-                        openTrainerFragment();
-                        break;
-                }
-                return true;
+        bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.menu_account:
+                    openProfileFragment();
+                    break;
+                case R.id.menu_workouts:
+                    openWorkoutsListFragment();
+                    break;
+                case R.id.menu_food:
+                    openFoodFragment();
+                    break;
+                case R.id.menu_trainer:
+                    openTrainerFragment();
+                    break;
             }
+            return true;
         });
         if (savedInstanceState == null) {
-            bottomNavigationView.setSelectedItemId(R.id.menu_workouts);
-            openWorkoutsListFragment();
+            if (checkSomeOneInSystem() != null) {
+                User.setACTIVEUSER(checkSomeOneInSystem());
+                openWorkoutsListFragment();
+            } else {
+                openLoginFragment();
+            }
         } else {
             onRestoreInstanceState(savedInstanceState);
         }
+    }
+
+
+    private User checkSomeOneInSystem() {
+        UserRepository userRepo = new UserRepository(this.getApplication());
+        return userRepo.getByStayIn(STAY);
+    }
+
+    @Override
+    public void openLoginFragment() {
+        bottomNavigationView.setVisibility(View.INVISIBLE);
+        User.setACTIVEUSER(null);
+        clearBackStack();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(fullScreenContainerId, LoginFragment.newInstance(this))
+                .commit();
+    }
+
+    public void openRegistrationFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(fullScreenContainerId, RegistrationFragment.newInstance(this))
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onLoginClick() {
+        openWorkoutsListFragment();
+    }
+
+    @Override
+    public void onRegisterClick() {
+        openRegistrationFragment();
     }
 
     @Override
@@ -80,21 +119,21 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
     public void openProfileFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(full_screen_container_id, ProfileFragment.newInstance(this))
+                .replace(fullScreenContainerId, ProfileFragment.newInstance(this))
                 .commit();
     }
 
     public void openFoodFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(full_screen_container_id, FoodFragment.newInstance(this))
+                .replace(fullScreenContainerId, FoodFragment.newInstance(this))
                 .commit();
     }
 
     public void openTrainerFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(full_screen_container_id, TrainerFragment.newInstance())
+                .replace(fullScreenContainerId, TrainerFragment.newInstance())
                 .commit();
     }
 
@@ -102,17 +141,18 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
     public void openWorkoutAddFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(full_screen_container_id, WorkoutAddFragment.newInstance(this))
+                .replace(fullScreenContainerId, WorkoutAddFragment.newInstance(this))
                 .addToBackStack(null)
                 .commit();
     }
 
     @Override
     public void openWorkoutsListFragment() {
+        bottomNavigationView.setVisibility(View.VISIBLE);
         clearBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(full_screen_container_id, WorkoutsListFragment.newInstance(this, this))
+                .replace(fullScreenContainerId, WorkoutsListFragment.newInstance(this, this))
                 .commit();
     }
 
@@ -127,7 +167,7 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
     public void openDetailWorkoutFragment(long workoutId) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(full_screen_container_id, DetailWorkoutFragment.newInstance(workoutId))
+                .replace(fullScreenContainerId, DetailWorkoutFragment.newInstance(workoutId, this))
                 .addToBackStack(null)
                 .commit();
     }
@@ -136,23 +176,25 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
     public void openDetailFoodFragment(long menuId) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(full_screen_container_id, DetailFoodFragment.newInstance(menuId))
+                .replace(fullScreenContainerId, DetailFoodFragment.newInstance(menuId))
                 .addToBackStack(null)
                 .commit();
-    }
-
-    @Override
-    public void openLoginActivity() {
-        Intent intent = new Intent(ForWorkoutsActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 
     @Override
     public void openAddMeasurementFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(full_screen_container_id, AddMeasurementsFragment.newInstance())
+                .replace(fullScreenContainerId, AddMeasurementsFragment.newInstance())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void openDoWorkoutFragment(long workoutId) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(fullScreenContainerId, DoWorkoutFragment.newInstance(workoutId))
                 .addToBackStack(null)
                 .commit();
     }

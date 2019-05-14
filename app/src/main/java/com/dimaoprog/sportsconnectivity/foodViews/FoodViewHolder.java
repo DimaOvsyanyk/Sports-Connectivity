@@ -18,11 +18,6 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(final DailyMenu dailyMenu, final FoodListAdapter.DetailFoodListener detailFoodListener) {
         binding.setDailyMenu(dailyMenu);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detailFoodListener.openDetailFoodFragment(dailyMenu.getId());
-            }
-        });
+        itemView.setOnClickListener(__ -> detailFoodListener.openDetailFoodFragment(dailyMenu.getId()));
     }
 }

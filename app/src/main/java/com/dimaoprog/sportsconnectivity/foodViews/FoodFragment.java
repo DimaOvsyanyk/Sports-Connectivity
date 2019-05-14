@@ -1,12 +1,11 @@
 package com.dimaoprog.sportsconnectivity.foodViews;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -15,16 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dimaoprog.sportsconnectivity.R;
-import com.dimaoprog.sportsconnectivity.dbEntities.DailyMenu;
+import com.dimaoprog.sportsconnectivity.databinding.FragmentFoodBinding;
 
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class FoodFragment extends Fragment {
 
@@ -42,40 +36,27 @@ public class FoodFragment extends Fragment {
 
     private FoodViewModel fViewModel;
 
-    Unbinder unbinder;
-    @BindView(R.id.rv_food_list)
-    RecyclerView foodList;
-    @BindView(R.id.swipe_layout_food)
-    SwipeRefreshLayout swipeRefresh;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_food, container, false);
-        unbinder = ButterKnife.bind(this, v);
-        foodList.setLayoutManager(new LinearLayoutManager(getContext()));
+        FragmentFoodBinding binding = DataBindingUtil.inflate(inflater,
+                R.layout.fragment_food, container, false);
+
+        binding.rvFoodList.setLayoutManager(new LinearLayoutManager(getContext()));
         final FoodListAdapter foodAdapter = new FoodListAdapter(detailFoodListener);
-        foodList.setAdapter(foodAdapter);
+        binding.rvFoodList.setAdapter(foodAdapter);
 
         fViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);
-        fViewModel.getAllMenu().observe(this, new Observer<List<DailyMenu>>() {
-            @Override
-            public void onChanged(@Nullable List<DailyMenu> dailyMenus) {
-                foodAdapter.submitList(dailyMenus);
+        fViewModel.getAllMenu().observe(this, dailyMenus -> foodAdapter.submitList(dailyMenus));
+        binding.swipeLayoutFood.setOnRefreshListener(() -> {
+            try {
+                fViewModel.addWeekMenuFromJson(getContext());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                try {
-                    fViewModel.addWeekMenuFromJson(getContext());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                swipeRefresh.setRefreshing(false);
-            }
+            binding.swipeLayoutFood.setRefreshing(false);
         });
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -87,13 +68,7 @@ public class FoodFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 fViewModel.deleteMenu(foodAdapter.getMenuAtPos(viewHolder.getAdapterPosition()));
             }
-        }).attachToRecyclerView(foodList);
-        return v;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
+        }).attachToRecyclerView(binding.rvFoodList);
+        return binding.getRoot();
     }
 }

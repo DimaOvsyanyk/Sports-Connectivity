@@ -7,4 +7,7 @@ public class Constants {
     public static final String FEMALE = "female";
     public static final String LOG_MAIN = "applog";
     public static final String WORKOUT_ID = "workout id";
+    public static final String EXERCISE_TO_DO_POSITION = "exerciseToDoPosition";
+
+
 }

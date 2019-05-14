@@ -1,6 +1,5 @@
 package com.dimaoprog.sportsconnectivity.workoutViews;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -14,20 +13,28 @@ import android.view.ViewGroup;
 
 import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentDetailWorkoutBinding;
-import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
-
-import java.util.List;
 
 import static com.dimaoprog.sportsconnectivity.Constants.WORKOUT_ID;
 
 public class DetailWorkoutFragment extends Fragment {
 
-    public static DetailWorkoutFragment newInstance(long workoutId) {
+    public static DetailWorkoutFragment newInstance(long workoutId, StartWorkoutListener startWorkoutListener) {
         Bundle args = new Bundle();
         args.putLong(WORKOUT_ID, workoutId);
         DetailWorkoutFragment fragment = new DetailWorkoutFragment();
         fragment.setArguments(args);
+        fragment.setStartWorkoutListener(startWorkoutListener);
         return fragment;
+    }
+
+    StartWorkoutListener startWorkoutListener;
+
+    public interface StartWorkoutListener {
+        void openDoWorkoutFragment(long workoutId);
+    }
+
+    public void setStartWorkoutListener(StartWorkoutListener startWorkoutListener) {
+        this.startWorkoutListener = startWorkoutListener;
     }
 
     private DetailWorkoutViewModel dwViewModel;
@@ -41,6 +48,7 @@ public class DetailWorkoutFragment extends Fragment {
         dwViewModel = ViewModelProviders.of(this).get(DetailWorkoutViewModel.class);
         dwViewModel.setWorkoutId(getArguments().getLong(WORKOUT_ID, -1));
         binding.setDetailWorkoutModel(dwViewModel);
+        binding.btnStartWorkout.setOnClickListener(__ -> startWorkoutListener.openDoWorkoutFragment(dwViewModel.getWorkoutId()));
         return binding.getRoot();
     }
 
@@ -50,11 +58,6 @@ public class DetailWorkoutFragment extends Fragment {
         binding.rvDetailExercises.setLayoutManager(new LinearLayoutManager(getContext()));
         final DetailWorkoutAdapter detailWorkoutAdapter = new DetailWorkoutAdapter();
         binding.rvDetailExercises.setAdapter(detailWorkoutAdapter);
-        dwViewModel.getAllExercises().observe(this, new Observer<List<Exercise>>() {
-            @Override
-            public void onChanged(@Nullable List<Exercise> exercises) {
-                detailWorkoutAdapter.submitList(exercises);
-            }
-        });
+        dwViewModel.getAllExercises().observe(this, exercises -> detailWorkoutAdapter.submitList(exercises));
     }
 }

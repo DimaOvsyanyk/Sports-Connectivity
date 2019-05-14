@@ -7,13 +7,14 @@ import android.content.Context;
 
 import com.dimaoprog.sportsconnectivity.dbEntities.DailyMenu;
 import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
+import com.dimaoprog.sportsconnectivity.dbEntities.ExerciseDone;
 import com.dimaoprog.sportsconnectivity.dbEntities.Meal;
 import com.dimaoprog.sportsconnectivity.dbEntities.User;
 import com.dimaoprog.sportsconnectivity.dbEntities.UserMeasurements;
 import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
 
 @Database(entities = {User.class, Workout.class, Exercise.class, DailyMenu.class,
-        Meal.class, UserMeasurements.class}, version = 1, exportSchema = false)
+        Meal.class, UserMeasurements.class, ExerciseDone.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
@@ -29,6 +30,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract MealDao mealDao();
 
     public abstract UserMeasurementsDao userMeasurementsDao();
+
+    public abstract ExerciseDoneDao exerciseDoneDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
         if (instance == null) {

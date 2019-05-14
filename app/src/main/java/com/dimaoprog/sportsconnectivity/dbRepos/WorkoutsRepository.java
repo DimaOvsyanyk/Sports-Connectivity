@@ -70,6 +70,10 @@ public class WorkoutsRepository {
         return allExercises;
     }
 
+    public List<Exercise> getAllExercisesStaticList(long workoutId) {
+        return exerciseDao.getByWorkoutIdStaticList(workoutId);
+    }
+
     public void addWorkoutsFromJson(Context context) throws IOException, JSONException {
         JSONReader.setWorkoutsFromJSON(context, workoutDao, exerciseDao, FIRST_WEEK_WORKOUTS);
     }

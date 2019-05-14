@@ -7,13 +7,12 @@ import com.dimaoprog.sportsconnectivity.dbEntities.UserMeasurements;
 import java.util.List;
 
 public class UserRepository {
+
     private UserDao userDao;
-    private UserMeasurementsDao userMeasurementsDao;
 
     public UserRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         userDao = db.userDao();
-        userMeasurementsDao = db.userMeasurementsDao();
     }
 
     public long insert(User user) {
@@ -40,23 +39,4 @@ public class UserRepository {
         return userDao.getAllUsers();
     }
 
-    public void insert(UserMeasurements userMeasurements) {
-        userMeasurementsDao.insert(userMeasurements);
-    }
-
-    public void update(UserMeasurements userMeasurements) {
-        userMeasurementsDao.update(userMeasurements);
-    }
-
-    public void delete(UserMeasurements userMeasurements) {
-        userMeasurementsDao.delete(userMeasurements);
-    }
-
-    public List<UserMeasurements> getUserMeasurementsList() {
-        return userMeasurementsDao.getUserMeasurementsList(User.getACTIVEUSER().getId());
-    }
-
-    public UserMeasurements getLastUserMeasurementById() {
-        return userMeasurementsDao.getLastUserMeasurementById(User.getACTIVEUSER().getId());
-    }
 }

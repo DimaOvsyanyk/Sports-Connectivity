@@ -1,70 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
 
-    <RelativeLayout
+    <data>
+
+        <variable
+            name="currentMenu"
+            type="com.dimaoprog.sportsconnectivity.dbEntities.DailyMenu" />
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".foodViews.DetailFoodFragment">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/img_picture_food"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_alignParentTop="true"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/picture"
-            android:scaleType="centerCrop"
-            android:src="@drawable/pic_food" />
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/img_picture_food"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="-75dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@android:color/white"
-            android:elevation="3dp"
             android:orientation="vertical"
-            android:padding="15dp"
-            android:translationZ="1dp">
+            tools:context=".foodViews.DetailFoodFragment">
 
-            <TextView
-                android:id="@+id/txt_title_menu_detail"
+            <ImageView
+                android:id="@+id/img_picture_food"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_alignParentTop="true"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/picture"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pic_food" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/img_picture_food"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="-75dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginBottom="10dp"
-                android:gravity="start"
-                android:text="@string/title"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:background="@android:color/white"
+                android:elevation="3dp"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:translationZ="1dp">
 
-            <View
-                android:id="@+id/divider1"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/colorAccent" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="start"
+                    android:text="@{currentMenu.menuTitle}"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="@string/title" />
 
-            <TextView
-                android:id="@+id/txt_date_menu_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="end"
-                android:text="@string/date"
-                android:textSize="14sp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/colorAccent" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_detail_meals"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="end"
+                    android:text="@{currentMenu.dateOfMenu}"
+                    android:textSize="14sp"
+                    tools:text="@string/date" />
 
-        </LinearLayout>
-    </RelativeLayout>
-</ScrollView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_detail_meals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</layout>

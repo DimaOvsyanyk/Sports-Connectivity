@@ -3,6 +3,7 @@ package com.dimaoprog.sportsconnectivity.profileViews;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.dimaoprog.sportsconnectivity.dbEntities.User;
 import com.dimaoprog.sportsconnectivity.dbEntities.UserMeasurements;
@@ -10,6 +11,7 @@ import com.dimaoprog.sportsconnectivity.dbRepos.ProfileRepository;
 import com.dimaoprog.sportsconnectivity.dbRepos.UserRepository;
 import java.util.List;
 
+import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
 import static com.dimaoprog.sportsconnectivity.Constants.NOTSTAY;
 import static com.dimaoprog.sportsconnectivity.Constants.STAY;
 
@@ -45,8 +47,20 @@ public class ProfileViewModel extends AndroidViewModel {
         }
     }
 
-    protected String getNameSurname() {
+    public String getNameSurname() {
         return User.getACTIVEUSER().getFirstName() + " " +
                 User.getACTIVEUSER().getSecondName();
     }
+
+    public void activeUserToLog() {
+        Log.d(LOG_MAIN, User.getACTIVEUSER().toString());
+    }
+
+    public void allUsersToLog() {
+        for (int i = 0; i < allUsers.size(); i++) {
+            Log.d(LOG_MAIN, allUsers.get(i).toString());
+        }
+    }
+
+
 }

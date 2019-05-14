@@ -40,19 +40,16 @@ public class RegistrationFragment extends Fragment {
         View v = binding.getRoot();
         rViewModel = ViewModelProviders.of(this).get(RegistrationViewModel.class);
         binding.setRegmodel(rViewModel);
-        binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (rViewModel.isInPutOK()) {
-                    if (rViewModel.addUserToBD()) {
-                        registrationCompleteListener.openLoginFragment();
-                    } else {
-                        binding.etEMail.setError("This e-mail already exist");
-                    }
+        binding.btnConfirm.setOnClickListener(__ -> {
+            if (rViewModel.isInPutOK()) {
+                if (rViewModel.addUserToBD()) {
+                    registrationCompleteListener.openLoginFragment();
                 } else {
-                    Toast.makeText(getContext(), "Incorrect entries", Toast.LENGTH_SHORT).show();
-                    checkVisibilityIncorrectText();
+                    binding.etEMail.setError("This e-mail already exist");
                 }
+            } else {
+                Toast.makeText(getContext(), "Incorrect entries", Toast.LENGTH_SHORT).show();
+                checkVisibilityIncorrectText();
             }
         });
         return v;
