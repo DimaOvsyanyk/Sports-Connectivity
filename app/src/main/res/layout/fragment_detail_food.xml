@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+        <import type="com.dimaoprog.sportsconnectivity.Converter" />
 
         <variable
             name="currentMenu"
@@ -63,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="end"
-                    android:text="@{currentMenu.dateOfMenu}"
+                    android:text="@{Converter.dateToString(currentMenu.dateOfMenu)}"
                     android:textSize="14sp"
                     tools:text="@string/date" />
 

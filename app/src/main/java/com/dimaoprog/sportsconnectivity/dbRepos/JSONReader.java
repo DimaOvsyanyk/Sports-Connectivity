@@ -16,6 +16,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Calendar;
+import java.util.Date;
 
 public class JSONReader {
     private static final String TAG_WEEK_WORKOUTS = "week_workouts";
@@ -39,7 +41,7 @@ public class JSONReader {
         JSONObject workoutObject;
         String workoutTitle;
         String muscleGroups;
-        String dateOfWorkout;
+        Date[] dates = getDatesArray(jsonArrayWeekWorkouts.length());
         JSONObject exerciseObject;
         String exerciseTitle;
         int rounds;
@@ -48,9 +50,8 @@ public class JSONReader {
             workoutObject = jsonArrayWeekWorkouts.getJSONObject(i);
             workoutTitle = workoutObject.getString(TAG_TITLE_WORKOUT);
             muscleGroups = workoutObject.getString(TAG_MUSCLE_GROUPS);
-            dateOfWorkout = workoutObject.getString(TAG_DATE_OF_WORKOUT);
             long workoutId = workoutDao.insert(new Workout(User.getACTIVEUSER().getId(),
-                    workoutTitle, muscleGroups, dateOfWorkout));
+                    workoutTitle, muscleGroups, dates[i]));
 
             JSONArray jsonArrayExercises = workoutObject.getJSONArray(TAG_EXERCISES);
             for (int a = 0; a < jsonArrayExercises.length(); a++) {
@@ -68,16 +69,15 @@ public class JSONReader {
         JSONArray jsonArrayMenu = readJSONtoObject(context, fileId).getJSONArray(TAG_WEEK_MENU);
         JSONObject menuObject;
         String menuTitle;
-        String dateOfMenu;
+        Date[] dates = getDatesArray(jsonArrayMenu.length());
         JSONObject mealObject;
         String foodIntake;
         String meal;
         for (int i = 0; i < jsonArrayMenu.length(); i++) {
             menuObject = jsonArrayMenu.getJSONObject(i);
             menuTitle = menuObject.getString(TAG_MENU_TITLE);
-            dateOfMenu = menuObject.getString(TAG_MENU_DATE);
             long menuId = dailyMenuDao.insert(new DailyMenu(User.getACTIVEUSER().getId(),
-                    menuTitle, dateOfMenu));
+                    menuTitle, dates[i]));
 
             JSONArray jsonArrayMeals = menuObject.getJSONArray(TAG_MEALS);
             for (int a = 0; a < jsonArrayMeals.length(); a++) {
@@ -99,5 +99,17 @@ public class JSONReader {
             builder.append("\n");
         }
         return new JSONObject(builder.toString());
+    }
+
+    private static Date[] getDatesArray(int days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+        Date[] dates = new Date[days];
+        for (int i = 0; i < days; i++) {
+            calendar.set(Calendar.DAY_OF_MONTH, currentDay + i +1);
+            dates[i] = calendar.getTime();
+        }
+        return dates;
     }
 }

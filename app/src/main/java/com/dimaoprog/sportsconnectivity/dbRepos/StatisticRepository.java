@@ -36,7 +36,7 @@ public class StatisticRepository {
     }
 
     public UserMeasurements getLastUserMeasurementById() {
-        return userMeasurementsDao.getLastUserMeasurementById(User.getACTIVEUSER().getId());
+        return userMeasurementsDao.getLastUserMeasurementByUserId(User.getACTIVEUSER().getId());
     }
 
     public void insert(ExerciseDone exerciseDone) {

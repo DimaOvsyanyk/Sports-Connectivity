@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+        <import type="com.dimaoprog.sportsconnectivity.Converter" />
 
         <variable
             name="detailWorkoutModel"
@@ -20,24 +21,22 @@
             tools:context=".workoutViews.DetailWorkoutFragment">
 
             <ImageView
-                android:id="@+id/img_picture"
+                android:id="@+id/img_workout_pic"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_alignParentTop="true"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/picture"
                 android:scaleType="centerCrop"
                 android:src="@drawable/pic_workout_advice" />
 
             <LinearLayout
-                android:id="@+id/txt_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/img_picture"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="-75dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="10dp"
+                android:layout_below="@id/img_workout_pic"
                 android:background="@android:color/white"
                 android:elevation="3dp"
                 android:orientation="vertical"
@@ -45,7 +44,6 @@
                 android:translationZ="1dp">
 
                 <TextView
-                    android:id="@+id/txt_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -56,18 +54,16 @@
                     tools:text="@string/title" />
 
                 <View
-                    android:id="@+id/divider1"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/colorAccent" />
 
                 <TextView
-                    android:id="@+id/txt_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="end"
-                    android:text="@{detailWorkoutModel.currentWorkout.dateOfWorkout}"
+                    android:text="@{Converter.dateToString(detailWorkoutModel.currentWorkout.dateOfWorkout)}"
                     android:textSize="14sp"
                     tools:text="@string/date" />
 
@@ -86,20 +82,17 @@
                     android:id="@+id/rv_detail_exercises"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" />
+                    android:layout_marginTop="@dimen/margin_m" />
 
+                <Button
+                    android:id="@+id/btn_start_workout"
+                    style="@android:style/Widget.Material.Button.Borderless.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_s"
+                    android:text="@string/start_workout"
+                    android:textSize="18sp" />
             </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_start_workout"
-                style="@android:style/Widget.Material.Button.Borderless.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt_info"
-                android:layout_marginTop="@dimen/margin_m"
-                android:layout_marginBottom="@dimen/margin_m"
-                android:text="@string/start_workout"
-                android:textSize="18sp" />
         </RelativeLayout>
     </ScrollView>
 </layout>

@@ -18,6 +18,5 @@ public class DetailFoodViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Meal meal) {
         binding.setMealItem(meal);
-        binding.btnAddMealItem.setVisibility(View.INVISIBLE);
     }
 }

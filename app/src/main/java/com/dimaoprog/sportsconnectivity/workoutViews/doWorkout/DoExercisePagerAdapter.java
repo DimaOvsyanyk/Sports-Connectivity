@@ -3,13 +3,13 @@ package com.dimaoprog.sportsconnectivity.workoutViews.doWorkout;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
 
 import java.util.List;
 
-public class DoExercisePagerAdapter extends FragmentPagerAdapter {
+public class DoExercisePagerAdapter extends FragmentStatePagerAdapter {
 
     private List<Exercise> exercisesToDo;
 

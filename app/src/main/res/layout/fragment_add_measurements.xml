@@ -15,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -25,7 +24,8 @@
             <TableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_m">
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -39,14 +39,16 @@
                         android:text="@string/height_cm"
                         android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/picker_height"
+                    <EditText
                         android:layout_width="75dp"
                         android:layout_height="wrap_content"
                         android:layout_column="2"
+                        android:autofillHints=""
                         android:background="@color/beige"
+                        android:inputType="number"
                         android:text="@={Converter.intToString(addModel.height)}"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        tools:targetApi="o" />
 
                 </TableRow>
 
@@ -62,14 +64,16 @@
                         android:text="@string/weight_kg"
                         android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/picker_weight"
+                    <EditText
                         android:layout_width="75dp"
                         android:layout_height="wrap_content"
                         android:layout_column="2"
+                        android:autofillHints=""
                         android:background="@color/beige"
+                        android:inputType="number"
                         android:text="@={Converter.intToString(addModel.weight)}"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        tools:targetApi="o" />
 
                 </TableRow>
 
@@ -86,14 +90,16 @@
                         android:text="@string/waist_girth_cm"
                         android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/picker_waist"
+                    <EditText
                         android:layout_width="75dp"
                         android:layout_height="wrap_content"
                         android:layout_column="2"
+                        android:autofillHints=""
                         android:background="@color/beige"
+                        android:inputType="number"
                         android:text="@={Converter.intToString(addModel.waist)}"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        tools:targetApi="o" />
 
                 </TableRow>
 
@@ -109,14 +115,16 @@
                         android:text="@string/neck_girth_cm"
                         android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/picker_neck"
+                    <EditText
                         android:layout_width="75dp"
                         android:layout_height="wrap_content"
                         android:layout_column="2"
+                        android:autofillHints=""
                         android:background="@color/beige"
+                        android:inputType="number"
                         android:text="@={Converter.intToString(addModel.neck)}"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        tools:targetApi="o" />
 
                 </TableRow>
 
@@ -133,14 +141,16 @@
                         android:text="@string/hip_girth_cm"
                         android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/picker_hip"
+                    <EditText
                         android:layout_width="75dp"
                         android:layout_height="wrap_content"
                         android:layout_column="2"
+                        android:autofillHints=""
                         android:background="@color/beige"
+                        android:inputType="number"
+                        android:text="@={Converter.intToString(addModel.hip)}"
                         android:textSize="18sp"
-                        android:text="@={Converter.intToString(addModel.hip)}" />
+                        tools:targetApi="o" />
 
                 </TableRow>
             </TableLayout>
@@ -151,13 +161,12 @@
                 android:background="@color/colorAccent" />
 
             <Button
-                android:id="@+id/btn_refresh_fat_bmi"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_m"
-                android:onClick="@{() -> addModel.calculateFatBMI()}"
-                android:background="@drawable/ic_refresh_orange_24dp" />
+                android:background="@drawable/ic_refresh_orange_24dp"
+                android:onClick="@{() -> addModel.calculateFatBMI()}" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -207,6 +216,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_l"
+                android:onClick="@{() -> addModel.insertNewMeasurement()}"
                 android:text="@string/add_measurement" />
 
         </LinearLayout>

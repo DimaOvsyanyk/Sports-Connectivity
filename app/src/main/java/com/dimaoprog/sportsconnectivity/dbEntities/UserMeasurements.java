@@ -5,6 +5,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "user_measurements", foreignKeys = @ForeignKey(entity = User.class,
         parentColumns = "id", childColumns = "user_id", onDelete = ForeignKey.CASCADE))
 public class UserMeasurements {
@@ -16,7 +18,7 @@ public class UserMeasurements {
     private long userId;
 
     @ColumnInfo(name = "date_of_measurement", index = true)
-    private long dateOfMeasurement;
+    private Date dateOfMeasurement;
 
     @ColumnInfo(name = "height_in_cm")
     private int heightInCM;
@@ -38,7 +40,7 @@ public class UserMeasurements {
 
     private double bmi;
 
-    public UserMeasurements(long userId, long dateOfMeasurement, int heightInCM, int weightInKG, int waistGirthInCM,
+    public UserMeasurements(long userId, Date dateOfMeasurement, int heightInCM, int weightInKG, int waistGirthInCM,
                             int neckGirthInCM, int hipGirthInCM, double bodyFat, double bmi) {
         this.userId = userId;
         this.dateOfMeasurement = dateOfMeasurement;
@@ -67,11 +69,11 @@ public class UserMeasurements {
         this.userId = userId;
     }
 
-    public long getDateOfMeasurement() {
+    public Date getDateOfMeasurement() {
         return dateOfMeasurement;
     }
 
-    public void setDateOfMeasurement(long dateOfMeasurement) {
+    public void setDateOfMeasurement(Date dateOfMeasurement) {
         this.dateOfMeasurement = dateOfMeasurement;
     }
 

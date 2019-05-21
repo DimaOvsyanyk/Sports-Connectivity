@@ -52,10 +52,9 @@ public class DetailFoodFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.setCurrentMenu(dfViewModel.getCurrentMenu());
-        RecyclerView detailMeals = binding.rvDetailMeals;
-        detailMeals.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvDetailMeals.setLayoutManager(new LinearLayoutManager(getContext()));
         final DetailFoodAdapter detailFoodAdapter = new DetailFoodAdapter();
-        detailMeals.setAdapter(detailFoodAdapter);
+        binding.rvDetailMeals.setAdapter(detailFoodAdapter);
         dfViewModel.getMeals().observe(this, meals -> detailFoodAdapter.submitList(meals));
     }
 }

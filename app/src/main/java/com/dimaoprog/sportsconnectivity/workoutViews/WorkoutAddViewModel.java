@@ -11,6 +11,7 @@ import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
 import com.dimaoprog.sportsconnectivity.dbRepos.WorkoutsRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class WorkoutAddViewModel extends AndroidViewModel {
@@ -18,7 +19,7 @@ public class WorkoutAddViewModel extends AndroidViewModel {
     private WorkoutsRepository workoutsRep;
     private List<Exercise> tempExercises = new ArrayList<>();
     private String workoutTitle;
-    private ObservableField<String> workoutDate = new ObservableField<>();
+    private ObservableField<Date> workoutDate = new ObservableField<>();
     private ObservableField<String> muscleGroups = new ObservableField<>();
 
 
@@ -48,7 +49,7 @@ public class WorkoutAddViewModel extends AndroidViewModel {
     }
 
     public boolean checkAllEntities() {
-        return workoutDate.get().length() > 0 & muscleGroups.get().length() > 0 &
+        return workoutDate.get() != null & muscleGroups.get().length() > 0 &
                 workoutTitle.length() > 0 & tempExercises.size() > 0;
     }
 
@@ -76,11 +77,11 @@ public class WorkoutAddViewModel extends AndroidViewModel {
         this.workoutTitle = workoutTitle;
     }
 
-    public ObservableField<String> getWorkoutDate() {
+    public ObservableField<Date> getWorkoutDate() {
         return workoutDate;
     }
 
-    public void setWorkoutDate(String workoutDate) {
+    public void setWorkoutDate(Date workoutDate) {
         this.workoutDate.set(workoutDate);
     }
 

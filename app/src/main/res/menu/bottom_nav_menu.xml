@@ -21,9 +21,9 @@
         android:enabled="true"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/menu_trainer"
-        android:title="@string/title_trainer"
-        android:icon="@drawable/ic_trainer_white_24dp"
+        android:id="@+id/menu_receipts"
+        android:title="@string/title_my_receipts"
+        android:icon="@drawable/ic_receipt_white_24dp"
         android:enabled="true"
         app:showAsAction="ifRoom"/>
 </menu>

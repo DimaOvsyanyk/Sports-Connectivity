@@ -3,7 +3,9 @@ package com.dimaoprog.sportsconnectivity;
 import android.arch.persistence.room.TypeConverter;
 import android.databinding.InverseMethod;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Converter {
 
@@ -26,13 +28,17 @@ public class Converter {
     }
 
     @TypeConverter
-    public static Date toDate(Long dateLong) {
+    public static Date longToDate(Long dateLong) {
         return dateLong == null ? null : new Date(dateLong);
     }
 
     @TypeConverter
-    public static Long fromDate(Date date) {
+    public static Long dateToLong(Date date) {
         return date == null ? null : date.getTime();
+    }
+
+    public static String dateToString(Date date) {
+        return date == null ? null : new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date);
     }
 
 }

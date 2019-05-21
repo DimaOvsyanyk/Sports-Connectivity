@@ -113,10 +113,35 @@
     <string name="of">of</string>
     <string name="add_set">Add set</string>
     <string name="repetitions">Repetitions</string>
+    <string name="meal_categories">Meal Categories</string>
+    <string name="meal_picture">Meal picture</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="title_my_receipts">My receipts</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="workout_reminder">Workout reminder</string>
+    <string name="water_balance_reminder">Water balance reminder</string>
 
     <string-array name="exercise_measures">
         <item>kg</item>
         <item>lb</item>
+    </string-array>
+
+    <string-array name="receipt_categories">
+        <item>Beef</item>
+        <item>Breakfast</item>
+        <item>Chicken</item>
+        <item>Desert</item>
+        <item>Goat</item>
+        <item>Lamb</item>
+        <item>Miscellaneous</item>
+        <item>Pasta</item>
+        <item>Pork</item>
+        <item>Seafood</item>
+        <item>Side</item>
+        <item>Starter</item>
+        <item>Vegan</item>
+        <item>Vegetarian</item>
     </string-array>
 
 </resources>

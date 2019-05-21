@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -20,17 +19,13 @@ import org.json.JSONException;
 
 import java.io.IOException;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-
 public class WorkoutsListFragment extends Fragment {
 
     WorkoutsListAdapter.IDetailWorkoutListener detailListener;
     AddListener addListener;
 
-    public static WorkoutsListFragment newInstance(WorkoutsListAdapter.IDetailWorkoutListener detailListener, AddListener addListener) {
+    public static WorkoutsListFragment newInstance(WorkoutsListAdapter.IDetailWorkoutListener detailListener,
+                                                   AddListener addListener) {
         WorkoutsListFragment fragment = new WorkoutsListFragment();
         fragment.setDetailListener(detailListener);
         fragment.setAddListener(addListener);

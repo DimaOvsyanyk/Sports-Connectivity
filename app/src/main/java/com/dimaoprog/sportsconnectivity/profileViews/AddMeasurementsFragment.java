@@ -33,8 +33,6 @@ public class AddMeasurementsFragment extends Fragment {
         amViewModel = ViewModelProviders.of(this).get(AddMeasurementsViewModel.class);
 
         binding.setAddModel(amViewModel);
-        binding.btnAddMeasurement.setOnClickListener(__ -> Log.d(LOG_MAIN, amViewModel.getBodyFat().get() +" "+ amViewModel.getHeight() +" "+ amViewModel.getWeight() +" "+
-                amViewModel.getHip() +" "+ amViewModel.getNeck() +" "+ amViewModel.getWaist() +" "+ amViewModel.getBmi().get()));
         return v;
     }
 

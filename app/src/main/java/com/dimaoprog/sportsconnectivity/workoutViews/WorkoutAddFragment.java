@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
@@ -29,10 +28,7 @@ import com.dimaoprog.sportsconnectivity.databinding.FragmentWorkoutAddBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
 
 import java.util.Calendar;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+import java.util.Date;
 
 public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.AddNewExerciseListener {
 
@@ -52,8 +48,6 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
         this.addWorkoutListener = addWorkoutListener;
     }
 
-    Unbinder unbinder;
-
     private WorkoutAddViewModel waViewModel;
     private FragmentWorkoutAddBinding binding;
     Calendar calendar;
@@ -63,9 +57,6 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_add, container, false);
-        View v = binding.getRoot();
-        unbinder = ButterKnife.bind(this, v);
-
         waViewModel = ViewModelProviders.of(this).get(WorkoutAddViewModel.class);
         binding.setWorkoutAddModel(waViewModel);
         binding.rvExercises.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -85,8 +76,20 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
                 checkVisibilityAddBTN();
             }
         }).attachToRecyclerView(binding.rvExercises);
+
         checkVisibilityAddBTN();
-        return v;
+        binding.txtPickMuscleGroups.setOnClickListener(__ -> showPickMuscleGroupsDialog());
+        binding.txtPickTheDate.setOnClickListener(__ -> showDatePicker());
+        binding.btnAddNewExercise.setOnClickListener(__ -> showAddExerciseDialog());
+        binding.btnConfirmAdd.setOnClickListener(__ -> {
+            if (waViewModel.checkAllEntities()) {
+                waViewModel.addWorkoutAndExercisesToDb();
+                addWorkoutListener.openWorkoutsListFragment();
+            } else {
+                Toast.makeText(getContext(), "You should fill all fields", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return binding.getRoot();
     }
 
     @Override
@@ -95,47 +98,24 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
         calendar = Calendar.getInstance();
     }
 
-    @OnClick(R.id.txt_pick_the_date)
-    void chooseDate(View v) {
-        showDatePicker();
-    }
-
-    @OnClick(R.id.txt_pick_muscle_groups)
-    void chooseMuscleGroups(View v) {
-        showPickMuscleGroupsDialog();
-    }
-
-    @OnClick(R.id.btn_add_new_exercise)
-    void addExercise(View v) {
-        showAddExerciseDialog();
-    }
-
-    @OnClick(R.id.btn_confirm_add)
-    void confirmAdd(View v) {
-        if (waViewModel.checkAllEntities()) {
-            waViewModel.addWorkoutAndExercisesToDb();
-            addWorkoutListener.openWorkoutsListFragment();
-        } else {
-            Toast.makeText(getContext(), "You should fill all fields", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void showDatePicker() {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            new DatePickerDialog(getContext(), onDateSetListener,
+            new DatePickerDialog(getContext(),
+                    (view, year1, month1, dayOfMonth1) -> waViewModel.setWorkoutDate(makeDate(year1, month1, dayOfMonth1)),
                     year, month, dayOfMonth).show();
         }
     }
 
-    DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            String date = dayOfMonth + "." + (monthOfYear + 1) + "." + year;
-            waViewModel.setWorkoutDate(date);
-        }
-    };
+    private Date makeDate(int year, int month, int dayOfMonth) {
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        return calendar.getTime();
+    }
 
     private void showPickMuscleGroupsDialog() {
         final String[] allMuscleGroups = getResources().getStringArray(R.array.pick_muscle_groups);
@@ -192,11 +172,5 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
             }
         });
         dialogAddExercise.show();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
     }
 }

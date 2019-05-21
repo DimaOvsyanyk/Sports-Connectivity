@@ -14,7 +14,12 @@ import com.dimaoprog.sportsconnectivity.loginRegistrationViews.LoginFragment;
 import com.dimaoprog.sportsconnectivity.loginRegistrationViews.RegistrationFragment;
 import com.dimaoprog.sportsconnectivity.profileViews.AddMeasurementsFragment;
 import com.dimaoprog.sportsconnectivity.profileViews.ProfileFragment;
-import com.dimaoprog.sportsconnectivity.trainerViews.TrainerFragment;
+import com.dimaoprog.sportsconnectivity.receiptViews.MyReceiptDetailFragment;
+import com.dimaoprog.sportsconnectivity.receiptViews.MyReceiptsListAdapter;
+import com.dimaoprog.sportsconnectivity.receiptViews.ReceiptAddNewFragment;
+import com.dimaoprog.sportsconnectivity.receiptViews.ReceiptDetailFragment;
+import com.dimaoprog.sportsconnectivity.receiptViews.ReceiptListAdapter;
+import com.dimaoprog.sportsconnectivity.receiptViews.MyReceiptsFragment;
 import com.dimaoprog.sportsconnectivity.workoutViews.DetailWorkoutFragment;
 import com.dimaoprog.sportsconnectivity.foodViews.FoodFragment;
 import com.dimaoprog.sportsconnectivity.workoutViews.WorkoutAddFragment;
@@ -29,7 +34,10 @@ import static com.dimaoprog.sportsconnectivity.Constants.STAY;
 
 public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsListAdapter.IDetailWorkoutListener,
         WorkoutsListFragment.AddListener, WorkoutAddFragment.AddWorkoutListener, FoodListAdapter.DetailFoodListener,
-        ProfileFragment.ProfileActionListener, DetailWorkoutFragment.StartWorkoutListener, RegistrationFragment.RegistrationCompleteListener, LoginFragment.OnPressedButtonListener {
+        ProfileFragment.ProfileActionListener, DetailWorkoutFragment.StartWorkoutListener,
+        RegistrationFragment.RegistrationCompleteListener, LoginFragment.OnPressedButtonListener,
+        ReceiptListAdapter.IReceiptPickedListener, MyReceiptsFragment.WantToAddNewReceiptListener,
+        MyReceiptsListAdapter.IFavoriteReceiptPickedListener {
 
     @BindView(R.id.bottom_nav_view)
     BottomNavigationView bottomNavigationView;
@@ -53,8 +61,8 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
                 case R.id.menu_food:
                     openFoodFragment();
                     break;
-                case R.id.menu_trainer:
-                    openTrainerFragment();
+                case R.id.menu_receipts:
+                    openReceiptFragment();
                     break;
             }
             return true;
@@ -62,7 +70,7 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
         if (savedInstanceState == null) {
             if (checkSomeOneInSystem() != null) {
                 User.setACTIVEUSER(checkSomeOneInSystem());
-                openWorkoutsListFragment();
+                openProfileFragment();
             } else {
                 openLoginFragment();
             }
@@ -79,7 +87,7 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
 
     @Override
     public void openLoginFragment() {
-        bottomNavigationView.setVisibility(View.INVISIBLE);
+        bottomNavigationView.setVisibility(View.GONE);
         User.setACTIVEUSER(null);
         clearBackStack();
         getSupportFragmentManager()
@@ -97,8 +105,18 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
     }
 
     @Override
+    public void openReceiptAddNewFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(fullScreenContainerId, ReceiptAddNewFragment.newInstance(this))
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
     public void onLoginClick() {
-        openWorkoutsListFragment();
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        openProfileFragment();
     }
 
     @Override
@@ -117,6 +135,8 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
     }
 
     public void openProfileFragment() {
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        clearBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(fullScreenContainerId, ProfileFragment.newInstance(this))
@@ -124,16 +144,19 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
     }
 
     public void openFoodFragment() {
+        clearBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(fullScreenContainerId, FoodFragment.newInstance(this))
                 .commit();
     }
 
-    public void openTrainerFragment() {
+    public void openReceiptFragment() {
+        clearBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(fullScreenContainerId, TrainerFragment.newInstance())
+                .replace(fullScreenContainerId, MyReceiptsFragment.newInstance(this,
+                        this))
                 .commit();
     }
 
@@ -148,7 +171,6 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
 
     @Override
     public void openWorkoutsListFragment() {
-        bottomNavigationView.setVisibility(View.VISIBLE);
         clearBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -168,6 +190,14 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(fullScreenContainerId, DetailWorkoutFragment.newInstance(workoutId, this))
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void openReceiptDetailFragment(String id) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(fullScreenContainerId, ReceiptDetailFragment.newInstance(id))
                 .addToBackStack(null)
                 .commit();
     }
@@ -195,6 +225,15 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(fullScreenContainerId, DoWorkoutFragment.newInstance(workoutId))
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void openMyReceiptDetailFragment(long id) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(fullScreenContainerId, MyReceiptDetailFragment.newInstance(id))
                 .addToBackStack(null)
                 .commit();
     }

@@ -6,6 +6,7 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity(tableName = "daily_menu", foreignKeys = @ForeignKey(entity = User.class, parentColumns = "id",
@@ -22,12 +23,12 @@ public class DailyMenu {
     private String menuTitle;
 
     @ColumnInfo(name = "date_of_menu")
-    private String dateOfMenu;
+    private Date dateOfMenu;
 
     @Ignore
     private List<Meal> meals;
 
-    public DailyMenu(long userId, String menuTitle, String dateOfMenu) {
+    public DailyMenu(long userId, String menuTitle, Date dateOfMenu) {
         this.userId = userId;
         this.menuTitle = menuTitle;
         this.dateOfMenu = dateOfMenu;
@@ -57,11 +58,11 @@ public class DailyMenu {
         this.menuTitle = menuTitle;
     }
 
-    public String getDateOfMenu() {
+    public Date getDateOfMenu() {
         return dateOfMenu;
     }
 
-    public void setDateOfMenu(String dateOfMenu) {
+    public void setDateOfMenu(Date dateOfMenu) {
         this.dateOfMenu = dateOfMenu;
     }
 

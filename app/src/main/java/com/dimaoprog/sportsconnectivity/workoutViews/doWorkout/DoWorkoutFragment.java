@@ -15,7 +15,6 @@ import com.dimaoprog.sportsconnectivity.databinding.FragmentDoWorkoutBinding;
 
 import static com.dimaoprog.sportsconnectivity.Constants.WORKOUT_ID;
 
-
 public class DoWorkoutFragment extends Fragment {
 
     public static DoWorkoutFragment newInstance(long workoutId) {
@@ -27,7 +26,7 @@ public class DoWorkoutFragment extends Fragment {
         return fragment;
     }
 
-    DoWorkoutViewModel dwViewModel;
+    private DoWorkoutViewModel dwViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,12 +36,11 @@ public class DoWorkoutFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        FragmentDoWorkoutBinding binding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_do_workout, container, false);
-        PagerAdapter pagerAdapter = new DoExercisePagerAdapter(getFragmentManager(), dwViewModel.getExercisesToDo());
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        FragmentDoWorkoutBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_do_workout, container, false);
+        PagerAdapter pagerAdapter = new DoExercisePagerAdapter(getActivity().getSupportFragmentManager(), dwViewModel.getExercisesToDo());
         binding.workoutPager.setAdapter(pagerAdapter);
+        binding.workoutPager.setOffscreenPageLimit(dwViewModel.getExercisesToDo().size() - 1);
         return binding.getRoot();
     }
 }

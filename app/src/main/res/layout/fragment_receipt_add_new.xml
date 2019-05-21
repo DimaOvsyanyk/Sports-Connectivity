@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".receiptViews.ReceiptAddNewFragment">
+
+        <Spinner
+            android:id="@+id/spinner_meal_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_l"
+            android:layout_marginStart="@dimen/margin_l"
+            android:layout_marginEnd="@dimen/margin_l"
+            android:layout_marginBottom="@dimen/margin_xs"
+            android:spinnerMode="dropdown"
+            android:prompt="@string/meal_categories"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_receipts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+</layout>

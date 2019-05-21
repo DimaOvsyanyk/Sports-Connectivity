@@ -2,38 +2,34 @@ package com.dimaoprog.sportsconnectivity.profileViews;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.content.Context;
+import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.dimaoprog.sportsconnectivity.dbEntities.User;
 import com.dimaoprog.sportsconnectivity.dbEntities.UserMeasurements;
-import com.dimaoprog.sportsconnectivity.dbRepos.ProfileRepository;
+import com.dimaoprog.sportsconnectivity.dbRepos.StatisticRepository;
 import com.dimaoprog.sportsconnectivity.dbRepos.UserRepository;
-import java.util.List;
+import com.dimaoprog.sportsconnectivity.notification.NotificationHelper;
 
-import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
 import static com.dimaoprog.sportsconnectivity.Constants.NOTSTAY;
 import static com.dimaoprog.sportsconnectivity.Constants.STAY;
 
 public class ProfileViewModel extends AndroidViewModel {
 
     private UserRepository userRepo;
-    private ProfileRepository profileRepo;
-    private List<User> allUsers;
+    private StatisticRepository statisticRepo;
+    private UserMeasurements lastMeasurement;
+    private ObservableBoolean enableWorkoutReminder = new ObservableBoolean();
+    protected Context appContext;
 
     public ProfileViewModel(@NonNull Application application) {
         super(application);
         userRepo = new UserRepository(application);
-        profileRepo = new ProfileRepository(application);
-        allUsers = userRepo.getAllUsers();
-    }
-
-    public UserMeasurements getLastMeasurement() {
-        return profileRepo.getLastUserMeasurementById(User.getACTIVEUSER().getId());
-    }
-
-    public List<User> getAllUsers() {
-        return allUsers;
+        statisticRepo = new StatisticRepository(application);
+        lastMeasurement = statisticRepo.getLastUserMeasurementById();
+        appContext = application.getApplicationContext();
+        enableWorkoutReminder.set(NotificationHelper.isAlarmManagerWorkoutOn());
     }
 
     public void update(User user) {
@@ -52,15 +48,29 @@ public class ProfileViewModel extends AndroidViewModel {
                 User.getACTIVEUSER().getSecondName();
     }
 
-    public void activeUserToLog() {
-        Log.d(LOG_MAIN, User.getACTIVEUSER().toString());
+    public ObservableBoolean getEnableWorkoutReminder() {
+        return enableWorkoutReminder;
     }
 
-    public void allUsersToLog() {
-        for (int i = 0; i < allUsers.size(); i++) {
-            Log.d(LOG_MAIN, allUsers.get(i).toString());
+    public void setEnableWorkoutReminder(boolean turnOn) {
+        this.enableWorkoutReminder.set(turnOn);
+    }
+
+    public void turnOnWorkoutReminder(boolean turnOn) {
+        if (turnOn) {
+            NotificationHelper.workoutNotification(appContext);
+            NotificationHelper.enableBootWorkoutReceiver(appContext);
+        } else {
+            NotificationHelper.cancelAlarmWorkout();
+            NotificationHelper.disableBootWorkoutReceiver(appContext);
         }
     }
 
+    public UserMeasurements getLastMeasurement() {
+        return lastMeasurement;
+    }
 
+    public void setLastMeasurement(UserMeasurements lastMeasurement) {
+        this.lastMeasurement = lastMeasurement;
+    }
 }

@@ -6,6 +6,7 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity(tableName = "workouts", foreignKeys = @ForeignKey(entity = User.class,
@@ -25,12 +26,12 @@ public class Workout {
     private String muscleGroups;
 
     @ColumnInfo(name = "date_of_workout")
-    private String dateOfWorkout;
+    private Date dateOfWorkout;
 
     @Ignore
     private List<Exercise> exercises;
 
-    public Workout(long userId, String workoutTitle, String muscleGroups, String dateOfWorkout) {
+    public Workout(long userId, String workoutTitle, String muscleGroups, Date dateOfWorkout) {
         this.userId = userId;
         this.workoutTitle = workoutTitle;
         this.muscleGroups = muscleGroups;
@@ -65,15 +66,15 @@ public class Workout {
         return muscleGroups;
     }
 
-    public void setMuscleGroups(String musclegroups) {
-        this.muscleGroups = musclegroups;
+    public void setMuscleGroups(String muscleGroups) {
+        this.muscleGroups = muscleGroups;
     }
 
-    public String getDateOfWorkout() {
+    public Date getDateOfWorkout() {
         return dateOfWorkout;
     }
 
-    public void setDateOfWorkout(String dateOfWorkout) {
+    public void setDateOfWorkout(Date dateOfWorkout) {
         this.dateOfWorkout = dateOfWorkout;
     }
 

@@ -42,22 +42,11 @@ public class ProfileFragment extends Fragment {
                 R.layout.fragment_profile, container, false);
         pViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
         binding.setProfileModel(pViewModel);
-        binding.btnDetailWorkoutStatistic.setOnClickListener(v -> binding.imgWorkoutStatisticDetail.setVisibility(rotate(v)));
         binding.btnAddNewMeasurements.setOnClickListener(__ -> profileActionListener.openAddMeasurementFragment());
         binding.btnLogoff.setOnClickListener(__ -> {
             pViewModel.logoffAction();
             profileActionListener.openLoginFragment();
         });
         return binding.getRoot();
-    }
-
-    private int rotate(View view) {
-        if (view.getRotation() == 0) {
-            view.animate().setDuration(200).rotation(180);
-            return View.VISIBLE;
-        } else {
-            view.animate().setDuration(200).rotation(0);
-            return View.GONE;
-        }
     }
 }

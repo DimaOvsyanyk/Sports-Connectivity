@@ -4,37 +4,69 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.databinding.ObservableDouble;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.dimaoprog.sportsconnectivity.dbEntities.User;
 import com.dimaoprog.sportsconnectivity.dbEntities.UserMeasurements;
-import com.dimaoprog.sportsconnectivity.dbRepos.ProfileRepository;
+import com.dimaoprog.sportsconnectivity.dbRepos.StatisticRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Calendar;
+import java.util.Date;
+
+import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
 
 public class AddMeasurementsViewModel extends AndroidViewModel {
 
-    private ProfileRepository profileRepo;
-    private int height = 184;
-    private int weight = 78;
-    private int waist = 85;
-    private int neck = 37;
-    private int hip = 93;
+    private StatisticRepository statisticRepository;
+    private int height;
+    private int weight;
+    private int waist;
+    private int neck;
+    private int hip;
+//    private int height = 184;
+//    private int weight = 78;
+//    private int waist = 85;
+//    private int neck = 37;
+//    private int hip = 93;
     private ObservableDouble bodyFat = new ObservableDouble();
     private ObservableDouble bmi = new ObservableDouble();
 
 
     public AddMeasurementsViewModel(@NonNull Application application) {
         super(application);
-        profileRepo = new ProfileRepository(application);
+        statisticRepository = new StatisticRepository(application);
+        checkLastMeasurement();
     }
 
-    public void insertNewMeasurement(UserMeasurements userMeasurements) {
-        profileRepo.insert(userMeasurements);
+    public void checkLastMeasurement() {
+        UserMeasurements lastM = getLastMeasurement();
+        if (lastM != null) {
+            height = lastM.getHeightInCM();
+            weight = lastM.getWeightInKG();
+            waist = lastM.getWaistGirthInCM();
+            neck = lastM.getNeckGirthInCM();
+            hip = lastM.getHipGirthInCM();
+        }
+    }
+
+    public void insertNewMeasurement() {
+        calculateFatBMI();
+        Date today = new Date();
+        today.setTime(Calendar.getInstance().getTimeInMillis());
+        statisticRepository.insert(new UserMeasurements(User.getACTIVEUSER().getId(), today, height, weight, waist, neck, hip,
+                bodyFat.get(), bmi.get()));
+        Log.d(LOG_MAIN, String.valueOf(getLastMeasurement().getId()));
+    }
+
+    public UserMeasurements getLastMeasurement() {
+        return statisticRepository.getLastUserMeasurementById();
     }
 
     public void calculateFatBMI() {
-        setBodyFat(86.010*Math.log10(waist-neck) - 70.041*Math.log10(height) + 30.30);
-        setBmi((double) (weight/((height * height)/10000)));
+        setBodyFat(86.010 * Math.log10(waist - neck) - 70.041 * Math.log10(height) + 30.30);
+        setBmi((double) (weight / ((height * height) / 10000)));
     }
 
 

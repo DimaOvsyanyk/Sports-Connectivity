@@ -13,7 +13,6 @@ import java.util.Date;
 
 @Entity(tableName = "exercise_done", foreignKeys = @ForeignKey(entity = Workout.class,
         parentColumns = "id", childColumns = "workout_id"))
-@TypeConverters(Converter.class)
 public class ExerciseDone {
 
     @PrimaryKey(autoGenerate = true)

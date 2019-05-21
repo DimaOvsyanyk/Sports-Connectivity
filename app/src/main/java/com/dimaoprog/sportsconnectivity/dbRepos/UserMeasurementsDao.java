@@ -17,7 +17,7 @@ public interface UserMeasurementsDao {
     List<UserMeasurements> getUserMeasurementsList(long userId);
 
     @Query("SELECT * FROM user_measurements WHERE id = (SELECT MAX(ID) FROM user_measurements WHERE user_id = :userId)")
-    UserMeasurements getLastUserMeasurementById(long userId);
+    UserMeasurements getLastUserMeasurementByUserId(long userId);
 
     @Insert
     void insert(UserMeasurements userMeasurement);

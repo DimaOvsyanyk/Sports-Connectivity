@@ -1,14 +1,11 @@
 package com.dimaoprog.sportsconnectivity.workoutViews.doWorkout;
 
-
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +14,6 @@ import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentDoExercisesBinding;
 
 import static com.dimaoprog.sportsconnectivity.Constants.EXERCISE_TO_DO_POSITION;
-import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
 import static com.dimaoprog.sportsconnectivity.Constants.WORKOUT_ID;
 
 public class DoExercisesFragment extends Fragment {
@@ -31,7 +27,7 @@ public class DoExercisesFragment extends Fragment {
         return fragment;
     }
 
-    DoExercisesViewModel deViewModel;
+    private DoExercisesViewModel deViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
