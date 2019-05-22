@@ -41,4 +41,8 @@ public class Converter {
         return date == null ? null : new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date);
     }
 
+    public static int dateToDayInt(Date date) {
+        return date == null ? null : Integer.valueOf(new SimpleDateFormat("dd", Locale.getDefault()).format(date));
+    }
+
 }

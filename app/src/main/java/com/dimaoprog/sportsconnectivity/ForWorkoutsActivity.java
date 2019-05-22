@@ -13,6 +13,7 @@ import com.dimaoprog.sportsconnectivity.foodViews.FoodListAdapter;
 import com.dimaoprog.sportsconnectivity.loginRegistrationViews.LoginFragment;
 import com.dimaoprog.sportsconnectivity.loginRegistrationViews.RegistrationFragment;
 import com.dimaoprog.sportsconnectivity.profileViews.AddMeasurementsFragment;
+import com.dimaoprog.sportsconnectivity.profileViews.MeasurementGraphFragment;
 import com.dimaoprog.sportsconnectivity.profileViews.ProfileFragment;
 import com.dimaoprog.sportsconnectivity.receiptViews.MyReceiptDetailFragment;
 import com.dimaoprog.sportsconnectivity.receiptViews.MyReceiptsListAdapter;
@@ -216,6 +217,15 @@ public class ForWorkoutsActivity extends AppCompatActivity implements WorkoutsLi
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(fullScreenContainerId, AddMeasurementsFragment.newInstance())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void openMeasurementGraphFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(fullScreenContainerId, new MeasurementGraphFragment())
                 .addToBackStack(null)
                 .commit();
     }

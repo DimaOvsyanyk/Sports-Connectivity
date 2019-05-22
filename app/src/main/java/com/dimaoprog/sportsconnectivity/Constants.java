@@ -10,4 +10,6 @@ public class Constants {
     public static final String EXERCISE_TO_DO_POSITION = "exerciseToDoPosition";
 
 
+
+
 }

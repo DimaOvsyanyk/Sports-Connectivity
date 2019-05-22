@@ -31,6 +31,8 @@ public class ProfileFragment extends Fragment {
         void openLoginFragment();
 
         void openAddMeasurementFragment();
+
+        void openMeasurementGraphFragment();
     }
 
     private ProfileViewModel pViewModel;
@@ -47,6 +49,7 @@ public class ProfileFragment extends Fragment {
             pViewModel.logoffAction();
             profileActionListener.openLoginFragment();
         });
+        binding.btnShowMeasurementStatistics.setOnClickListener(v -> profileActionListener.openMeasurementGraphFragment());
         return binding.getRoot();
     }
 }

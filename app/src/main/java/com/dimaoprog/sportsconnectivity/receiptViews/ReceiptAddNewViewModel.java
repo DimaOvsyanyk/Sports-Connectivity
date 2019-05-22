@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import com.dimaoprog.sportsconnectivity.dagger.DaggerAppComponent;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDB;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDBResponse;
 import com.dimaoprog.sportsconnectivity.retrofit.MealDBRetrofit;
@@ -43,7 +44,7 @@ public class ReceiptAddNewViewModel extends AndroidViewModel {
     }
 
     public void setNewListByCategory(String category) {
-        MealDBRetrofit.getApi().getListByCategory(category).enqueue(new Callback<MealDBResponse>() {
+        DaggerAppComponent.create().getMealDBApi().getListByCategory(category).enqueue(new Callback<MealDBResponse>() {
             @Override
             public void onResponse(Call<MealDBResponse> call, Response<MealDBResponse> response) {
                 setMealDBList(response.body().getMealsDB());

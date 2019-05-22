@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_l"
+        tools:context=".profileViews.MeasurementGraphFragment">
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graph_measurement"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/margin_m" />
+
+        <Spinner
+            android:id="@+id/spinner_measurements"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_l"
+            android:layout_marginTop="@dimen/margin_m"
+            android:layout_marginEnd="@dimen/margin_l"
+            android:layout_marginBottom="@dimen/margin_m" />
+
+    </LinearLayout>
+</layout>

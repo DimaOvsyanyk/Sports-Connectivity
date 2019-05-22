@@ -58,6 +58,30 @@ public class AddMeasurementsViewModel extends AndroidViewModel {
         statisticRepository.insert(new UserMeasurements(User.getACTIVEUSER().getId(), today, height, weight, waist, neck, hip,
                 bodyFat.get(), bmi.get()));
         Log.d(LOG_MAIN, String.valueOf(getLastMeasurement().getId()));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        calendar.set(Calendar.DAY_OF_MONTH, currentDay - 2);
+        today.setTime(calendar.getTimeInMillis());
+        statisticRepository.insert(new UserMeasurements(User.getACTIVEUSER().getId(), today, height, weight+5, waist+5, neck+1, hip+2,
+                bodyFat.get(), bmi.get()));
+
+        calendar.set(Calendar.DAY_OF_MONTH, currentDay - 3);
+        today.setTime(calendar.getTimeInMillis());
+        statisticRepository.insert(new UserMeasurements(User.getACTIVEUSER().getId(), today, height, weight-2, waist-1, neck, hip-2,
+                bodyFat.get(), bmi.get()));
+
+        calendar.set(Calendar.DAY_OF_MONTH, currentDay - 4);
+        today.setTime(calendar.getTimeInMillis());
+        statisticRepository.insert(new UserMeasurements(User.getACTIVEUSER().getId(), today, height, weight-6, waist-5, neck-1, hip-5,
+                bodyFat.get(), bmi.get()));
+
+        calendar.set(Calendar.DAY_OF_MONTH, currentDay - 5);
+        today.setTime(calendar.getTimeInMillis());
+        statisticRepository.insert(new UserMeasurements(User.getACTIVEUSER().getId(), today, height, weight, waist, neck, hip,
+                bodyFat.get(), bmi.get()));
     }
 
     public UserMeasurements getLastMeasurement() {
