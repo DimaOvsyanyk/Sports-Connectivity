@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -63,7 +63,7 @@
                     android:layout_marginTop="@dimen/margin_xs"
                     android:background="@color/colorAccent" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -71,20 +71,29 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
                         android:layout_marginTop="@dimen/margin_s"
                         android:text="@string/workout_statistics" />
 
-                    <ImageView
-                        android:id="@+id/img_workout_statistic_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_xs"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/workout_statistics"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/fitness_statistics" />
+                    <Button
+                        android:id="@+id/btn_detail_workout_statistic"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/ic_arrow_drop_down_orange_24dp" />
 
-                </LinearLayout>
+                    <com.applandeo.materialcalendarview.CalendarView
+                        android:id="@+id/calendar_view"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/margin_s"
+                        android:layout_height="450dp"
+                        android:layout_below="@id/btn_detail_workout_statistic"
+                        android:textSize="12sp"
+                        app:headerColor="@color/colorPrimary"
+                        app:todayLabelColor="@color/colorPrimaryDark"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"

@@ -20,6 +20,9 @@ public interface DailyMenuDao {
     @Query("SELECT * FROM daily_menu WHERE id = :id")
     DailyMenu getMenuById(long id);
 
+    @Query("SELECT * FROM daily_menu WHERE id = (SELECT MAX(ID) FROM daily_menu WHERE user_id = :userId)")
+    DailyMenu getLastMenu(long userId);
+
     @Insert
     long insert(DailyMenu dailyMenu);
 

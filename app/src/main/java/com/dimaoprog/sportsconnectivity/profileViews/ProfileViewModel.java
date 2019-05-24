@@ -2,15 +2,22 @@ package com.dimaoprog.sportsconnectivity.profileViews;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 
+import com.applandeo.materialcalendarview.EventDay;
+import com.dimaoprog.sportsconnectivity.Converter;
 import com.dimaoprog.sportsconnectivity.dbEntities.User;
 import com.dimaoprog.sportsconnectivity.dbEntities.UserMeasurements;
+import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
 import com.dimaoprog.sportsconnectivity.dbRepos.StatisticRepository;
 import com.dimaoprog.sportsconnectivity.dbRepos.UserRepository;
 import com.dimaoprog.sportsconnectivity.notification.NotificationHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.dimaoprog.sportsconnectivity.Constants.NOTSTAY;
 import static com.dimaoprog.sportsconnectivity.Constants.STAY;
@@ -21,7 +28,9 @@ public class ProfileViewModel extends AndroidViewModel {
     private StatisticRepository statisticRepo;
     private UserMeasurements lastMeasurement;
     private ObservableBoolean enableWorkoutReminder = new ObservableBoolean();
-    protected Context appContext;
+    private Context appContext;
+    private List<EventDay> eventDayList = new ArrayList<>();
+    private LiveData<List<Workout>> allDoneWorkouts;
 
     public ProfileViewModel(@NonNull Application application) {
         super(application);
@@ -30,6 +39,12 @@ public class ProfileViewModel extends AndroidViewModel {
         lastMeasurement = statisticRepo.getLastUserMeasurementById();
         appContext = application.getApplicationContext();
         enableWorkoutReminder.set(NotificationHelper.isAlarmManagerWorkoutOn());
+        allDoneWorkouts = statisticRepo.getAllDoneWorkouts();
+//        eventDayList = Converter.workoutToEventList(allDoneWorkouts.getValue());
+    }
+
+    public List<EventDay> getEventDayList() {
+        return eventDayList;
     }
 
     public void update(User user) {

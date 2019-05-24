@@ -1,8 +1,11 @@
 package com.dimaoprog.sportsconnectivity.receiptViews;
 
+import android.app.ProgressDialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -34,14 +37,31 @@ public class ReceiptAddNewFragment extends Fragment {
 
     private FragmentReceiptAddNewBinding binding;
     private ReceiptAddNewViewModel ranViewModel;
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_receipt_add_new, container, false);
         ranViewModel = ViewModelProviders.of(this).get(ReceiptAddNewViewModel.class);
+        setupProgressDialog();
+        ranViewModel.getShowDialogLive().observe(this, show -> showProgressDialog(show));
         setupRecyclerView();
         setupSpinner();
         return binding.getRoot();
+    }
+
+    private void showProgressDialog(boolean show) {
+        if (show) {
+            progressDialog.show();
+        } else {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void setupProgressDialog() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Receiving receipts");
+        progressDialog.setMessage("Please wait");
     }
 
     private void setupRecyclerView() {
@@ -67,6 +87,10 @@ public class ReceiptAddNewFragment extends Fragment {
 
             }
         });
+    }
+
+    private void progressDialog() {
+
     }
 
 }

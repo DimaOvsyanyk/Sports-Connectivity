@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import com.dimaoprog.sportsconnectivity.dagger.DaggerAppComponent;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDB;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDBResponse;
-import com.dimaoprog.sportsconnectivity.retrofit.MealDBRetrofit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +20,8 @@ public class ReceiptAddNewViewModel extends AndroidViewModel {
 
     private List<MealDB> mealDBList = new ArrayList<>();
     private MutableLiveData<List<MealDB>> mealDBLiveList = new MutableLiveData<>();
+    private boolean showDialog;
+    private MutableLiveData<Boolean> showDialogLive = new MutableLiveData<>();
 
     public ReceiptAddNewViewModel(@NonNull Application application) {
         super(application);
@@ -43,11 +44,32 @@ public class ReceiptAddNewViewModel extends AndroidViewModel {
         mealDBLiveList.setValue(mealDBList);
     }
 
+    public boolean isShowDialog() {
+        return showDialog;
+    }
+
+    public void setShowDialog(boolean showDialog) {
+        this.showDialog = showDialog;
+        setShowDialogLive();
+    }
+
+    public MutableLiveData<Boolean> getShowDialogLive() {
+        return showDialogLive;
+    }
+
+    public void setShowDialogLive() {
+        showDialogLive.setValue(showDialog);
+    }
+
     public void setNewListByCategory(String category) {
+        setShowDialog(true);
         DaggerAppComponent.create().getMealDBApi().getListByCategory(category).enqueue(new Callback<MealDBResponse>() {
             @Override
-            public void onResponse(Call<MealDBResponse> call, Response<MealDBResponse> response) {
-                setMealDBList(response.body().getMealsDB());
+            public void onResponse(@NonNull Call<MealDBResponse> call, @NonNull Response<MealDBResponse> response) {
+                if (response.isSuccessful()) {
+                    setMealDBList(response.body().getMealsDB());
+                    setShowDialog(false);
+                }
             }
 
             @Override

@@ -121,6 +121,11 @@
     <string name="add_to_favorites">Add to favorites</string>
     <string name="workout_reminder">Workout reminder</string>
     <string name="water_balance_reminder">Water balance reminder</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="snack">Snack</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
+    <string name="add_new_menu">add new menu</string>
 
     <string-array name="exercise_measures">
         <item>kg</item>
@@ -152,6 +157,24 @@
         <item>Body Fat</item>
         <item>BMI</item>
         <item>Height</item>
+    </string-array>
+
+    <string-array name="days_of_week">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+
+    <string-array name="food_intakes">
+        <item>Breakfast</item>
+        <item>Snack</item>
+        <item>Lunch</item>
+        <item>Snack</item>
+        <item>Dinner</item>
     </string-array>
 
 </resources>

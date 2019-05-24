@@ -14,12 +14,14 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
+import static com.dimaoprog.sportsconnectivity.Constants.WORKOUT_NOT_DONE;
+
 public class WorkoutsRepository {
 
     private WorkoutDao workoutDao;
     private ExerciseDao exerciseDao;
 
-    private LiveData<List<Workout>> allWorkouts;
+    private LiveData<List<Workout>> allNotDoneWorkouts;
     private LiveData<List<Exercise>> allExercises;
 
     public static final int FIRST_WEEK_WORKOUTS = R.raw.week_workouts;
@@ -29,7 +31,7 @@ public class WorkoutsRepository {
         workoutDao = database.workoutDao();
         exerciseDao = database.exerciseDao();
 
-        allWorkouts = workoutDao.getByUserId(User.getACTIVEUSER().getId());
+        allNotDoneWorkouts = workoutDao.getByUserId(User.getACTIVEUSER().getId(), WORKOUT_NOT_DONE);
     }
 
 
@@ -50,7 +52,7 @@ public class WorkoutsRepository {
     }
 
     public LiveData<List<Workout>> getAllWorkouts() {
-        return allWorkouts;
+        return allNotDoneWorkouts;
     }
 
     public void insert(Exercise exercise) {

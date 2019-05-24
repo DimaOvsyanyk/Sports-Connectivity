@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="mealDB"
             type="com.dimaoprog.sportsconnectivity.dbEntities.MealDB" />
@@ -131,7 +133,8 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient2.isEmpty() ? View.GONE : View.VISIBLE}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -163,7 +166,8 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient3.isEmpty() ? View.GONE : View.VISIBLE}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -194,7 +198,8 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient4.isEmpty() ? View.GONE : View.VISIBLE}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -226,7 +231,8 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient5.isEmpty() ? View.GONE : View.VISIBLE}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -257,7 +263,8 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient6.isEmpty() ? View.GONE : View.VISIBLE}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -289,7 +296,8 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient7.isEmpty() ? View.GONE : View.VISIBLE}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -320,7 +328,8 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient8.isEmpty() ? View.GONE : View.VISIBLE}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -352,7 +361,8 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient9.isEmpty() ? View.GONE : View.VISIBLE}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -383,7 +393,8 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient10.isEmpty() ? View.GONE : View.VISIBLE}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -413,295 +424,330 @@
 
                     </TableRow>
 
-                    <!--<TableRow-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content">-->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient11.isEmpty() ? View.GONE : View.VISIBLE}">
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="1"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="@{mealDB.strIngredient11}"-->
-                    <!--tools:text="Ingredient11" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@{mealDB.strIngredient11}"
+                            tools:text="Ingredient11" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="1"-->
-                    <!--android:layout_marginStart="@dimen/margin_xs"-->
-                    <!--android:layout_marginEnd="@dimen/margin_xs"-->
-                    <!--android:text="-" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_marginStart="@dimen/margin_xs"
+                            android:layout_marginEnd="@dimen/margin_xs"
+                            android:text="-" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="2"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="start"-->
-                    <!--android:text="@{mealDB.strMeasure11}"-->
-                    <!--tools:text="Measure11" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="3"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="@{mealDB.strMeasure11}"
+                            tools:text="Measure11" />
+                    </TableRow>
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="3"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="@{mealDB.strIngredient12}"-->
-                    <!--tools:text="Ingredient12" />-->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient12.isEmpty() ? View.GONE : View.VISIBLE}">
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="3"-->
-                    <!--android:layout_marginStart="@dimen/margin_xs"-->
-                    <!--android:layout_marginEnd="@dimen/margin_xs"-->
-                    <!--android:text="-" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@{mealDB.strIngredient12}"
+                            tools:text="Ingredient12" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="4"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="start"-->
-                    <!--android:text="@{mealDB.strMeasure12}"-->
-                    <!--tools:text="Measure12" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_marginStart="@dimen/margin_xs"
+                            android:layout_marginEnd="@dimen/margin_xs"
+                            android:text="-" />
 
-                    <!--</TableRow>-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="3"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="@{mealDB.strMeasure12}"
+                            tools:text="Measure12" />
 
-                    <!--<TableRow-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content">-->
+                    </TableRow>
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="1"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="@{mealDB.strIngredient13}"-->
-                    <!--tools:text="Ingredient13" />-->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient13.isEmpty() ? View.GONE : View.VISIBLE}">
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="1"-->
-                    <!--android:layout_marginStart="@dimen/margin_xs"-->
-                    <!--android:layout_marginEnd="@dimen/margin_xs"-->
-                    <!--android:text="-" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@{mealDB.strIngredient13}"
+                            tools:text="Ingredient13" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="2"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="start"-->
-                    <!--android:text="@{mealDB.strMeasure13}"-->
-                    <!--tools:text="Measure13" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_marginStart="@dimen/margin_xs"
+                            android:layout_marginEnd="@dimen/margin_xs"
+                            android:text="-" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="3"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="@{mealDB.strIngredient14}"-->
-                    <!--tools:text="Ingredient14" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="3"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="@{mealDB.strMeasure13}"
+                            tools:text="Measure13" />
+                    </TableRow>
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="3"-->
-                    <!--android:layout_marginStart="@dimen/margin_xs"-->
-                    <!--android:layout_marginEnd="@dimen/margin_xs"-->
-                    <!--android:text="-" />-->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient14.isEmpty() ? View.GONE : View.VISIBLE}">
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="4"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="start"-->
-                    <!--android:text="@{mealDB.strMeasure14}"-->
-                    <!--tools:text="Measure14" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@{mealDB.strIngredient14}"
+                            tools:text="Ingredient14" />
 
-                    <!--</TableRow>-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_marginStart="@dimen/margin_xs"
+                            android:layout_marginEnd="@dimen/margin_xs"
+                            android:text="-" />
 
-                    <!--<TableRow-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content">-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="3"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="@{mealDB.strMeasure14}"
+                            tools:text="Measure14" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="1"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="@{mealDB.strIngredient15}"-->
-                    <!--tools:text="Ingredient15" />-->
+                    </TableRow>
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="1"-->
-                    <!--android:layout_marginStart="@dimen/margin_xs"-->
-                    <!--android:layout_marginEnd="@dimen/margin_xs"-->
-                    <!--android:text="-" />-->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient15.isEmpty() ? View.GONE : View.VISIBLE}">
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="2"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="start"-->
-                    <!--android:text="@{mealDB.strMeasure15}"-->
-                    <!--tools:text="Measure15" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@{mealDB.strIngredient15}"
+                            tools:text="Ingredient15" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="3"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="@{mealDB.strIngredient16}"-->
-                    <!--tools:text="Ingredient16" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_marginStart="@dimen/margin_xs"
+                            android:layout_marginEnd="@dimen/margin_xs"
+                            android:text="-" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="3"-->
-                    <!--android:layout_marginStart="@dimen/margin_xs"-->
-                    <!--android:layout_marginEnd="@dimen/margin_xs"-->
-                    <!--android:text="-" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="3"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="@{mealDB.strMeasure15}"
+                            tools:text="Measure15" />
+                    </TableRow>
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="4"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="start"-->
-                    <!--android:text="@{mealDB.strMeasure16}"-->
-                    <!--tools:text="Measure16" />-->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient16.isEmpty() ? View.GONE : View.VISIBLE}">
 
-                    <!--</TableRow>-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@{mealDB.strIngredient16}"
+                            tools:text="Ingredient16" />
 
-                    <!--<TableRow-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content">-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_marginStart="@dimen/margin_xs"
+                            android:layout_marginEnd="@dimen/margin_xs"
+                            android:text="-" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="1"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="@{mealDB.strIngredient17}"-->
-                    <!--tools:text="Ingredient17" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="3"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="@{mealDB.strMeasure16}"
+                            tools:text="Measure16" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="1"-->
-                    <!--android:layout_marginStart="@dimen/margin_xs"-->
-                    <!--android:layout_marginEnd="@dimen/margin_xs"-->
-                    <!--android:text="-" />-->
+                    </TableRow>
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="2"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="start"-->
-                    <!--android:text="@{mealDB.strMeasure17}"-->
-                    <!--tools:text="Measure17" />-->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient17.isEmpty() ? View.GONE : View.VISIBLE}">
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="3"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="@{mealDB.strIngredient18}"-->
-                    <!--tools:text="Ingredient18" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@{mealDB.strIngredient17}"
+                            tools:text="Ingredient17" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="3"-->
-                    <!--android:layout_marginStart="@dimen/margin_xs"-->
-                    <!--android:layout_marginEnd="@dimen/margin_xs"-->
-                    <!--android:text="-" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_marginStart="@dimen/margin_xs"
+                            android:layout_marginEnd="@dimen/margin_xs"
+                            android:text="-" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="4"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="start"-->
-                    <!--android:text="@{mealDB.strMeasure18}"-->
-                    <!--tools:text="Measure18" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="3"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="@{mealDB.strMeasure17}"
+                            tools:text="Measure17" />
+                    </TableRow>
 
-                    <!--</TableRow>-->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient18.isEmpty() ? View.GONE : View.VISIBLE}">
 
-                    <!--<TableRow-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content">-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@{mealDB.strIngredient18}"
+                            tools:text="Ingredient18" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="1"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="@{mealDB.strIngredient19}"-->
-                    <!--tools:text="Ingredient19" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_marginStart="@dimen/margin_xs"
+                            android:layout_marginEnd="@dimen/margin_xs"
+                            android:text="-" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="1"-->
-                    <!--android:layout_marginStart="@dimen/margin_xs"-->
-                    <!--android:layout_marginEnd="@dimen/margin_xs"-->
-                    <!--android:text="-" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="3"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="@{mealDB.strMeasure18}"
+                            tools:text="Measure18" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="2"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="start"-->
-                    <!--android:text="@{mealDB.strMeasure19}"-->
-                    <!--tools:text="Measure19" />-->
+                    </TableRow>
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="3"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="end"-->
-                    <!--android:text="@{mealDB.strIngredient20}"-->
-                    <!--tools:text="Ingredient20" />-->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient19.isEmpty() ? View.GONE : View.VISIBLE}">
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="3"-->
-                    <!--android:layout_marginStart="@dimen/margin_xs"-->
-                    <!--android:layout_marginEnd="@dimen/margin_xs"-->
-                    <!--android:text="-" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@{mealDB.strIngredient19}"
+                            tools:text="Ingredient19" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_column="4"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="start"-->
-                    <!--android:text="@{mealDB.strMeasure20}"-->
-                    <!--tools:text="Measure20" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_marginStart="@dimen/margin_xs"
+                            android:layout_marginEnd="@dimen/margin_xs"
+                            android:text="-" />
 
-                    <!--</TableRow>-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="3"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="@{mealDB.strMeasure19}"
+                            tools:text="Measure19" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mealDB.strIngredient20.isEmpty() ? View.GONE : View.VISIBLE}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@{mealDB.strIngredient20}"
+                            tools:text="Ingredient20" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_marginStart="@dimen/margin_xs"
+                            android:layout_marginEnd="@dimen/margin_xs"
+                            android:text="-" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="3"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="@{mealDB.strMeasure20}"
+                            tools:text="Measure20" />
+
+                    </TableRow>
 
                 </TableLayout>
 

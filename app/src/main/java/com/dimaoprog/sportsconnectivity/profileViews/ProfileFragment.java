@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentProfileBinding;
 
+import java.util.List;
+
 public class ProfileFragment extends Fragment {
 
     ProfileActionListener profileActionListener;
@@ -50,6 +52,18 @@ public class ProfileFragment extends Fragment {
             profileActionListener.openLoginFragment();
         });
         binding.btnShowMeasurementStatistics.setOnClickListener(v -> profileActionListener.openMeasurementGraphFragment());
+        binding.calendarView.setEvents(pViewModel.getEventDayList());
+        binding.btnDetailWorkoutStatistic.setOnClickListener(v -> binding.calendarView.setVisibility(rotate(v)));
         return binding.getRoot();
+    }
+
+    private int rotate(View view) {
+        if (view.getRotation() == 0) {
+            view.animate().setDuration(200).rotation(180);
+            return View.VISIBLE;
+        } else {
+            view.animate().setDuration(200).rotation(0);
+            return View.GONE;
+        }
     }
 }

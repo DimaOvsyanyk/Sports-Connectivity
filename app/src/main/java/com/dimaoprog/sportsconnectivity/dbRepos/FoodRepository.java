@@ -69,6 +69,10 @@ public class FoodRepository {
         return meals;
     }
 
+    public DailyMenu getLastMenu() {
+        return dailyMenuDao.getLastMenu(User.getACTIVEUSER().getId());
+    }
+
     public void addMenuFromJson(Context context) throws IOException, JSONException {
         JSONReader.setMenuFromJSON(context, dailyMenuDao, mealDao, WEEK_MENU);
     }

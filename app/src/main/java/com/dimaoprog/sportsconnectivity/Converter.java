@@ -3,8 +3,15 @@ package com.dimaoprog.sportsconnectivity;
 import android.arch.persistence.room.TypeConverter;
 import android.databinding.InverseMethod;
 
+import com.applandeo.materialcalendarview.EventDay;
+import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
+import com.dimaoprog.sportsconnectivity.dbEntities.WorkoutEvent;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class Converter {
@@ -43,6 +50,22 @@ public class Converter {
 
     public static int dateToDayInt(Date date) {
         return date == null ? null : Integer.valueOf(new SimpleDateFormat("dd", Locale.getDefault()).format(date));
+    }
+
+    public static WorkoutEvent workoutToEvent(Workout workout) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(workout.getDateOfWorkout());
+        return new WorkoutEvent(calendar, workout.getWorkoutTitle(), workout.getId());
+    }
+
+    public static List<EventDay> workoutToEventList(List<Workout> workoutList) {
+        Calendar calendar = Calendar.getInstance();
+        List<EventDay> workoutEventList = new ArrayList<>();
+        for (int i = 0; i < workoutList.size(); i++) {
+            calendar.setTime(workoutList.get(i).getDateOfWorkout());
+            workoutEventList.add(new WorkoutEvent(calendar, workoutList.get(i).getWorkoutTitle(), workoutList.get(i).getId()));
+        }
+        return workoutEventList;
     }
 
 }

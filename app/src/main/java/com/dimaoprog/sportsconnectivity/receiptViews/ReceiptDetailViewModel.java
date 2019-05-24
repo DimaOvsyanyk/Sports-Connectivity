@@ -24,6 +24,8 @@ public class ReceiptDetailViewModel extends AndroidViewModel {
     private MealDB currentMealDB;
     private MutableLiveData<MealDB> currentMealDBLive = new MutableLiveData<>();
     private MealDBRepository mealDBRepo;
+    private boolean showDialog;
+    private MutableLiveData<Boolean> showDialogLive = new MutableLiveData<>();
 
     public ReceiptDetailViewModel(@NonNull Application application) {
         super(application);
@@ -31,10 +33,14 @@ public class ReceiptDetailViewModel extends AndroidViewModel {
     }
 
     public void setCurrentMealById(String id) {
+        setShowDialog(true);
         DaggerAppComponent.create().getMealDBApi().getMealById(id).enqueue(new Callback<MealDBResponse>() {
             @Override
-            public void onResponse(Call<MealDBResponse> call, Response<MealDBResponse> response) {
-                setCurrentMealDB(response.body().getMealsDB().get(0));
+            public void onResponse(@NonNull Call<MealDBResponse> call, @NonNull Response<MealDBResponse> response) {
+                if (response.isSuccessful()) {
+                    setCurrentMealDB(response.body().getMealsDB().get(0));
+                    setShowDialog(false);
+                }
             }
 
             @Override
@@ -42,6 +48,23 @@ public class ReceiptDetailViewModel extends AndroidViewModel {
 
             }
         });
+    }
+
+    public boolean isShowDialog() {
+        return showDialog;
+    }
+
+    public void setShowDialog(boolean showDialog) {
+        this.showDialog = showDialog;
+        setShowDialogLive();
+    }
+
+    public MutableLiveData<Boolean> getShowDialogLive() {
+        return showDialogLive;
+    }
+
+    public void setShowDialogLive() {
+        showDialogLive.setValue(showDialog);
     }
 
     public MealDB getCurrentMealDB() {

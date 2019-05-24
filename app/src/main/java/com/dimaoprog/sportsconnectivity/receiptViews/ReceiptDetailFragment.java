@@ -1,5 +1,6 @@
 package com.dimaoprog.sportsconnectivity.receiptViews;
 
+import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ public class ReceiptDetailFragment extends Fragment {
         return fragment;
     }
 
-    ReceiptDetailViewModel rdViewModel;
+    private ReceiptDetailViewModel rdViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,10 +37,13 @@ public class ReceiptDetailFragment extends Fragment {
         rdViewModel.setCurrentMealById(id);
     }
 
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentReceiptDetailBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_receipt_detail, container, false);
+        setupProgressDialog();
+        rdViewModel.getShowDialogLive().observe(this, show -> showProgressDialog(show));
         rdViewModel.getCurrentMealDBLive().observe(this, mealDB -> binding.setMealDB(mealDB));
         binding.btnAddToFavorites.setOnClickListener(__ -> {
             if (rdViewModel.saveMealDBtoFavorite()) {
@@ -53,4 +57,17 @@ public class ReceiptDetailFragment extends Fragment {
         return binding.getRoot();
     }
 
+    private void showProgressDialog(boolean show) {
+        if (show) {
+            progressDialog.show();
+        } else {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void setupProgressDialog() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Receiving receipt details");
+        progressDialog.setMessage("Please wait");
+    }
 }

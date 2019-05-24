@@ -1,5 +1,6 @@
 package com.dimaoprog.sportsconnectivity.foodViews;
 
+import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -12,8 +13,13 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.databinding.DialogAddMenuBinding;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentFoodBinding;
 
 import org.json.JSONException;
@@ -69,6 +75,30 @@ public class FoodFragment extends Fragment {
                 fViewModel.deleteMenu(foodAdapter.getMenuAtPos(viewHolder.getAdapterPosition()));
             }
         }).attachToRecyclerView(binding.rvFoodList);
+
+        binding.fabAddFood.setOnClickListener(__ -> showAddExerciseDialog());
         return binding.getRoot();
+    }
+
+    public void showAddExerciseDialog() {
+        final Dialog dialogAddMenu = new Dialog(getContext());
+        dialogAddMenu.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DialogAddMenuBinding bindingAddMenu = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
+                R.layout.dialog_add_menu, null, false);
+        dialogAddMenu.setContentView(bindingAddMenu.getRoot());
+        dialogAddMenu.setCanceledOnTouchOutside(true);
+        bindingAddMenu.setFoodModel(fViewModel);
+        String[] foodIntakes = getResources().getStringArray(R.array.food_intakes);
+        String[] daysOfWeek = getResources().getStringArray(R.array.days_of_week);
+
+        bindingAddMenu.btnAddMenu.setOnClickListener(__ -> {
+            if (fViewModel.isMenuOk()) {
+                fViewModel.addNewMenu(foodIntakes, daysOfWeek);
+                dialogAddMenu.dismiss();
+            } else {
+                Toast.makeText(getContext(), "You have empty fields", Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialogAddMenu.show();
     }
 }

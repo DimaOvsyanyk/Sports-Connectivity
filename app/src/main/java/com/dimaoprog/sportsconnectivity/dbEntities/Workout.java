@@ -9,6 +9,8 @@ import android.arch.persistence.room.PrimaryKey;
 import java.util.Date;
 import java.util.List;
 
+import static com.dimaoprog.sportsconnectivity.Constants.WORKOUT_NOT_DONE;
+
 @Entity(tableName = "workouts", foreignKeys = @ForeignKey(entity = User.class,
         parentColumns = "id", childColumns = "user_id", onDelete = ForeignKey.CASCADE))
 public class Workout {
@@ -25,8 +27,11 @@ public class Workout {
     @ColumnInfo(name = "muscle_groups")
     private String muscleGroups;
 
-    @ColumnInfo(name = "date_of_workout")
+    @ColumnInfo(name = "date_of_workout", index = true)
     private Date dateOfWorkout;
+
+    @ColumnInfo(name = "workout_done_flag", index = true)
+    private int workoutDoneFlag;
 
     @Ignore
     private List<Exercise> exercises;
@@ -36,6 +41,7 @@ public class Workout {
         this.workoutTitle = workoutTitle;
         this.muscleGroups = muscleGroups;
         this.dateOfWorkout = dateOfWorkout;
+        this.workoutDoneFlag = WORKOUT_NOT_DONE;
     }
 
     public long getId() {
@@ -84,6 +90,14 @@ public class Workout {
 
     public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
+    }
+
+    public int getWorkoutDoneFlag() {
+        return workoutDoneFlag;
+    }
+
+    public void setWorkoutDoneFlag(int workoutDoneFlag) {
+        this.workoutDoneFlag = workoutDoneFlag;
     }
 
     @Override
