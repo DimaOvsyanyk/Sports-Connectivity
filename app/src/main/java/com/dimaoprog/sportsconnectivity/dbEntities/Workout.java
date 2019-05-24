@@ -102,12 +102,6 @@ public class Workout {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < exercises.size(); i++) {
-            sb.append(i + 1);
-            sb.append(" ");
-            sb.append(exercises.get(i).toString());
-        }
-        return "Workout ID - " + id + ", title - " + workoutTitle + sb.toString();
+        return "Workout ID - " + id + ", title - " + workoutTitle + " flag - " + workoutDoneFlag;
     }
 }

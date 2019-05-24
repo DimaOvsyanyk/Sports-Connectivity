@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="regmodel"
-            type="com.dimaoprog.sportsconnectivity.loginRegistrationViews.RegistrationViewModel" />
+            name="profileModel"
+            type="com.dimaoprog.sportsconnectivity.profileViews.ProfileViewModel" />
     </data>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,11 +17,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_left_right_login_page"
-            android:layout_marginTop="@dimen/margin_s"
-            android:layout_marginEnd="@dimen/margin_left_right_login_page"
             android:orientation="vertical"
+            android:padding="@dimen/padding_s"
             tools:context=".loginRegistrationViews.RegistrationFragment">
+
 
             <EditText
                 android:id="@+id/et_first_name"
@@ -32,19 +31,8 @@
                 android:ems="10"
                 android:hint="@string/first_name"
                 android:inputType="text"
-                android:text="@={regmodel.firstName}"
+                android:text="@={profileModel.firstName}"
                 tools:targetApi="o" />
-
-            <TextView
-                android:id="@+id/text_incorrect_first"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="@string/enter_first_name"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="12sp"
-                android:visibility="invisible"
-                tools:visibility="visible" />
 
             <EditText
                 android:id="@+id/et_second_name"
@@ -55,19 +43,8 @@
                 android:ems="10"
                 android:hint="@string/second_name"
                 android:inputType="text"
-                android:text="@={regmodel.secondName}"
+                android:text="@={profileModel.secondName}"
                 tools:targetApi="o" />
-
-            <TextView
-                android:id="@+id/text_incorrect_second"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="@string/enter_second_name"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="12sp"
-                android:visibility="invisible"
-                tools:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -92,32 +69,23 @@
                         android:id="@+id/radio_male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="@={regmodel.male}"
+                        android:checked="@={profileModel.male}"
                         android:text="@string/male" />
 
                     <RadioButton
                         android:id="@+id/radio_female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="@={regmodel.female}"
+                        android:checked="@={profileModel.female}"
                         android:text="@string/female" />
 
                 </RadioGroup>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/text_incorrect_gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="@string/select_gender"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="12sp"
-                android:visibility="invisible"
-                tools:visibility="visible" />
 
             <EditText
-                android:id="@+id/et_birth_day"
+                android:id="@+id/birth_day_picker"
+                style="@android:style/Widget.Material.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_m"
@@ -125,44 +93,21 @@
                 android:ems="10"
                 android:hint="@string/date_of_birth"
                 android:inputType="text"
-                android:text="@={regmodel.birthDay}"
+                android:text="@={profileModel.birthDay}"
                 android:textSize="18sp"
                 tools:targetApi="o" />
-
-            <TextView
-                android:id="@+id/text_incorrect_date_of_birth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="@string/enter_date_of_birth"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="12sp"
-                android:visibility="invisible"
-                tools:visibility="visible" />
 
             <EditText
                 android:id="@+id/et_e_mail"
                 style="@android:style/Widget.Material.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_l"
                 android:autofillHints="@string/e_mail"
                 android:ems="10"
                 android:hint="@string/e_mail"
                 android:inputType="textEmailAddress"
-                android:text="@={regmodel.email}"
+                android:text="@={profileModel.email}"
                 tools:targetApi="o" />
-
-            <TextView
-                android:id="@+id/text_incorrect_mail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="@string/incorrect_e_mail"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="12sp"
-                android:visibility="invisible"
-                tools:visibility="visible" />
 
             <EditText
                 android:id="@+id/et_password"
@@ -172,28 +117,16 @@
                 android:autofillHints="@string/password"
                 android:ems="10"
                 android:hint="@string/password"
-                android:inputType="textPassword"
-                android:text="@={regmodel.password}"
+                android:inputType="text"
+                android:text="@={profileModel.password}"
                 tools:targetApi="o" />
 
-            <TextView
-                android:id="@+id/text_incorrect_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="@string/incorrect_password"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="12sp"
-                android:visibility="invisible"
-                tools:visibility="visible" />
-
-
             <Button
-                android:id="@+id/btn_confirm"
+                android:id="@+id/btn_save"
                 style="@android:style/Widget.Material.Button.Borderless.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/confirm" />
+                android:text="@string/save" />
         </LinearLayout>
     </ScrollView>
 </layout>

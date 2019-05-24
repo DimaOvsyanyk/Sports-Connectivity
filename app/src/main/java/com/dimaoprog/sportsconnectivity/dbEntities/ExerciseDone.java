@@ -41,7 +41,8 @@ public class ExerciseDone {
     }
 
     @Ignore
-    public ExerciseDone(String exerciseTitle, int weightInKg, int reps) {
+    public ExerciseDone(long workoutId, String exerciseTitle, int weightInKg, int reps) {
+        this.workoutId = workoutId;
         this.exerciseTitle = exerciseTitle;
         this.weightInKg = weightInKg;
         this.reps = reps;

@@ -1,19 +1,27 @@
 package com.dimaoprog.sportsconnectivity.profileViews;
 
+import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Toast;
 
+import com.applandeo.materialcalendarview.EventDay;
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.databinding.DialogEditProfileBinding;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentProfileBinding;
 
 import java.util.List;
+
+import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
 
 public class ProfileFragment extends Fragment {
 
@@ -52,9 +60,38 @@ public class ProfileFragment extends Fragment {
             profileActionListener.openLoginFragment();
         });
         binding.btnShowMeasurementStatistics.setOnClickListener(v -> profileActionListener.openMeasurementGraphFragment());
-        binding.calendarView.setEvents(pViewModel.getEventDayList());
-        binding.btnDetailWorkoutStatistic.setOnClickListener(v -> binding.calendarView.setVisibility(rotate(v)));
+
+        binding.btnDetailWorkoutStatistic.setOnClickListener(v -> {
+            binding.calendarView.setVisibility(rotate(v));
+            binding.calendarView.setEvents(pViewModel.getEventDayList());
+            Log.d(LOG_MAIN, String.valueOf(pViewModel.getEventDayList().size()));
+
+        });
+        binding.btnEditProfile.setOnClickListener(__ -> showAddEditDialog());
         return binding.getRoot();
+    }
+
+    public void showAddEditDialog() {
+        pViewModel.setActiveUserDetails();
+        final Dialog dialogEditProfile = new Dialog(getContext());
+        dialogEditProfile.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DialogEditProfileBinding bindingEditProfile = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
+                R.layout.dialog_edit_profile, null, false);
+        dialogEditProfile.setContentView(bindingEditProfile.getRoot());
+        dialogEditProfile.setCanceledOnTouchOutside(true);
+        bindingEditProfile.setProfileModel(pViewModel);
+
+        bindingEditProfile.btnSave.setOnClickListener(__ -> {
+            if (pViewModel.isUserDetailsOk()) {
+                pViewModel.updateActiveUser();
+                dialogEditProfile.dismiss();
+                Toast.makeText(getContext(), "Profile details updated", Toast.LENGTH_SHORT).show();
+
+            } else {
+                Toast.makeText(getContext(), "You have invalid entities", Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialogEditProfile.show();
     }
 
     private int rotate(View view) {

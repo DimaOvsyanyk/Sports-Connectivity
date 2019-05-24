@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import type="com.dimaoprog.sportsconnectivity.Converter" />
 
         <variable
@@ -169,7 +171,8 @@
                 style="@android:style/Widget.Material.Button.Borderless.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/add_set" />
+                android:text="@string/add_set"
+                android:visibility="@{doExerciseModel.btnAddSetVisibility ? View.VISIBLE : View.GONE}" />
 
         </LinearLayout>
     </ScrollView>

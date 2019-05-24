@@ -59,13 +59,15 @@ public class Converter {
     }
 
     public static List<EventDay> workoutToEventList(List<Workout> workoutList) {
-        Calendar calendar = Calendar.getInstance();
-        List<EventDay> workoutEventList = new ArrayList<>();
-        for (int i = 0; i < workoutList.size(); i++) {
-            calendar.setTime(workoutList.get(i).getDateOfWorkout());
-            workoutEventList.add(new WorkoutEvent(calendar, workoutList.get(i).getWorkoutTitle(), workoutList.get(i).getId()));
+        if (workoutList != null) {
+            List<EventDay> workoutEventList = new ArrayList<>();
+            for (int i = 0; i < workoutList.size(); i++) {
+                workoutEventList.add(workoutToEvent(workoutList.get(i)));
+            }
+            return workoutEventList;
+        } else {
+            return null;
         }
-        return workoutEventList;
     }
 
 }

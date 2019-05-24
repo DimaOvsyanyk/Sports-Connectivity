@@ -17,6 +17,9 @@ public interface WorkoutDao {
     @Query("SELECT * FROM workouts WHERE user_id = :userId AND workout_done_flag = :workoutDoneFlag")
     LiveData<List<Workout>> getByUserId(long userId, int workoutDoneFlag);
 
+    @Query("SELECT * FROM workouts WHERE user_id = :userId AND workout_done_flag = :workoutDoneFlag")
+    List<Workout> getByUserIdStaticList(long userId, int workoutDoneFlag);
+
     @Query("SELECT * FROM workouts WHERE id = :id")
     Workout getById(long id);
 

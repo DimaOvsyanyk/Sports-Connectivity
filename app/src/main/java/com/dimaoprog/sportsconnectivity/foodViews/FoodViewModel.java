@@ -6,6 +6,7 @@ import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.dimaoprog.sportsconnectivity.dbEntities.DailyMenu;
 import com.dimaoprog.sportsconnectivity.dbEntities.Meal;
@@ -18,6 +19,8 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
 
 public class FoodViewModel extends AndroidViewModel{
 
@@ -58,18 +61,25 @@ public class FoodViewModel extends AndroidViewModel{
 
     public void addNewMenu(String[] foodIntakes, String[] daysOfWeek) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(foodRep.getLastMenu().getDateOfMenu());
+        calendar.setTime(getNextDate());
         int dayOfLastMenu = calendar.get(Calendar.DAY_OF_MONTH);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfLastMenu + 1);
-        int dayOfWeekNew = calendar.get(Calendar.DAY_OF_WEEK);
+        int dayOfWeekNew = calendar.get(Calendar.DAY_OF_WEEK) - 1;
         String[] meals = new String[] {breakfast, snackFirst, lunch, snackSecond, dinner};
-
         long menuId = foodRep.insert(new DailyMenu(User.getACTIVEUSER().getId(),
                 daysOfWeek[dayOfWeekNew], calendar.getTime()));
         for (int i = 0; i < foodIntakes.length; i++) {
             foodRep.insert(new Meal(menuId, foodIntakes[i], meals[i]));
         }
+    }
 
+    private Date getNextDate() {
+        if (foodRep.getLastMenu() != null) {
+            return foodRep.getLastMenu().getDateOfMenu();
+        } else {
+            Calendar calendar = Calendar.getInstance();
+            return calendar.getTime();
+        }
     }
 
     public String getBreakfast() {

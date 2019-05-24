@@ -76,11 +76,11 @@ public class FoodFragment extends Fragment {
             }
         }).attachToRecyclerView(binding.rvFoodList);
 
-        binding.fabAddFood.setOnClickListener(__ -> showAddExerciseDialog());
+        binding.fabAddFood.setOnClickListener(__ -> showAddMenuDialog());
         return binding.getRoot();
     }
 
-    public void showAddExerciseDialog() {
+    public void showAddMenuDialog() {
         final Dialog dialogAddMenu = new Dialog(getContext());
         dialogAddMenu.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DialogAddMenuBinding bindingAddMenu = DataBindingUtil.inflate(LayoutInflater.from(getContext()),

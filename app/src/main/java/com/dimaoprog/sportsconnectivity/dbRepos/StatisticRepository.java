@@ -18,7 +18,7 @@ public class StatisticRepository {
     private ExerciseDoneDao exerciseDoneDao;
     private WorkoutDao workoutDao;
 
-    private LiveData<List<Workout>> allDoneWorkouts;
+    private List<Workout> allDoneWorkouts;
 
     public StatisticRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
@@ -26,10 +26,10 @@ public class StatisticRepository {
         exerciseDoneDao = db.exerciseDoneDao();
         workoutDao = db.workoutDao();
 
-        allDoneWorkouts = workoutDao.getByUserId(User.getACTIVEUSER().getId(), WORKOUT_DONE);
+        allDoneWorkouts = workoutDao.getByUserIdStaticList(User.getACTIVEUSER().getId(), WORKOUT_DONE);
     }
 
-    public LiveData<List<Workout>> getAllDoneWorkouts() {
+    public List<Workout> getAllDoneWorkouts() {
         return allDoneWorkouts;
     }
 

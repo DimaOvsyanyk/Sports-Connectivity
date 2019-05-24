@@ -2,6 +2,7 @@ package com.dimaoprog.sportsconnectivity.workoutViews.doWorkout;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -23,12 +24,11 @@ public class DoExercisesViewModel extends AndroidViewModel {
     private ObservableInt tempWeight = new ObservableInt();
     private ObservableInt tempReps = new ObservableInt();
     private ObservableInt currentSet = new ObservableInt();
-
+    private ObservableBoolean btnAddSetVisibility = new ObservableBoolean();
 
     public DoExercisesViewModel(@NonNull Application application) {
         super(application);
         workoutsRepo = new WorkoutsRepository(application);
-        setCurrentSet();
     }
 
     public Exercise getExerciseToDo() {
@@ -37,6 +37,8 @@ public class DoExercisesViewModel extends AndroidViewModel {
 
     public void setExerciseToDo(long workoutId, int exercisePosition) {
         exerciseToDo = workoutsRepo.getAllExercisesStaticList(workoutId).get(exercisePosition);
+        setCurrentSet();
+        setBtnAddSetVisibility();
     }
 
     public ObservableInt getTempWeight() {
@@ -68,14 +70,27 @@ public class DoExercisesViewModel extends AndroidViewModel {
     }
 
     public void setCurrentSet() {
-        this.currentSet.set(tempExerciseDoneList.size() + 1);
+        if (exerciseToDo.getRounds() == currentSet.get()) {
+            currentSet.set(tempExerciseDoneList.size());
+        } else {
+            currentSet.set(tempExerciseDoneList.size() + 1);
+        }
     }
 
     public void addExerciseToDoneList() {
-        ExerciseDone exerciseDone = new ExerciseDone(exerciseToDo.getExerciseTitle(), tempWeight.get(), tempReps.get());
+        ExerciseDone exerciseDone = new ExerciseDone(exerciseToDo.getWorkoutId(), exerciseToDo.getExerciseTitle(), tempWeight.get(), tempReps.get());
         tempExerciseDoneList.add(exerciseDone);
         tempWeight.set(0);
         tempReps.set(0);
         setCurrentSet();
+        setBtnAddSetVisibility();
+    }
+
+    public ObservableBoolean getBtnAddSetVisibility() {
+        return btnAddSetVisibility;
+    }
+
+    public void setBtnAddSetVisibility() {
+        btnAddSetVisibility.set(!(tempExerciseDoneList.size() == exerciseToDo.getRounds()));
     }
 }

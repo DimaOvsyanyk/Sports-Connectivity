@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="doWorkoutModel"
+            type="com.dimaoprog.sportsconnectivity.workoutViews.doWorkout.DoWorkoutViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".workoutViews.doWorkout.DoWorkoutFragment">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/workout_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <android.support.v4.view.PagerTitleStrip
                 android:id="@+id/workout_pager_title_strip"
@@ -18,5 +29,13 @@
                 android:layout_height="wrap_content" />
         </android.support.v4.view.ViewPager>
 
-    </FrameLayout>
+        <Button
+            android:id="@+id/btn_post_workout"
+            style="@android:style/Widget.Material.Button.Borderless.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:text="@string/post_workout"
+            android:visibility="@{doWorkoutModel.btnPostVisibility ? View.VISIBLE : View.GONE}" />
+    </LinearLayout>
 </layout>

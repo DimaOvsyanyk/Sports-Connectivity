@@ -85,13 +85,13 @@
                     <com.applandeo.materialcalendarview.CalendarView
                         android:id="@+id/calendar_view"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/margin_s"
-                        android:layout_height="450dp"
+                        android:layout_height="500dp"
                         android:layout_below="@id/btn_detail_workout_statistic"
+                        android:layout_marginTop="@dimen/margin_s"
                         android:textSize="12sp"
+                        android:visibility="gone"
                         app:headerColor="@color/colorPrimary"
-                        app:todayLabelColor="@color/colorPrimaryDark"
-                        android:visibility="gone" />
+                        app:todayLabelColor="@color/colorPrimaryDark" />
 
                 </RelativeLayout>
 
@@ -120,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_m"
                         android:checked="@{profileModel.enableWorkoutReminder}"
-                        android:onCheckedChanged="@{(button, bool) -> profileModel.turnOnWorkoutReminder(bool)}"/>
+                        android:onCheckedChanged="@{(button, bool) -> profileModel.turnOnWorkoutReminder(bool)}" />
 
                 </LinearLayout>
 
