@@ -3,11 +3,12 @@ package com.dimaoprog.sportsconnectivity.profileViews;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-import android.util.Log;
+import android.support.annotation.Nullable;
 
 import com.applandeo.materialcalendarview.EventDay;
 import com.dimaoprog.sportsconnectivity.Converter;
@@ -18,11 +19,10 @@ import com.dimaoprog.sportsconnectivity.dbRepos.StatisticRepository;
 import com.dimaoprog.sportsconnectivity.dbRepos.UserRepository;
 import com.dimaoprog.sportsconnectivity.notification.NotificationHelper;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.dimaoprog.sportsconnectivity.Constants.FEMALE;
-import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
 import static com.dimaoprog.sportsconnectivity.Constants.MALE;
 import static com.dimaoprog.sportsconnectivity.Constants.NOTSTAY;
 import static com.dimaoprog.sportsconnectivity.Constants.STAY;
@@ -31,7 +31,8 @@ public class ProfileViewModel extends AndroidViewModel {
 
     private UserRepository userRepo;
     private StatisticRepository statisticRepo;
-    private UserMeasurements lastMeasurement;
+    private Date lastMeasurementDate;
+    private LiveData<Date> lastMeasurement;
     private ObservableBoolean enableWorkoutReminder = new ObservableBoolean();
     private Context appContext;
     private List<EventDay> eventDayList;
@@ -50,12 +51,21 @@ public class ProfileViewModel extends AndroidViewModel {
         super(application);
         userRepo = new UserRepository(application);
         statisticRepo = new StatisticRepository(application);
-        lastMeasurement = statisticRepo.getLastUserMeasurementById();
+        lastMeasurement = statisticRepo.getLastUserMeasurement();
         appContext = application.getApplicationContext();
         enableWorkoutReminder.set(NotificationHelper.isAlarmManagerWorkoutOn());
         allDoneWorkouts = statisticRepo.getAllDoneWorkouts();
         eventDayList = Converter.workoutToEventList(allDoneWorkouts);
         setNameSurname();
+
+    }
+
+    public Date getLastMeasurementDate() {
+        return lastMeasurementDate;
+    }
+
+    public void setLastMeasurementDate(Date lastMeasurementDate) {
+        this.lastMeasurementDate = lastMeasurementDate;
     }
 
     public List<Workout> getAllDoneWorkouts() {
@@ -127,12 +137,8 @@ public class ProfileViewModel extends AndroidViewModel {
         }
     }
 
-    public UserMeasurements getLastMeasurement() {
+    public LiveData<Date> getLastMeasurement() {
         return lastMeasurement;
-    }
-
-    public void setLastMeasurement(UserMeasurements lastMeasurement) {
-        this.lastMeasurement = lastMeasurement;
     }
 
     public void updateActiveUser() {

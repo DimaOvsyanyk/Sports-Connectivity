@@ -2,9 +2,9 @@ package com.dimaoprog.sportsconnectivity.profileViews;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
 import android.databinding.ObservableDouble;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.dimaoprog.sportsconnectivity.dbEntities.User;
 import com.dimaoprog.sportsconnectivity.dbEntities.UserMeasurements;
@@ -14,8 +14,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
-
-import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
 
 public class AddMeasurementsViewModel extends AndroidViewModel {
 
@@ -60,7 +58,7 @@ public class AddMeasurementsViewModel extends AndroidViewModel {
     }
 
     public UserMeasurements getLastMeasurement() {
-        return statisticRepository.getLastUserMeasurementById();
+        return statisticRepository.getLastUserMeasurementStatic();
     }
 
     public void calculateFatBMI() {

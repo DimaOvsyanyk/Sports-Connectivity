@@ -1,6 +1,7 @@
 package com.dimaoprog.sportsconnectivity.profileViews;
 
 import android.app.Dialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -18,7 +19,9 @@ import com.applandeo.materialcalendarview.EventDay;
 import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.databinding.DialogEditProfileBinding;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentProfileBinding;
+import com.dimaoprog.sportsconnectivity.dbEntities.UserMeasurements;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
@@ -53,6 +56,7 @@ public class ProfileFragment extends Fragment {
         FragmentProfileBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_profile, container, false);
         pViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
+        pViewModel.getLastMeasurement().observe(this, date -> binding.setLastDate(date));
         binding.setProfileModel(pViewModel);
         binding.btnAddNewMeasurements.setOnClickListener(__ -> profileActionListener.openAddMeasurementFragment());
         binding.btnLogoff.setOnClickListener(__ -> {

@@ -6,6 +6,10 @@
         <import type="com.dimaoprog.sportsconnectivity.Converter" />
 
         <variable
+            name="lastDate"
+            type="java.util.Date"/>
+
+        <variable
             name="profileModel"
             type="com.dimaoprog.sportsconnectivity.profileViews.ProfileViewModel" />
     </data>
@@ -147,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_xs"
                         android:layout_weight="1"
-                        android:text="@{Converter.dateToString(profileModel.lastMeasurement.dateOfMeasurement)}"
+                        android:text="@{Converter.dateToString(lastDate)}"
                         tools:text="22.04.2019" />
 
                     <Button
