@@ -7,21 +7,18 @@ import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.databinding.ItemMealdbBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDBFavorite;
 
 public class MyReceiptsListAdapter extends ListAdapter<MealDBFavorite, MyReceiptsListViewHolder> {
 
-    private IFavoriteReceiptPickedListener iFavoriteReceiptPickedListener;
+    private FragmentNaviManager navigation;
 
-    public interface IFavoriteReceiptPickedListener {
-        void openMyReceiptDetailFragment(long id);
-    }
-
-    protected MyReceiptsListAdapter(IFavoriteReceiptPickedListener iFavoriteReceiptPickedListener) {
+    protected MyReceiptsListAdapter(FragmentNaviManager navigation) {
         super(DIFF_CALLBACK);
-        this.iFavoriteReceiptPickedListener = iFavoriteReceiptPickedListener;
+        this.navigation = navigation;
     }
 
     private static final DiffUtil.ItemCallback<MealDBFavorite> DIFF_CALLBACK = new DiffUtil.ItemCallback<MealDBFavorite>() {
@@ -46,7 +43,7 @@ public class MyReceiptsListAdapter extends ListAdapter<MealDBFavorite, MyReceipt
 
     @Override
     public void onBindViewHolder(@NonNull MyReceiptsListViewHolder myReceiptsListViewHolder, int i) {
-        myReceiptsListViewHolder.bind(getItem(i), iFavoriteReceiptPickedListener);
+        myReceiptsListViewHolder.bind(getItem(i), navigation);
     }
 
     public MealDBFavorite getMealAtPos(int position) {

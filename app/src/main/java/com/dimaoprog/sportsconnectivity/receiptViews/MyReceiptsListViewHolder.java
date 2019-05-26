@@ -3,6 +3,7 @@ package com.dimaoprog.sportsconnectivity.receiptViews;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.databinding.ItemMealdbBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDB;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDBFavorite;
@@ -16,9 +17,8 @@ public class MyReceiptsListViewHolder extends RecyclerView.ViewHolder {
         this.binding = binding;
     }
 
-    public void bind(MealDBFavorite mealDBFavorite,
-                     MyReceiptsListAdapter.IFavoriteReceiptPickedListener iFavoriteReceiptPickedListener) {
+    public void bind(MealDBFavorite mealDBFavorite, FragmentNaviManager navigation) {
         binding.setMealDB(new MealDB(mealDBFavorite));
-        itemView.setOnClickListener(__ -> iFavoriteReceiptPickedListener.openMyReceiptDetailFragment(mealDBFavorite.getIdMeal()));
+        itemView.setOnClickListener(__ -> navigation.showNewFragment(MyReceiptDetailFragment.newInstance(mealDBFavorite.getIdMeal())));
     }
 }

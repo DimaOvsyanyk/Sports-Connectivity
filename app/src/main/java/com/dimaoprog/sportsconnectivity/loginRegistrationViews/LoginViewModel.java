@@ -11,7 +11,6 @@ import static com.dimaoprog.sportsconnectivity.Constants.STAY;
 
 public class LoginViewModel extends AndroidViewModel {
 
-    private LoginFragment.OnPressedButtonListener onPressedButtonListener;
     private UserRepository userRepo;
     private String email;
     private String pass;
@@ -47,14 +46,6 @@ public class LoginViewModel extends AndroidViewModel {
             User.setACTIVEUSER(tempUser);
             return true;
         }
-    }
-
-    public void setOnPressedButtonListener(LoginFragment.OnPressedButtonListener onPressedButtonListener) {
-        this.onPressedButtonListener = onPressedButtonListener;
-    }
-
-    public void register() {
-        onPressedButtonListener.onRegisterClick();
     }
 
     public String getEmail() {

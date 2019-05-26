@@ -7,21 +7,18 @@ import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.databinding.ItemWorkoutBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
 
 public class WorkoutsListAdapter extends ListAdapter<Workout, WorkoutsListViewHolder> {
 
-    public interface IDetailWorkoutListener {
-        void openDetailWorkoutFragment(long workoutId);
-    }
+    private FragmentNaviManager navigation;
 
-    private IDetailWorkoutListener detailListener;
-
-    public WorkoutsListAdapter(IDetailWorkoutListener detailListener) {
+    public WorkoutsListAdapter(FragmentNaviManager navigation) {
         super(DIFF_CALLBACK);
-        this.detailListener = detailListener;
+        this.navigation = navigation;
     }
 
     private static final DiffUtil.ItemCallback<Workout> DIFF_CALLBACK = new DiffUtil.ItemCallback<Workout>() {
@@ -47,7 +44,7 @@ public class WorkoutsListAdapter extends ListAdapter<Workout, WorkoutsListViewHo
 
     @Override
     public void onBindViewHolder(@NonNull WorkoutsListViewHolder workoutsListViewHolder, int i) {
-        workoutsListViewHolder.bind(getItem(i), detailListener);
+        workoutsListViewHolder.bind(getItem(i), navigation);
     }
 
     public Workout getWorkoutAtPos(int position) {

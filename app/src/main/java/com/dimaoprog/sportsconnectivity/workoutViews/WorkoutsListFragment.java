@@ -12,37 +12,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentWorkoutsListBinding;
 
 import org.json.JSONException;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
 public class WorkoutsListFragment extends Fragment {
 
-    WorkoutsListAdapter.IDetailWorkoutListener detailListener;
-    AddListener addListener;
-
-    public static WorkoutsListFragment newInstance(WorkoutsListAdapter.IDetailWorkoutListener detailListener,
-                                                   AddListener addListener) {
-        WorkoutsListFragment fragment = new WorkoutsListFragment();
-        fragment.setDetailListener(detailListener);
-        fragment.setAddListener(addListener);
-        return fragment;
-    }
-
-    public void setDetailListener(WorkoutsListAdapter.IDetailWorkoutListener detailListener) {
-        this.detailListener = detailListener;
-    }
-
-    public interface AddListener {
-        void openWorkoutAddFragment();
-    }
-
-    public void setAddListener(AddListener addListener) {
-        this.addListener = addListener;
-    }
+    @Inject
+    FragmentNaviManager navigation;
 
     private WorkoutsListViewModel wlViewModel;
 
@@ -50,7 +34,8 @@ public class WorkoutsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentWorkoutsListBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_workouts_list, container, false);
-        final WorkoutsListAdapter workoutsListAdapter = new WorkoutsListAdapter(detailListener);
+        AppComponentBuild.getComponent().inject(this);
+        final WorkoutsListAdapter workoutsListAdapter = new WorkoutsListAdapter(navigation);
         binding.rvWorkoutsList.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvWorkoutsList.setAdapter(workoutsListAdapter);
 
@@ -78,7 +63,7 @@ public class WorkoutsListFragment extends Fragment {
                 wlViewModel.delete(workoutsListAdapter.getWorkoutAtPos(viewHolder.getAdapterPosition()));
             }
         }).attachToRecyclerView(binding.rvWorkoutsList);
-        binding.fabAdd.setOnClickListener(v -> addListener.openWorkoutAddFragment());
+        binding.fabAdd.setOnClickListener(v -> navigation.showNewFragment(new WorkoutAddFragment()));
         return binding.getRoot();
     }
 }

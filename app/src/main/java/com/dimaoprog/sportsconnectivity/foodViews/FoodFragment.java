@@ -18,7 +18,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
 import com.dimaoprog.sportsconnectivity.databinding.DialogAddMenuBinding;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentFoodBinding;
 
@@ -26,20 +28,12 @@ import org.json.JSONException;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
 public class FoodFragment extends Fragment {
 
-    FoodListAdapter.DetailFoodListener detailFoodListener;
-
-    public static FoodFragment newInstance(FoodListAdapter.DetailFoodListener detailFoodListener) {
-        FoodFragment fragment = new FoodFragment();
-        fragment.setDetailFoodListener(detailFoodListener);
-        return fragment;
-    }
-
-    public void setDetailFoodListener(FoodListAdapter.DetailFoodListener detailFoodListener) {
-        this.detailFoodListener = detailFoodListener;
-    }
-
+    @Inject
+    FragmentNaviManager navigation;
     private FoodViewModel fViewModel;
 
     @Override
@@ -47,9 +41,10 @@ public class FoodFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         FragmentFoodBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_food, container, false);
+        AppComponentBuild.getComponent().inject(this);
 
         binding.rvFoodList.setLayoutManager(new LinearLayoutManager(getContext()));
-        final FoodListAdapter foodAdapter = new FoodListAdapter(detailFoodListener);
+        final FoodListAdapter foodAdapter = new FoodListAdapter(navigation);
         binding.rvFoodList.setAdapter(foodAdapter);
 
         fViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);

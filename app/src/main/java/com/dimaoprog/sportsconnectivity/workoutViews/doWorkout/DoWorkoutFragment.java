@@ -50,6 +50,7 @@ public class DoWorkoutFragment extends Fragment implements DoExercisePagerAdapte
         binding.btnPostWorkout.setOnClickListener(v -> {
             dwViewModel.postDoneWorkout(pagerAdapter.getAllExercisesDoneLists());
             Toast.makeText(getContext(), "Workout done!", Toast.LENGTH_SHORT).show();
+            binding.btnPostWorkout.setVisibility(View.GONE);
         });
 
         return binding.getRoot();

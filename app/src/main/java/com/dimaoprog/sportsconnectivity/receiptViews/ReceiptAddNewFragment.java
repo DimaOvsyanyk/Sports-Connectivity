@@ -14,26 +14,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentReceiptAddNewBinding;
+
+import javax.inject.Inject;
 
 public class ReceiptAddNewFragment extends Fragment {
 
-    public static ReceiptAddNewFragment newInstance(ReceiptListAdapter.IReceiptPickedListener iReceiptPickedListener) {
-
-        Bundle args = new Bundle();
-
-        ReceiptAddNewFragment fragment = new ReceiptAddNewFragment();
-        fragment.setIReceiptPickedListener(iReceiptPickedListener);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    private ReceiptListAdapter.IReceiptPickedListener iReceiptPickedListener;
-
-    public void setIReceiptPickedListener(ReceiptListAdapter.IReceiptPickedListener iReceiptPickedListener) {
-        this.iReceiptPickedListener = iReceiptPickedListener;
-    }
+    @Inject
+    FragmentNaviManager navigation;
 
     private FragmentReceiptAddNewBinding binding;
     private ReceiptAddNewViewModel ranViewModel;
@@ -42,6 +33,7 @@ public class ReceiptAddNewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_receipt_add_new, container, false);
+        AppComponentBuild.getComponent().inject(this);
         ranViewModel = ViewModelProviders.of(this).get(ReceiptAddNewViewModel.class);
         setupProgressDialog();
         ranViewModel.getShowDialogLive().observe(this, show -> showProgressDialog(show));
@@ -65,7 +57,7 @@ public class ReceiptAddNewFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        ReceiptListAdapter adapter = new ReceiptListAdapter(iReceiptPickedListener);
+        ReceiptListAdapter adapter = new ReceiptListAdapter(navigation);
         binding.rvReceipts.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvReceipts.setAdapter(adapter);
         ranViewModel.getMealDBLiveList().observe(this, mealDBList -> adapter.submitList(mealDBList));
@@ -88,9 +80,4 @@ public class ReceiptAddNewFragment extends Fragment {
             }
         });
     }
-
-    private void progressDialog() {
-
-    }
-
 }

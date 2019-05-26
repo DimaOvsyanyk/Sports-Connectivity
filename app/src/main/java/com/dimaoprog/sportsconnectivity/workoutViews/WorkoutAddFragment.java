@@ -23,30 +23,21 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentWorkoutAddBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
 
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.AddNewExerciseListener {
 
-    public static WorkoutAddFragment newInstance(AddWorkoutListener addWorkoutListener) {
-        WorkoutAddFragment fragment = new WorkoutAddFragment();
-        fragment.setAddWorkoutListener(addWorkoutListener);
-        return fragment;
-    }
-
-    private AddWorkoutListener addWorkoutListener;
-
-    public interface AddWorkoutListener {
-        void openWorkoutsListFragment();
-    }
-
-    public void setAddWorkoutListener(AddWorkoutListener addWorkoutListener) {
-        this.addWorkoutListener = addWorkoutListener;
-    }
+    @Inject
+    FragmentNaviManager navigation;
 
     private WorkoutAddViewModel waViewModel;
     private FragmentWorkoutAddBinding binding;
@@ -57,6 +48,8 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_add, container, false);
+        AppComponentBuild.getComponent().inject(this);
+
         waViewModel = ViewModelProviders.of(this).get(WorkoutAddViewModel.class);
         binding.setWorkoutAddModel(waViewModel);
         binding.rvExercises.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -84,7 +77,7 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
         binding.btnConfirmAdd.setOnClickListener(__ -> {
             if (waViewModel.checkAllEntities()) {
                 waViewModel.addWorkoutAndExercisesToDb();
-                addWorkoutListener.openWorkoutsListFragment();
+                navigation.showNewFragment(new WorkoutsListFragment());
             } else {
                 Toast.makeText(getContext(), "You should fill all fields", Toast.LENGTH_SHORT).show();
             }

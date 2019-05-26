@@ -11,44 +11,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentDetailWorkoutBinding;
+import com.dimaoprog.sportsconnectivity.workoutViews.doWorkout.DoWorkoutFragment;
+
+import javax.inject.Inject;
 
 import static com.dimaoprog.sportsconnectivity.Constants.WORKOUT_ID;
 
 public class DetailWorkoutFragment extends Fragment {
 
-    public static DetailWorkoutFragment newInstance(long workoutId, StartWorkoutListener startWorkoutListener) {
+    public static DetailWorkoutFragment newInstance(long workoutId) {
         Bundle args = new Bundle();
         args.putLong(WORKOUT_ID, workoutId);
         DetailWorkoutFragment fragment = new DetailWorkoutFragment();
         fragment.setArguments(args);
-        fragment.setStartWorkoutListener(startWorkoutListener);
         return fragment;
-    }
-
-    StartWorkoutListener startWorkoutListener;
-
-    public interface StartWorkoutListener {
-        void openDoWorkoutFragment(long workoutId);
-    }
-
-    public void setStartWorkoutListener(StartWorkoutListener startWorkoutListener) {
-        this.startWorkoutListener = startWorkoutListener;
     }
 
     private DetailWorkoutViewModel dwViewModel;
     private FragmentDetailWorkoutBinding binding;
 
+    @Inject
+    FragmentNaviManager navigation;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_workout, container, false);
+        AppComponentBuild.getComponent().inject(this);
 
         dwViewModel = ViewModelProviders.of(this).get(DetailWorkoutViewModel.class);
         dwViewModel.setWorkoutId(getArguments().getLong(WORKOUT_ID, -1));
         binding.setDetailWorkoutModel(dwViewModel);
-        binding.btnStartWorkout.setOnClickListener(__ -> startWorkoutListener.openDoWorkoutFragment(dwViewModel.getWorkoutId()));
+        binding.btnStartWorkout.setOnClickListener(__ -> navigation.showNewFragment(DoWorkoutFragment.newInstance(dwViewModel.getWorkoutId())));
         return binding.getRoot();
     }
 

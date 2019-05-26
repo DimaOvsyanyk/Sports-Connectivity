@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.databinding.ItemDayMenuBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.DailyMenu;
 
@@ -16,8 +17,8 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
         this.binding = binding;
     }
 
-    public void bind(final DailyMenu dailyMenu, final FoodListAdapter.DetailFoodListener detailFoodListener) {
+    public void bind(final DailyMenu dailyMenu, FragmentNaviManager navigation) {
         binding.setDailyMenu(dailyMenu);
-        itemView.setOnClickListener(__ -> detailFoodListener.openDetailFoodFragment(dailyMenu.getId()));
+        itemView.setOnClickListener(__ -> navigation.showNewFragment(DetailFoodFragment.newInstance(dailyMenu.getId())));
     }
 }

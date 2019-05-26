@@ -7,21 +7,18 @@ import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.databinding.ItemDayMenuBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.DailyMenu;
 
 public class FoodListAdapter extends ListAdapter<DailyMenu, FoodViewHolder> {
 
-    private DetailFoodListener detailFoodListener;
+    private FragmentNaviManager navigation;
 
-    public interface DetailFoodListener {
-        void openDetailFoodFragment(long workoutId);
-    }
-
-    protected FoodListAdapter(DetailFoodListener detailFoodListener) {
+    protected FoodListAdapter(FragmentNaviManager navigation) {
         super(DIFF_CALLBACK);
-        this.detailFoodListener = detailFoodListener;
+        this.navigation = navigation;
     }
 
     private static final DiffUtil.ItemCallback<DailyMenu> DIFF_CALLBACK = new DiffUtil.ItemCallback<DailyMenu>() {
@@ -46,7 +43,7 @@ public class FoodListAdapter extends ListAdapter<DailyMenu, FoodViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder foodViewHolder, int i) {
-        foodViewHolder.bind(getItem(i), detailFoodListener);
+        foodViewHolder.bind(getItem(i), navigation);
     }
 
     public DailyMenu getMenuAtPos(int position) {

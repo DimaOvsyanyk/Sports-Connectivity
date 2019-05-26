@@ -12,34 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentMyReceiptsBinding;
+
+import javax.inject.Inject;
 
 public class MyReceiptsFragment extends Fragment {
 
-    private MyReceiptsListAdapter.IFavoriteReceiptPickedListener iFavoriteReceiptPickedListener;
-
-    public static MyReceiptsFragment newInstance(MyReceiptsListAdapter.IFavoriteReceiptPickedListener iFavoriteReceiptPickedListener,
-                                                 WantToAddNewReceiptListener wantToAddNewReceiptListener) {
-        MyReceiptsFragment fragment = new MyReceiptsFragment();
-        fragment.setIFavoriteReceiptPickedListener(iFavoriteReceiptPickedListener);
-        fragment.setWantToAddNewReceiptListener(wantToAddNewReceiptListener);
-        return fragment;
-    }
-
-    public void setIFavoriteReceiptPickedListener(MyReceiptsListAdapter.IFavoriteReceiptPickedListener iFavoriteReceiptPickedListener) {
-        this.iFavoriteReceiptPickedListener = iFavoriteReceiptPickedListener;
-    }
-
-    private WantToAddNewReceiptListener wantToAddNewReceiptListener;
-
-    public interface WantToAddNewReceiptListener {
-        void openReceiptAddNewFragment();
-    }
-
-    public void setWantToAddNewReceiptListener(WantToAddNewReceiptListener wantToAddNewReceiptListener) {
-        this.wantToAddNewReceiptListener = wantToAddNewReceiptListener;
-    }
+    @Inject
+    FragmentNaviManager navigation;
 
     private FragmentMyReceiptsBinding binding;
     private MyReceiptsViewModel myrViewModel;
@@ -49,6 +32,7 @@ public class MyReceiptsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_receipts, container, false);
+        AppComponentBuild.getComponent().inject(this);
         myrViewModel = ViewModelProviders.of(this).get(MyReceiptsViewModel.class);
         setupRecyclerView();
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -63,12 +47,12 @@ public class MyReceiptsFragment extends Fragment {
             }
         }).attachToRecyclerView(binding.rvMyReceipts);
 
-        binding.fabAddReceipt.setOnClickListener(__ -> wantToAddNewReceiptListener.openReceiptAddNewFragment());
+        binding.fabAddReceipt.setOnClickListener(__ -> navigation.showNewFragment(new ReceiptAddNewFragment()));
         return binding.getRoot();
     }
 
     private void setupRecyclerView() {
-        adapter = new MyReceiptsListAdapter(iFavoriteReceiptPickedListener);
+        adapter = new MyReceiptsListAdapter(navigation);
         binding.rvMyReceipts.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvMyReceipts.setAdapter(adapter);
         myrViewModel.getMealDBFavoritesList().observe(this, mealDBFavorites -> adapter.submitList(mealDBFavorites));

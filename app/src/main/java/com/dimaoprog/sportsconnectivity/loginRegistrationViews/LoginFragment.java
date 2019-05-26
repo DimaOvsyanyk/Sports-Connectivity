@@ -8,43 +8,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentLoginBinding;
+import com.dimaoprog.sportsconnectivity.profileViews.ProfileFragment;
+
+import javax.inject.Inject;
 
 public class LoginFragment extends Fragment {
 
-    OnPressedButtonListener pressedEvent;
-
-    public void setOnPressedButtonListener(OnPressedButtonListener pressedEvent) {
-        this.pressedEvent = pressedEvent;
-    }
-
-    public interface OnPressedButtonListener {
-        void onLoginClick();
-
-        void onRegisterClick();
-    }
-
-    public static LoginFragment newInstance(OnPressedButtonListener pressedEvent) {
-        LoginFragment fragment = new LoginFragment();
-        fragment.setOnPressedButtonListener(pressedEvent);
-        return fragment;
-    }
-
-    LoginViewModel lViewModel;
+    @Inject
+    FragmentNaviManager navigation;
+    private LoginViewModel lViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final FragmentLoginBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_login, container, false);
-        View v = binding.getRoot();
+        AppComponentBuild.getComponent().inject(this);
         lViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-        lViewModel.setOnPressedButtonListener(pressedEvent);
         binding.setLoginmodel(lViewModel);
+        binding.btnRegister.setOnClickListener(v -> navigation.showNewFragment(new RegistrationFragment()));
         binding.btnLogin.setOnClickListener(__ -> {
             if (lViewModel.checkUser()) {
-                pressedEvent.onLoginClick();
+                navigation.showNewFragment(new ProfileFragment());
+
             } else {
                 if (lViewModel.isEmailOk()) {
                     binding.etEMail.setError("invalid e-mail");
@@ -54,6 +44,6 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
-        return v;
+        return binding.getRoot();
     }
 }

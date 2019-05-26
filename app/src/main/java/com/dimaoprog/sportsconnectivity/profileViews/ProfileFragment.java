@@ -1,75 +1,56 @@
 package com.dimaoprog.sportsconnectivity.profileViews;
 
 import android.app.Dialog;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Toast;
 
-import com.applandeo.materialcalendarview.EventDay;
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.R;
+import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
 import com.dimaoprog.sportsconnectivity.databinding.DialogEditProfileBinding;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentProfileBinding;
-import com.dimaoprog.sportsconnectivity.dbEntities.UserMeasurements;
+import com.dimaoprog.sportsconnectivity.loginRegistrationViews.LoginFragment;
 
-import java.util.Date;
-import java.util.List;
-
-import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
+import javax.inject.Inject;
 
 public class ProfileFragment extends Fragment {
 
-    ProfileActionListener profileActionListener;
-
-    public static ProfileFragment newInstance(ProfileActionListener profileActionListener) {
-        ProfileFragment fragment = new ProfileFragment();
-        fragment.setProfileActionListener(profileActionListener);
-        return fragment;
-    }
-
-    public void setProfileActionListener(ProfileActionListener profileActionListener) {
-        this.profileActionListener = profileActionListener;
-    }
-
-    public interface ProfileActionListener {
-        void openLoginFragment();
-
-        void openAddMeasurementFragment();
-
-        void openMeasurementGraphFragment();
-    }
-
     private ProfileViewModel pViewModel;
+
+    @Inject
+    FragmentNaviManager navigation;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         FragmentProfileBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_profile, container, false);
+        AppComponentBuild.getComponent().inject(this);
         pViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
         pViewModel.getLastMeasurement().observe(this, date -> binding.setLastDate(date));
         binding.setProfileModel(pViewModel);
-        binding.btnAddNewMeasurements.setOnClickListener(__ -> profileActionListener.openAddMeasurementFragment());
+
+        binding.btnAddNewMeasurements.setOnClickListener(__ -> navigation.showNewFragment(new AddMeasurementsFragment()));
+
         binding.btnLogoff.setOnClickListener(__ -> {
             pViewModel.logoffAction();
-            profileActionListener.openLoginFragment();
+            navigation.showNewFragment(new LoginFragment());
         });
-        binding.btnShowMeasurementStatistics.setOnClickListener(v -> profileActionListener.openMeasurementGraphFragment());
+
+        binding.btnShowMeasurementStatistics.setOnClickListener(v -> navigation.showNewFragment(new MeasurementGraphFragment()));
 
         binding.btnDetailWorkoutStatistic.setOnClickListener(v -> {
             binding.calendarView.setVisibility(rotate(v));
             binding.calendarView.setEvents(pViewModel.getEventDayList());
-            Log.d(LOG_MAIN, String.valueOf(pViewModel.getEventDayList().size()));
-
         });
         binding.btnEditProfile.setOnClickListener(__ -> showAddEditDialog());
         return binding.getRoot();

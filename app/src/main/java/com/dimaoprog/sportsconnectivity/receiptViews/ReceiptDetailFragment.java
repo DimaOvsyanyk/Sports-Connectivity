@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentReceiptDetailBinding;
 
+import java.util.Objects;
+
 public class ReceiptDetailFragment extends Fragment {
 
     private static final String MEAL_DB_ID = "mealDBid";
@@ -49,6 +51,7 @@ public class ReceiptDetailFragment extends Fragment {
             if (rdViewModel.saveMealDBtoFavorite()) {
                 Toast.makeText(getContext(), "Receipt " + rdViewModel.getCurrentMealDB().getStrMeal() +
                         " added", Toast.LENGTH_SHORT).show();
+                Objects.requireNonNull(getActivity()).onBackPressed();
             } else {
                 Toast.makeText(getContext(), "Receipt " + rdViewModel.getCurrentMealDB().getStrMeal() +
                         " already in your favorites", Toast.LENGTH_SHORT).show();

@@ -12,30 +12,15 @@ import android.widget.Toast;
 import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentRegistrationBinding;
 
+import java.util.Objects;
+
 public class RegistrationFragment extends Fragment {
 
-    RegistrationCompleteListener registrationCompleteListener;
-
-    public void setRegistrationCompleteListener(RegistrationCompleteListener registrationCompleteListener) {
-        this.registrationCompleteListener = registrationCompleteListener;
-    }
-
-    public interface RegistrationCompleteListener {
-        void openLoginFragment();
-    }
-
-    public static RegistrationFragment newInstance(RegistrationCompleteListener registrationCompleteListener) {
-        RegistrationFragment fragment = new RegistrationFragment();
-        fragment.setRegistrationCompleteListener(registrationCompleteListener);
-        return fragment;
-    }
-
-    RegistrationViewModel rViewModel;
-    FragmentRegistrationBinding binding;
+    private RegistrationViewModel rViewModel;
+    private FragmentRegistrationBinding binding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registration, container, false);
         View v = binding.getRoot();
         rViewModel = ViewModelProviders.of(this).get(RegistrationViewModel.class);
@@ -43,7 +28,8 @@ public class RegistrationFragment extends Fragment {
         binding.btnConfirm.setOnClickListener(__ -> {
             if (rViewModel.isInPutOK()) {
                 if (rViewModel.addUserToBD()) {
-                    registrationCompleteListener.openLoginFragment();
+                    Toast.makeText(getContext(), "New user created", Toast.LENGTH_SHORT).show();
+                    Objects.requireNonNull(getActivity()).onBackPressed();
                 } else {
                     binding.etEMail.setError("This e-mail already exist");
                 }

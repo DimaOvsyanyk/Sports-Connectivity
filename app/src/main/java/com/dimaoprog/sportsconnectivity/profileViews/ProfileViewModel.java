@@ -104,6 +104,7 @@ public class ProfileViewModel extends AndroidViewModel {
             User.getACTIVEUSER().setStayInSystem(NOTSTAY);
             update(User.getACTIVEUSER());
         }
+        User.setACTIVEUSER(null);
     }
 
     public ObservableField<String> getNameSurname() {

@@ -7,22 +7,18 @@ import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.databinding.ItemMealdbBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDB;
 
 public class ReceiptListAdapter extends ListAdapter<MealDB, ReceiptListViewHolder> {
 
-    private IReceiptPickedListener iReceiptPickedListener;
+    private FragmentNaviManager navigation;
 
-    public interface IReceiptPickedListener {
-        void openReceiptDetailFragment(String id);
-    }
-
-
-    protected ReceiptListAdapter(IReceiptPickedListener iReceiptPickedListener) {
+    protected ReceiptListAdapter(FragmentNaviManager navigation) {
         super(DIFF_CALLBACK);
-        this.iReceiptPickedListener = iReceiptPickedListener;
+        this.navigation = navigation;
     }
 
     private static final DiffUtil.ItemCallback<MealDB> DIFF_CALLBACK = new DiffUtil.ItemCallback<MealDB>() {
@@ -46,7 +42,7 @@ public class ReceiptListAdapter extends ListAdapter<MealDB, ReceiptListViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull ReceiptListViewHolder receiptListViewHolder, int i) {
-        receiptListViewHolder.bind(getItem(i), iReceiptPickedListener);
+        receiptListViewHolder.bind(getItem(i), navigation);
     }
 
 }

@@ -16,13 +16,6 @@ import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
 
 public class AddMeasurementsFragment extends Fragment {
 
-    public static AddMeasurementsFragment newInstance() {
-        Bundle args = new Bundle();
-        AddMeasurementsFragment fragment = new AddMeasurementsFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     AddMeasurementsViewModel amViewModel;
     FragmentAddMeasurementsBinding binding;
 

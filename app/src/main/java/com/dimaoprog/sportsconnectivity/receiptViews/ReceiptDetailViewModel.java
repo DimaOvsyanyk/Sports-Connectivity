@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
 import com.dimaoprog.sportsconnectivity.dagger.DaggerAppComponent;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDB;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDBFavorite;
@@ -34,7 +35,7 @@ public class ReceiptDetailViewModel extends AndroidViewModel {
 
     public void setCurrentMealById(String id) {
         setShowDialog(true);
-        DaggerAppComponent.create().getMealDBApi().getMealById(id).enqueue(new Callback<MealDBResponse>() {
+        AppComponentBuild.getComponent().getMealDBApi().getMealById(id).enqueue(new Callback<MealDBResponse>() {
             @Override
             public void onResponse(@NonNull Call<MealDBResponse> call, @NonNull Response<MealDBResponse> response) {
                 if (response.isSuccessful()) {
