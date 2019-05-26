@@ -48,6 +48,7 @@
                         android:inputType="number"
                         android:text="@={Converter.intToString(addModel.height)}"
                         android:textSize="18sp"
+                        android:maxLength="3"
                         tools:targetApi="o" />
 
                 </TableRow>
@@ -73,6 +74,7 @@
                         android:inputType="number"
                         android:text="@={Converter.intToString(addModel.weight)}"
                         android:textSize="18sp"
+                        android:maxLength="3"
                         tools:targetApi="o" />
 
                 </TableRow>
@@ -99,6 +101,7 @@
                         android:inputType="number"
                         android:text="@={Converter.intToString(addModel.waist)}"
                         android:textSize="18sp"
+                        android:maxLength="3"
                         tools:targetApi="o" />
 
                 </TableRow>
@@ -124,6 +127,7 @@
                         android:inputType="number"
                         android:text="@={Converter.intToString(addModel.neck)}"
                         android:textSize="18sp"
+                        android:maxLength="2"
                         tools:targetApi="o" />
 
                 </TableRow>
@@ -150,6 +154,7 @@
                         android:inputType="number"
                         android:text="@={Converter.intToString(addModel.hip)}"
                         android:textSize="18sp"
+                        android:maxLength="3"
                         tools:targetApi="o" />
 
                 </TableRow>

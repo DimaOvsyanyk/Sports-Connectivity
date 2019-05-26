@@ -3,6 +3,7 @@ package com.dimaoprog.sportsconnectivity.workoutViews.doWorkout;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import com.dimaoprog.sportsconnectivity.databinding.FragmentDoExercisesBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.ExerciseDone;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.dimaoprog.sportsconnectivity.Constants.EXERCISE_TO_DO_POSITION;
 import static com.dimaoprog.sportsconnectivity.Constants.WORKOUT_ID;
@@ -44,11 +46,11 @@ public class DoExercisesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         deViewModel = ViewModelProviders.of(this).get(DoExercisesViewModel.class);
-        deViewModel.setExerciseToDo(getArguments().getLong(WORKOUT_ID), getArguments().getInt(EXERCISE_TO_DO_POSITION));
+        deViewModel.setExerciseToDo(Objects.requireNonNull(getArguments()).getLong(WORKOUT_ID), getArguments().getInt(EXERCISE_TO_DO_POSITION));
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         FragmentDoExercisesBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_do_exercises, container, false);

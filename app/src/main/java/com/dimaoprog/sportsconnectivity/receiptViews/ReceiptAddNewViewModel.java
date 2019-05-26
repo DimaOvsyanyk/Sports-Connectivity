@@ -6,7 +6,6 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
-import com.dimaoprog.sportsconnectivity.dagger.DaggerAppComponent;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDB;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDBResponse;
 

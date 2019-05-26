@@ -2,18 +2,14 @@ package com.dimaoprog.sportsconnectivity.workoutViews.doWorkout;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.ListAdapter;
-import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.databinding.ItemDoneSetBinding;
-import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
 import com.dimaoprog.sportsconnectivity.dbEntities.ExerciseDone;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DoExerciseListAdapter extends RecyclerView.Adapter<DoExerciseViewHolder> {

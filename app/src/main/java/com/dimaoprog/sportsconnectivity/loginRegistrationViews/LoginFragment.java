@@ -3,6 +3,7 @@ package com.dimaoprog.sportsconnectivity.loginRegistrationViews;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,7 @@ public class LoginFragment extends Fragment {
     private LoginViewModel lViewModel;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final FragmentLoginBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_login, container, false);
@@ -33,8 +34,7 @@ public class LoginFragment extends Fragment {
         binding.btnRegister.setOnClickListener(v -> navigation.showNewFragment(new RegistrationFragment()));
         binding.btnLogin.setOnClickListener(__ -> {
             if (lViewModel.checkUser()) {
-                navigation.showNewFragment(new ProfileFragment());
-
+                navigation.showNewMainFragment(new ProfileFragment(), true);
             } else {
                 if (lViewModel.isEmailOk()) {
                     binding.etEMail.setError("invalid e-mail");

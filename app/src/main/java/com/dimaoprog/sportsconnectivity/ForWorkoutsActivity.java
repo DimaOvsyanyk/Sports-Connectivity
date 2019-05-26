@@ -36,17 +36,16 @@ public class ForWorkoutsActivity extends AppCompatActivity implements FragmentNa
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.menu_account:
-                    showMainFragments(new ProfileFragment());
+                    showMainFragmentsFromActivity(new ProfileFragment(), true);
                     break;
                 case R.id.menu_workouts:
-                    showMainFragments(new WorkoutsListFragment());
+                    showMainFragmentsFromActivity(new WorkoutsListFragment(), true);
                     break;
                 case R.id.menu_food:
-                    clearBackStack();
-                    showMainFragments(new FoodFragment());
+                    showMainFragmentsFromActivity(new FoodFragment(), true);
                     break;
                 case R.id.menu_receipts:
-                    showMainFragments(new MyReceiptsFragment());
+                    showMainFragmentsFromActivity(new MyReceiptsFragment(), true);
                     break;
             }
             return true;
@@ -54,11 +53,10 @@ public class ForWorkoutsActivity extends AppCompatActivity implements FragmentNa
         if (savedInstanceState == null) {
             if (checkSomeOneInSystem() != null) {
                 User.setACTIVEUSER(checkSomeOneInSystem());
-                bottomNavigationView.setVisibility(View.VISIBLE);
-                showMainFragments(new ProfileFragment());
+                showMainFragmentsFromActivity(new ProfileFragment(), true);
             } else {
-                bottomNavigationView.setVisibility(View.GONE);
-                showMainFragments(new LoginFragment());
+                showMainFragmentsFromActivity(new LoginFragment(), false
+                );
             }
         } else {
             onRestoreInstanceState(savedInstanceState);
@@ -73,7 +71,6 @@ public class ForWorkoutsActivity extends AppCompatActivity implements FragmentNa
         }
     }
 
-
     private User checkSomeOneInSystem() {
         UserRepository userRepo = new UserRepository(this.getApplication());
         return userRepo.getByStayIn(STAY);
@@ -86,12 +83,14 @@ public class ForWorkoutsActivity extends AppCompatActivity implements FragmentNa
         }
     }
 
-    public void showMainFragments(Fragment fragment) {
+    @Override
+    public void showMainFragmentsFromActivity(Fragment fragment, boolean isBottomNaviView) {
         clearBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container_fr, fragment)
                 .commit();
+        showBottomNaviView(isBottomNaviView);
     }
 
     @Override

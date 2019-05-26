@@ -37,7 +37,7 @@ public class DetailWorkoutViewModel extends AndroidViewModel {
         return allExercises;
     }
 
-    public void setAllExercises(LiveData<List<Exercise>> allExercises) {
+    private void setAllExercises(LiveData<List<Exercise>> allExercises) {
         this.allExercises = allExercises;
     }
 
@@ -45,7 +45,7 @@ public class DetailWorkoutViewModel extends AndroidViewModel {
         return currentWorkout;
     }
 
-    public void setCurrentWorkout(Workout currentWorkout) {
+    private void setCurrentWorkout(Workout currentWorkout) {
         this.currentWorkout = currentWorkout;
     }
 }

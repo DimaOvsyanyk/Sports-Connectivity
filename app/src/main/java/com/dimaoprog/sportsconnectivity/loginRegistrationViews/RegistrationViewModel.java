@@ -37,7 +37,7 @@ public class RegistrationViewModel extends AndroidViewModel {
         return userRepo.insert(user);
     }
 
-    public User getUserByEmail(String eMail) {
+    private User getUserByEmail(String eMail) {
         return userRepo.getByEmail(eMail);
     }
 

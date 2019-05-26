@@ -4,21 +4,18 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
-import com.dimaoprog.sportsconnectivity.dagger.DaggerAppComponent;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDB;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDBFavorite;
 import com.dimaoprog.sportsconnectivity.dbEntities.MealDBResponse;
 import com.dimaoprog.sportsconnectivity.dbRepos.MealDBRepository;
-import com.dimaoprog.sportsconnectivity.retrofit.MealDBRetrofit;
+
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
 
 public class ReceiptDetailViewModel extends AndroidViewModel {
 
@@ -39,7 +36,7 @@ public class ReceiptDetailViewModel extends AndroidViewModel {
             @Override
             public void onResponse(@NonNull Call<MealDBResponse> call, @NonNull Response<MealDBResponse> response) {
                 if (response.isSuccessful()) {
-                    setCurrentMealDB(response.body().getMealsDB().get(0));
+                    setCurrentMealDB(Objects.requireNonNull(response.body()).getMealsDB().get(0));
                     setShowDialog(false);
                 }
             }

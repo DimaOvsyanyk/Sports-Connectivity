@@ -31,7 +31,7 @@ public class WorkoutsListFragment extends Fragment {
     private WorkoutsListViewModel wlViewModel;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentWorkoutsListBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_workouts_list, container, false);
         AppComponentBuild.getComponent().inject(this);

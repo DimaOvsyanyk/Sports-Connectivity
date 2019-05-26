@@ -3,17 +3,14 @@ package com.dimaoprog.sportsconnectivity.profileViews;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.applandeo.materialcalendarview.EventDay;
 import com.dimaoprog.sportsconnectivity.Converter;
 import com.dimaoprog.sportsconnectivity.dbEntities.User;
-import com.dimaoprog.sportsconnectivity.dbEntities.UserMeasurements;
 import com.dimaoprog.sportsconnectivity.dbEntities.Workout;
 import com.dimaoprog.sportsconnectivity.dbRepos.StatisticRepository;
 import com.dimaoprog.sportsconnectivity.dbRepos.UserRepository;
@@ -57,7 +54,6 @@ public class ProfileViewModel extends AndroidViewModel {
         allDoneWorkouts = statisticRepo.getAllDoneWorkouts();
         eventDayList = Converter.workoutToEventList(allDoneWorkouts);
         setNameSurname();
-
     }
 
     public Date getLastMeasurementDate() {
@@ -111,11 +107,11 @@ public class ProfileViewModel extends AndroidViewModel {
         return nameSurname;
     }
 
-    public void setNameSurname() {
+    private void setNameSurname() {
         nameSurname.set(getNameSurnameFromUser());
     }
 
-    public String getNameSurnameFromUser() {
+    private String getNameSurnameFromUser() {
         return User.getACTIVEUSER().getFirstName() + " " +
                 User.getACTIVEUSER().getSecondName();
     }

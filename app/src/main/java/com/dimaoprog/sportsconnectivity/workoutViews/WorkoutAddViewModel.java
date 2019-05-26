@@ -28,14 +28,6 @@ public class WorkoutAddViewModel extends AndroidViewModel {
         workoutsRep = new WorkoutsRepository(application);
     }
 
-    public long insertWorkout(Workout workout) {
-        return workoutsRep.insert(workout);
-    }
-
-    public void insertExercise(Exercise exercise) {
-        workoutsRep.insert(exercise);
-    }
-
     public void addNewExerciseToWorkout(Exercise exercise) {
         tempExercises.add(exercise);
     }
@@ -49,24 +41,20 @@ public class WorkoutAddViewModel extends AndroidViewModel {
     }
 
     public boolean checkAllEntities() {
-        return workoutDate.get() != null & muscleGroups.get().length() > 0 &
-                workoutTitle.length() > 0 & tempExercises.size() > 0;
+        return workoutDate.get() != null & muscleGroups.get() != null &
+                workoutTitle != null & tempExercises.size() > 0;
     }
 
     public void addWorkoutAndExercisesToDb() {
         Workout newWorkout = new Workout(User.getACTIVEUSER().getId(), workoutTitle,
                 muscleGroups.get(), workoutDate.get());
-        long newWorkoutId = insertWorkout(newWorkout);
+        long newWorkoutId = workoutsRep.insert(newWorkout);
         Exercise newExercise;
         for (int i = 0; i < tempExercises.size(); i++) {
             newExercise = tempExercises.get(i);
             newExercise.setWorkoutId(newWorkoutId);
-            insertExercise(newExercise);
+            workoutsRep.insert(newExercise);
         }
-    }
-
-    public void setTempExercises(List<Exercise> tempExercises) {
-        this.tempExercises = tempExercises;
     }
 
     public String getWorkoutTitle() {
@@ -92,6 +80,5 @@ public class WorkoutAddViewModel extends AndroidViewModel {
     public void setMuscleGroups(String muscleGroups) {
         this.muscleGroups.set(muscleGroups);
     }
-
 
 }

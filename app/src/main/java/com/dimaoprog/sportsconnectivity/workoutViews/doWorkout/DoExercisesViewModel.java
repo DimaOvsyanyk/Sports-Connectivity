@@ -5,7 +5,6 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
 import com.dimaoprog.sportsconnectivity.dbEntities.ExerciseDone;
@@ -13,8 +12,6 @@ import com.dimaoprog.sportsconnectivity.dbRepos.WorkoutsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
 
 public class DoExercisesViewModel extends AndroidViewModel {
 

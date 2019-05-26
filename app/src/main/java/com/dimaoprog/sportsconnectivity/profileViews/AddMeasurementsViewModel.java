@@ -2,7 +2,6 @@ package com.dimaoprog.sportsconnectivity.profileViews;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
 import android.databinding.ObservableDouble;
 import android.support.annotation.NonNull;
 
@@ -38,7 +37,7 @@ public class AddMeasurementsViewModel extends AndroidViewModel {
         checkLastMeasurement();
     }
 
-    public void checkLastMeasurement() {
+    private void checkLastMeasurement() {
         UserMeasurements lastM = getLastMeasurement();
         if (lastM != null) {
             height = lastM.getHeightInCM();
@@ -57,7 +56,7 @@ public class AddMeasurementsViewModel extends AndroidViewModel {
                 bodyFat.get(), bmi.get()));
     }
 
-    public UserMeasurements getLastMeasurement() {
+    private UserMeasurements getLastMeasurement() {
         return statisticRepository.getLastUserMeasurementStatic();
     }
 

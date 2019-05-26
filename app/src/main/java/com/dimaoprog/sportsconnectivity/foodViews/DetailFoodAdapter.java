@@ -13,7 +13,7 @@ import com.dimaoprog.sportsconnectivity.dbEntities.Meal;
 
 public class DetailFoodAdapter extends ListAdapter<Meal, DetailFoodViewHolder> {
 
-    protected DetailFoodAdapter() {
+    public DetailFoodAdapter() {
         super(DIFF_CALLBACK);
     }
 

@@ -17,6 +17,8 @@ import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentDetailWorkoutBinding;
 import com.dimaoprog.sportsconnectivity.workoutViews.doWorkout.DoWorkoutFragment;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 import static com.dimaoprog.sportsconnectivity.Constants.WORKOUT_ID;
@@ -38,13 +40,13 @@ public class DetailWorkoutFragment extends Fragment {
     FragmentNaviManager navigation;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_workout, container, false);
         AppComponentBuild.getComponent().inject(this);
 
         dwViewModel = ViewModelProviders.of(this).get(DetailWorkoutViewModel.class);
-        dwViewModel.setWorkoutId(getArguments().getLong(WORKOUT_ID, -1));
+        dwViewModel.setWorkoutId(Objects.requireNonNull(getArguments()).getLong(WORKOUT_ID, -1));
         binding.setDetailWorkoutModel(dwViewModel);
         binding.btnStartWorkout.setOnClickListener(__ -> navigation.showNewFragment(DoWorkoutFragment.newInstance(dwViewModel.getWorkoutId())));
         return binding.getRoot();

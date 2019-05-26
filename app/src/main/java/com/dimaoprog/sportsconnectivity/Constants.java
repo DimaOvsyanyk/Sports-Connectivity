@@ -11,9 +11,4 @@ public class Constants {
 
     public static final int WORKOUT_DONE = 1;
     public static final int WORKOUT_NOT_DONE = 0;
-
-
-
-
-
 }

@@ -24,7 +24,7 @@ public class WorkoutsRepository {
     private LiveData<List<Workout>> allNotDoneWorkouts;
     private LiveData<List<Exercise>> allExercises;
 
-    public static final int FIRST_WEEK_WORKOUTS = R.raw.week_workouts;
+    private static final int FIRST_WEEK_WORKOUTS = R.raw.week_workouts;
 
     public WorkoutsRepository(Application application) {
         AppDatabase database = AppDatabase.getInstance(application);

@@ -7,23 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentDetailFoodBinding;
-import com.dimaoprog.sportsconnectivity.dbEntities.DailyMenu;
-import com.dimaoprog.sportsconnectivity.dbEntities.Meal;
 
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import java.util.Objects;
 
 public class DetailFoodFragment extends Fragment {
 
@@ -41,10 +32,10 @@ public class DetailFoodFragment extends Fragment {
     private FragmentDetailFoodBinding binding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_food, container, false);
         dfViewModel = ViewModelProviders.of(this).get(DetailFoodViewModel.class);
-        dfViewModel.setMenuId(getArguments().getLong(MENU_ID, -1));
+        dfViewModel.setMenuId(Objects.requireNonNull(getArguments()).getLong(MENU_ID, -1));
         return binding.getRoot();
     }
 

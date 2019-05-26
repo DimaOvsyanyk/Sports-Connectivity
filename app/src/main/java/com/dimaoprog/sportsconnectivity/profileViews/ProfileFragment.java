@@ -20,6 +20,8 @@ import com.dimaoprog.sportsconnectivity.databinding.DialogEditProfileBinding;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentProfileBinding;
 import com.dimaoprog.sportsconnectivity.loginRegistrationViews.LoginFragment;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 public class ProfileFragment extends Fragment {
@@ -43,7 +45,7 @@ public class ProfileFragment extends Fragment {
 
         binding.btnLogoff.setOnClickListener(__ -> {
             pViewModel.logoffAction();
-            navigation.showNewFragment(new LoginFragment());
+            navigation.showNewMainFragment(new LoginFragment(), false);
         });
 
         binding.btnShowMeasurementStatistics.setOnClickListener(v -> navigation.showNewFragment(new MeasurementGraphFragment()));
@@ -58,7 +60,7 @@ public class ProfileFragment extends Fragment {
 
     public void showAddEditDialog() {
         pViewModel.setActiveUserDetails();
-        final Dialog dialogEditProfile = new Dialog(getContext());
+        final Dialog dialogEditProfile = new Dialog(Objects.requireNonNull(getContext()));
         dialogEditProfile.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DialogEditProfileBinding bindingEditProfile = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
                 R.layout.dialog_edit_profile, null, false);

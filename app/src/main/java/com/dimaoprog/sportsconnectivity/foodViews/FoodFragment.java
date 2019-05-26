@@ -14,8 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
@@ -27,6 +25,7 @@ import com.dimaoprog.sportsconnectivity.databinding.FragmentFoodBinding;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -76,7 +75,7 @@ public class FoodFragment extends Fragment {
     }
 
     public void showAddMenuDialog() {
-        final Dialog dialogAddMenu = new Dialog(getContext());
+        final Dialog dialogAddMenu = new Dialog(Objects.requireNonNull(getContext()));
         dialogAddMenu.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DialogAddMenuBinding bindingAddMenu = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
                 R.layout.dialog_add_menu, null, false);

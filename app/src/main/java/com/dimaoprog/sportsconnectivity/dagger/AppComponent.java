@@ -25,8 +25,6 @@ public interface AppComponent {
 
     void inject(WorkoutsListFragment workoutsListFragment);
 
-    void inject(WorkoutAddFragment workoutAddFragment);
-
     void inject(DetailWorkoutFragment detailWorkoutFragment);
 
     void inject(DoWorkoutFragment doWorkoutFragment);

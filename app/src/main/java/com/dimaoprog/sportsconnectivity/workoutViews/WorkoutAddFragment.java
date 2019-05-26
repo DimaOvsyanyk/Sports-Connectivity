@@ -23,21 +23,15 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
-import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.R;
-import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentWorkoutAddBinding;
 import com.dimaoprog.sportsconnectivity.dbEntities.Exercise;
 
 import java.util.Calendar;
 import java.util.Date;
-
-import javax.inject.Inject;
+import java.util.Objects;
 
 public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.AddNewExerciseListener {
-
-    @Inject
-    FragmentNaviManager navigation;
 
     private WorkoutAddViewModel waViewModel;
     private FragmentWorkoutAddBinding binding;
@@ -45,10 +39,10 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
     WorkoutAddAdapter addAdapter;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_add, container, false);
-        AppComponentBuild.getComponent().inject(this);
 
         waViewModel = ViewModelProviders.of(this).get(WorkoutAddViewModel.class);
         binding.setWorkoutAddModel(waViewModel);
@@ -58,7 +52,8 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder viewHolder1) {
                 return false;
             }
 
@@ -77,7 +72,7 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
         binding.btnConfirmAdd.setOnClickListener(__ -> {
             if (waViewModel.checkAllEntities()) {
                 waViewModel.addWorkoutAndExercisesToDb();
-                navigation.showNewFragment(new WorkoutsListFragment());
+                Objects.requireNonNull(getActivity()).onBackPressed();
             } else {
                 Toast.makeText(getContext(), "You should fill all fields", Toast.LENGTH_SHORT).show();
             }
@@ -96,7 +91,7 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            new DatePickerDialog(getContext(),
+            new DatePickerDialog(Objects.requireNonNull(getContext()),
                     (view, year1, month1, dayOfMonth1) -> waViewModel.setWorkoutDate(makeDate(year1, month1, dayOfMonth1)),
                     year, month, dayOfMonth).show();
         }
@@ -113,7 +108,7 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
     private void showPickMuscleGroupsDialog() {
         final String[] allMuscleGroups = getResources().getStringArray(R.array.pick_muscle_groups);
         final boolean[] selectedMuscleGroups = new boolean[allMuscleGroups.length];
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         builder.setTitle(R.string.pick_muscle_groups);
         builder.setMultiChoiceItems(allMuscleGroups, selectedMuscleGroups,
                 (dialog, which, isChecked) -> selectedMuscleGroups[which] = isChecked);
@@ -141,7 +136,7 @@ public class WorkoutAddFragment extends Fragment implements WorkoutAddAdapter.Ad
 
     @Override
     public void showAddExerciseDialog() {
-        final Dialog dialogAddExercise = new Dialog(getContext());
+        final Dialog dialogAddExercise = new Dialog(Objects.requireNonNull(getContext()));
         dialogAddExercise.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogAddExercise.setContentView(R.layout.dialog_add_exercise);
         dialogAddExercise.setCanceledOnTouchOutside(true);

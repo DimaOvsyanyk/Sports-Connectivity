@@ -4,9 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
-import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.dimaoprog.sportsconnectivity.dbEntities.DailyMenu;
 import com.dimaoprog.sportsconnectivity.dbEntities.Meal;
@@ -20,9 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static com.dimaoprog.sportsconnectivity.Constants.LOG_MAIN;
-
-public class FoodViewModel extends AndroidViewModel{
+public class FoodViewModel extends AndroidViewModel {
 
     private FoodRepository foodRep;
     private LiveData<List<DailyMenu>> allMenu;
@@ -65,7 +61,7 @@ public class FoodViewModel extends AndroidViewModel{
         int dayOfLastMenu = calendar.get(Calendar.DAY_OF_MONTH);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfLastMenu + 1);
         int dayOfWeekNew = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-        String[] meals = new String[] {breakfast, snackFirst, lunch, snackSecond, dinner};
+        String[] meals = new String[]{breakfast, snackFirst, lunch, snackSecond, dinner};
         long menuId = foodRep.insert(new DailyMenu(User.getACTIVEUSER().getId(),
                 daysOfWeek[dayOfWeekNew], calendar.getTime()));
         for (int i = 0; i < foodIntakes.length; i++) {

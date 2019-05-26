@@ -1,11 +1,10 @@
 package com.dimaoprog.sportsconnectivity.receiptViews;
 
 import android.app.ProgressDialog;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -19,6 +18,8 @@ import com.dimaoprog.sportsconnectivity.R;
 import com.dimaoprog.sportsconnectivity.dagger.AppComponentBuild;
 import com.dimaoprog.sportsconnectivity.databinding.FragmentReceiptAddNewBinding;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 public class ReceiptAddNewFragment extends Fragment {
@@ -31,7 +32,7 @@ public class ReceiptAddNewFragment extends Fragment {
     private ProgressDialog progressDialog;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_receipt_add_new, container, false);
         AppComponentBuild.getComponent().inject(this);
         ranViewModel = ViewModelProviders.of(this).get(ReceiptAddNewViewModel.class);
@@ -65,7 +66,7 @@ public class ReceiptAddNewFragment extends Fragment {
 
     private void setupSpinner() {
         String[] strMealCategories = getResources().getStringArray(R.array.receipt_categories);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, strMealCategories);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, strMealCategories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerMealCategories.setAdapter(adapter);
         binding.spinnerMealCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

@@ -2,7 +2,6 @@ package com.dimaoprog.sportsconnectivity.foodViews;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.dimaoprog.sportsconnectivity.FragmentNaviManager;
 import com.dimaoprog.sportsconnectivity.databinding.ItemDayMenuBinding;
